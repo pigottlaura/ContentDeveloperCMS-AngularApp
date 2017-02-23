@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-8-12">
+    <h1>{{pageTitle}}</h1>
+  </div>
+  <div *ngIf="user != null" class="col-4-12 right">
+    <span>{{user.displayName}}</span>
+    <img src="{{user.google_profile_image_url}} + '&sz=50'">
+  </div>
+</div>

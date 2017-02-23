@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+/* General */
+html {
+    overflow-y: scroll;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+textarea {
+    display: block;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Visible */
+.hidden {
+    visibility: hidden !important;
+}
+.visible {
+    visibility: visible !important;
+}
+.active {
+    background-color: black !important;
+    color: white;
+    outline-color: transparent;
+}
+.selected {
+    background-color: #a9a9a9;
+}
+
+/* Dragging */
+[draggable="true"]:before {
+    content: "...";
+}
+
+/* ALIGN */
+.right {
+    text-align: right;
+}
+.left {
+    text-align: left;
+}
+.alignRight {
+    float: right;
+}
+
+/* GRID */
+.row {
+    display: block;
+    overflow: auto;
+    margin: 0 0 1% 0;
+    padding: 0.5% 1%;
+}
+[class*="col-"]{
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: text-top;
+    padding: 0 1%;
+}
+.col-1-12 {width: 8%;}
+.col-2-12 {width: 16%;}
+.col-3-12 {width: 25%;}
+.col-4-12 {width: 33%;}
+.col-5-12 {width: 42%;}
+.col-6-12 {width: 49%;}
+.col-7-12 {width: 58%;}
+.col-8-12 {width: 66%;}
+.col-9-12 {width: 75%;}
+.col-10-12 {width: 83%;}
+.col-11-12 {width: 88%;}
+.col-12-12 {width: 100%;}
