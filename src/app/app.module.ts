@@ -10,12 +10,16 @@ import { CmsComponent } from './cms/cms.component';
 import { HeaderComponent } from './general/header/header.component';
 import { FooterComponent } from './general/footer/footer.component';
 
+// Providers
+import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
+
 @NgModule({
   declarations: [
     AppComponent,
     CmsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ContentDeveloperServerService
   ],
   imports: [
     BrowserModule,
