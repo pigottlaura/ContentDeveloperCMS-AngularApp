@@ -1,0 +1,12 @@
+<div class="row">
+	<div class="col-6-12">
+		<h2>Project Structure</h2>
+		<textarea *ngIf="projectStructure != null">{{projectStructure | json}}</textarea>
+	</div>
+	<div class="col-6-12">
+		<h2>Project Content</h2>
+		<div *ngIf="projectContent != null">
+			<app-content-editor [viewOnly]="true" [projectContent]="projectContent"></app-content-editor>
+		</div>
+	</div>
+</div>

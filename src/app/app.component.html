@@ -1,14 +1,14 @@
-<app-header [user]="_user"></app-header>
-    <ng-container *ngIf="_userId == null">
+<app-header [user]="user"></app-header>
+    <ng-container *ngIf="userId == null">
         <button (click)="simulateLogin()">Google Login</button>
     </ng-container>
 
-    <ng-container *ngIf="_userId != null && _projectId == null">
+    <ng-container *ngIf="userId != null && projectId == null">
         list of projects
         <button (click)="simulateProject()">Project 1</button>
     </ng-container>
 
-    <ng-container *ngIf="_userId != null && _projectId != null">
-        <app-cms [projectId]="_projectId" [userId]="_userId"></app-cms>
+    <ng-container *ngIf="userId != null && projectId != null">
+        <app-cms [projectId]="projectId" [userId]="userId" [accessLevel]="accessLevel"></app-cms>
     </ng-container>
 <app-footer></app-footer>
