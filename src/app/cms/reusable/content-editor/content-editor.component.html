@@ -1,3 +1,14 @@
-<div *ngIf="projectContent != null">
-  {{projectContent | json}}
+<div class="row">
+  <div class="col-2-12">
+      <ul *ngIf="projectContent != null">
+        <li *ngFor="let collection of projectContent | keyValArray : 'keys'"
+            (click)="viewCollection(collection)"
+            [class]="(collection === currentCollection) || (currentCollection == null && index == 0) ? 'active' : ''">
+          {{collection}}
+        </li>
+      </ul>
+  </div>
+  <div class="col-10-12">
+    <app-collection [collection]="currentCollection" [projectContent]="projectContent" [projectStructure]="projectStructure"></app-collection>
+  </div>
 </div>

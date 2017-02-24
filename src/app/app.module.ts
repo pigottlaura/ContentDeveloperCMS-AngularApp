@@ -12,9 +12,11 @@ import { EditorComponent } from './cms/editor/editor.component';
 import { HeaderComponent } from './general/header/header.component';
 import { FooterComponent } from './general/footer/footer.component';
 import { ContentEditorComponent } from './cms/reusable/content-editor/content-editor.component';
+import { KeyValArrayPipe } from './pipes/key-val-array.pipe';
 
 // Providers
 import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
+import { CollectionComponent } from './cms/reusable/collection/collection.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { ContentDeveloperServerService } from './services/content-developer-serv
     EditorComponent,
     HeaderComponent,
     FooterComponent,
-    ContentEditorComponent
+    ContentEditorComponent,
+    KeyValArrayPipe,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,

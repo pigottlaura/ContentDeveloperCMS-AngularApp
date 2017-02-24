@@ -8,10 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ContentEditorComponent implements OnInit {
   @Input() viewOnly:boolean;
   @Input() projectContent:Object;
+  currentCollection:Object;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  viewCollection(collection){
+    this.currentCollection = collection;
   }
 
 }
