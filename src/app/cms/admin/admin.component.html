@@ -1,15 +1,20 @@
 <div class="row">
 	<div class="col-6-12">
 		<h2>Project Structure</h2>
-		<textarea *ngIf="projectStructure != null">{{projectStructure | json}}</textarea>
+		<textarea
+			*ngIf="projectStructure != null"
+			[(ngModel)]="projectStructurePreview">
+		</textarea>
+		<button (click)="formatStructureJson()">Format JSON</button>
+		<button (click)="resetProjectStructure()">Reset</button>
 	</div>
 	<div class="col-6-12">
 		<h2>Project Content</h2>
-		<div *ngIf="projectContent != null">
+		<div *ngIf="projectStructurePreview != null">
 			<app-content-editor
-				[viewContent]="false"
+				[viewContent]="true"
 				[projectContent]="projectContent"
-				[projectStructure]="projectStructure">
+				[projectStructure]="projectStructurePreview | customJson:'parse'">
 			</app-content-editor>
 		</div>
 	</div>

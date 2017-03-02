@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-collection',
@@ -16,4 +16,7 @@ export class CollectionComponent implements OnInit {
   ngOnInit() {
   }
 
+  onChanges(changes){
+    console.log(changes);
+  }
 }

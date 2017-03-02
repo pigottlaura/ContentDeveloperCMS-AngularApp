@@ -17,6 +17,11 @@ table {
     border-collapse: collapse;
 }
 
+/* Alerts */
+.warning {
+    border: 2px solid #F00;
+}
+
 /* Visible */
 .hidden {
     visibility: hidden !important;

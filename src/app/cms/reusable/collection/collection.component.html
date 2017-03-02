@@ -1,11 +1,11 @@
-<h3>{{collection}}</h3>
-<div *ngIf="projectStructure[collection] != null">
+<div *ngIf="projectStructure != null && projectStructure[collection]">
+  <h3>{{collection}}</h3>
 
-  <ng-container *ngIf="projectStructure[collection].attributes != null">
+  <ng-container *ngIf="projectStructure[collection] != null">
     <app-collection-item
       [itemName]="collection"
       [itemStructure]="projectStructure[collection]"
-      [itemContent]="projectContent[collection]"
+      [itemContent]="projectContent != null ? projectContent[collection] : null"
       [viewContent]="viewContent">
     </app-collection-item>
   </ng-container>
@@ -16,7 +16,7 @@
         <app-collection-item
           [itemName]="collectionItemName"
           [itemStructure]="projectStructure[collection].items[collectionItemName]"
-          [itemContent]="projectContent[collection][collectionItemName]"
+          [itemContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection][collectionItemName] : null"
           [viewContent]="viewContent">
         </app-collection-item>
       </ng-container>
@@ -24,7 +24,7 @@
 
     <ng-container *ngIf="projectStructure[collection].type == 'array'">
 
-      <ng-container *ngIf="projectContent[collection] != null && viewContent">
+      <ng-container *ngIf="projectContent != null && projectContent[collection] != null && viewContent">
         <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
           <div>
             <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
@@ -39,7 +39,7 @@
         </ng-container>
       </ng-container>
 
-      <ng-container *ngIf="projectContent[collection] == null || viewContent == false">
+      <ng-container *ngIf="projectContent != null && projectContent[collection] == null || viewContent == false">
         <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
           <app-collection-item
             [itemName]="collectionItemName"
