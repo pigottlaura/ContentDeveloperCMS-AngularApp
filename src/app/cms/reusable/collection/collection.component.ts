@@ -6,9 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
-  @Input() collection:Object;
+  @Input() collection:string;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
+  @Input() viewContent:boolean;
 
   constructor() { }
 

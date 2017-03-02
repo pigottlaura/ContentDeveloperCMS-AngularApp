@@ -1,0 +1,25 @@
+<ng-container *ngIf="itemStructure.attributes != null">
+    <label>{{itemName}}
+      <input
+        *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'input'"
+        [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
+        [value]="itemContent == null || viewContent == false || itemStructure.attributes.type == 'file' ? '' : itemContent">
+        <img
+          *ngIf="itemStructure.attributes.type == 'file' && viewContent && itemContent != null"
+          [src]="itemContent">
+      <textarea
+        *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'textarea'"
+        [value]="itemContent == null || viewContent == false ? '' : itemContent">
+      </textarea>
+      <select
+        *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
+        <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
+          <option
+            *ngFor="let option of itemStructure.attributes.options"
+            [selected]="itemContent != null && viewContent != false && option == itemContent">
+            {{option}}
+          </option>
+        </ng-container>
+      </select>
+    </label>
+  </ng-container>

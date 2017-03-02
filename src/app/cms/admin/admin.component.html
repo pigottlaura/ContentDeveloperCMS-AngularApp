@@ -6,7 +6,11 @@
 	<div class="col-6-12">
 		<h2>Project Content</h2>
 		<div *ngIf="projectContent != null">
-			<app-content-editor [viewOnly]="true" [projectContent]="projectContent"></app-content-editor>
+			<app-content-editor
+				[viewContent]="false"
+				[projectContent]="projectContent"
+				[projectStructure]="projectStructure">
+			</app-content-editor>
 		</div>
 	</div>
 </div>

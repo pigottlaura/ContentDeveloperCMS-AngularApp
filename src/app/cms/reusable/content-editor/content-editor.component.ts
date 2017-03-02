@@ -6,9 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./content-editor.component.css']
 })
 export class ContentEditorComponent implements OnInit {
-  @Input() viewOnly:boolean;
+  @Input() viewContent:boolean;
   @Input() projectContent:Object;
+  @Input() projectStructure:Object;
   currentCollection:Object;
+  currentCollectionName:string;
 
   constructor() { }
 
@@ -17,6 +19,7 @@ export class ContentEditorComponent implements OnInit {
 
   viewCollection(collection){
     this.currentCollection = collection;
+    this.currentCollectionName = collection;
   }
 
 }

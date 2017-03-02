@@ -1,6 +1,87 @@
-<p>
-  collection works!
-</p>
-<div *ngIf="projectContent != null && collection != null">
-  {{projectContent[collection]}}
+<h3>{{collection}}</h3>
+<div *ngIf="projectStructure[collection] != null">
+
+  <ng-container *ngIf="projectStructure[collection].attributes != null">
+    <app-collection-item
+      [itemName]="collection"
+      [itemStructure]="projectStructure[collection]"
+      [itemContent]="projectContent[collection]"
+      [viewContent]="viewContent">
+    </app-collection-item>
+  </ng-container>
+  
+  <ng-container *ngIf="projectStructure[collection].items != null">
+    <ng-container *ngIf="projectStructure[collection].type == 'object'">
+      <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+        <app-collection-item
+          [itemName]="collectionItemName"
+          [itemStructure]="projectStructure[collection].items[collectionItemName]"
+          [itemContent]="projectContent[collection][collectionItemName]"
+          [viewContent]="viewContent">
+        </app-collection-item>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="projectStructure[collection].type == 'array'">
+
+      <ng-container *ngIf="projectContent[collection] != null && viewContent">
+        <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
+          <div>
+            <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+              <app-collection-item
+                [itemName]="collectionItemName"
+                [itemStructure]="projectStructure[collection].items[collectionItemName]"
+                [itemContent]="projectContent[collection][index][collectionItemName]"
+                [viewContent]="viewContent">
+              </app-collection-item>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="projectContent[collection] == null || viewContent == false">
+        <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+          <app-collection-item
+            [itemName]="collectionItemName"
+            [itemStructure]="projectStructure[collection].items[collectionItemName]"
+            [viewContent]="viewContent">
+          </app-collection-item>
+        </ng-container>
+      </ng-container>
+
+    </ng-container>
+  </ng-container>
+
+  
+
+    <!--Attempt at long version
+    <ng-container *ngIf="projectStructure[collection].type == 'array'">
+      <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+        <label>{{collectionItemName}}
+          <input
+            *ngIf="projectStructure[collection].items[collectionItemName].input_type == null || projectStructure[collection].items[collectionItemName].input_type == 'input'"
+            [type]="projectStructure[collection].items[collectionItemName].attributes.type != null ? projectStructure[collection].items[collectionItemName].type : text"
+            [value]="projectContent[collection][collectionItemName] == null || viewContent == false || projectStructure[collection].items[collectionItemName].attributes.type == 'file' ? '' : projectContent[collection][collectionItemName]">
+          <img
+            *ngIf="projectStructure[collection].items[collectionItemName].attributes.type == 'file' && viewContent && projectContent[collection][collectionItemName] != null"
+            [src]="projectContent[collection][collectionItemName]">
+          <textarea
+            *ngIf="projectStructure[collection].items[collectionItemName].input_type != null && projectStructure[collection].items[collectionItemName].input_type == 'textarea'"
+            [value]="projectContent[collection][collectionItemName] == null || viewContent == false ? '' : projectContent[collection][collectionItemName]">
+          </textarea>
+          <select
+            *ngIf="projectStructure[collection].items[collectionItemName].input_type != null && projectStructure[collection].items[collectionItemName].input_type == 'select'">
+            <ng-container *ngIf="projectStructure[collection].items[collectionItemName].attributes != null && projectStructure[collection].items[collectionItemName].attributes.options != null">
+              <option
+                *ngFor="let option of projectStructure[collection].items[collectionItemName].attributes.options"
+                [selected]="projectContent[collection][collectionItemName] != null && viewContent != false && option == projectContent[collection][collectionItemName]">
+                {{option}}
+              </option>
+            </ng-container>
+          </select>
+        </label>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  -->
 </div>

@@ -9,6 +9,13 @@
       </ul>
   </div>
   <div class="col-10-12">
-    <app-collection [collection]="currentCollection" [projectContent]="projectContent" [projectStructure]="projectStructure"></app-collection>
+    <ng-container *ngIf="currentCollectionName != null">
+      <app-collection
+        [collection]="currentCollectionName"
+        [projectContent]="projectContent"
+        [projectStructure]="projectStructure"
+        [viewContent]="false">
+      </app-collection>
+    </ng-container>
   </div>
 </div>
