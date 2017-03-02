@@ -26,4 +26,15 @@ export class CmsComponent implements OnInit {
     );
   }
 
+  saveProjectStructure(updatedStructure){
+    if(updatedStructure != null){
+      this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
+      responseObject => {
+          this.projectStructure = responseObject;
+          console.log("Structure Saved!!");
+        }
+      );
+    }
+  }
+
 }

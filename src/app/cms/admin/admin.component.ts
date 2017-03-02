@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomJsonPipe } from "./../../pipes/custom-json.pipe";
 
 @Component({
@@ -11,15 +11,19 @@ export class AdminComponent implements OnInit {
   @Input() projectContent;
   @Input() projectStructure;
   @Input() projectStructurePreview;
+  @Output() saveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   
   constructor(private _jsPipe:CustomJsonPipe) {}
 
   ngOnInit() {
   }
 
-  ngOnChanges(){
-    this.projectStructurePreview = this._jsPipe.transform(this.projectStructure, "stringify");
-    this.formatStructureJson();
+  ngOnChanges(changes){
+    if(changes.projectStructure){
+      this.projectStructure = changes.projectStructure.currentValue;
+      this.projectStructurePreview = this._jsPipe.transform(this.projectStructure, "stringify");
+      this.formatStructureJson();
+    }
   }
 
   formatStructureJson(){
@@ -32,6 +36,13 @@ export class AdminComponent implements OnInit {
 
   resetProjectStructure(){
     this.projectStructurePreview = this._jsPipe.transform(this.projectStructure, "stringify");
+  }
+
+  saveProjectStructure(){
+    let updatedStructure = this._jsPipe.transform(this.projectStructurePreview, "parse");
+    if(updatedStructure != null){
+      this.saveStructure.emit(updatedStructure);
+    }
   }
 
 }

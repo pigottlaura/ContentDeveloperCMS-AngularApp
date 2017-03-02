@@ -1,2 +1,11 @@
-<app-cms-admin *ngIf="accessLevel == 1" [projectContent]="projectContent" [projectStructure]="projectStructure"></app-cms-admin>
-<app-cms-editor *ngIf="accessLevel == 2" [projectContent]="projectContent" [projectStructure]="projectStructure"></app-cms-editor>
+<app-cms-admin
+    *ngIf="accessLevel == 1"
+    [projectContent]="projectContent"
+    [projectStructure]="projectStructure"
+    (saveStructure)="saveProjectStructure($event)">
+</app-cms-admin>
+<app-cms-editor
+    *ngIf="accessLevel == 2"
+    [projectContent]="projectContent"
+    [projectStructure]="projectStructure">
+</app-cms-editor>
