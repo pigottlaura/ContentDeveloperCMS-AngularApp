@@ -1,5 +1,5 @@
 <ng-container *ngIf="itemStructure.attributes != null">
-    <label>{{itemName}}
+    <label>{{itemName}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
       <input
         *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'input'"
         [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
