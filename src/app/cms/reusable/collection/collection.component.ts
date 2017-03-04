@@ -11,6 +11,7 @@ export class CollectionComponent implements OnInit {
   @Input() projectStructure:Object;
   @Input() viewContent:boolean;
   @Input() topLevelCollection:Boolean = false;
+  @Input() subCollection:boolean = false;
 
   constructor() { }
 

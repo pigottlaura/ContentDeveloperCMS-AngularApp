@@ -53,6 +53,9 @@ table {
 .alignRight {
     float: right;
 }
+.inline {
+    display: inline-block;
+}
 
 /* GRID */
 .row {

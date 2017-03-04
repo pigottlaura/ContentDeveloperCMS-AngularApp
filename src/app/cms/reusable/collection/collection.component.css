@@ -1,7 +1,9 @@
 :host > div{
     background-color: #FFFFFF;
 }
-.subCollection{
+.collection, .subCollection{
     display: block;
+}
+.subCollection{
     margin-left: 4%;
 }
