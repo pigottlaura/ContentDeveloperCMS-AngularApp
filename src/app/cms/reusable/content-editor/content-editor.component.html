@@ -12,7 +12,9 @@
   </div>
   <div class="col-10-12">
     <ng-container *ngIf="currentCollectionName != null">
+      <h2>{{currentCollectionName}}</h2>
       <app-collection
+        [topLevelCollection]="true"
         [collection]="currentCollectionName"
         [projectContent]="projectContent"
         [projectStructure]="projectStructure"

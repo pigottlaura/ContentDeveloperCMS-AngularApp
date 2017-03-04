@@ -10,6 +10,7 @@ export class CollectionComponent implements OnInit {
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
   @Input() viewContent:boolean;
+  @Input() topLevelCollection:Boolean = false;
 
   constructor() { }
 
