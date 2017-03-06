@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, DoCheck, OnChanges } from '@angular/core';
 import { CustomJsonPipe } from "./../../pipes/custom-json.pipe";
 
 @Component({
@@ -7,11 +7,12 @@ import { CustomJsonPipe } from "./../../pipes/custom-json.pipe";
   styleUrls: ['./admin.component.css'],
   providers: [ CustomJsonPipe ]
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnChanges, DoCheck {
   @Input() projectContent;
   @Input() projectStructure;
-  @Input() projectStructurePreview;
+  @Input() projectStructureJson;
   @Output() saveStructure:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() saveContent:EventEmitter<void> = new EventEmitter<void>();
   
   constructor(private _jsPipe:CustomJsonPipe) {}
 
@@ -20,29 +21,35 @@ export class AdminComponent implements OnInit {
 
   ngOnChanges(changes){
     if(changes.projectStructure){
-      this.projectStructure = changes.projectStructure.currentValue;
-      this.projectStructurePreview = this._jsPipe.transform(this.projectStructure, "stringify");
-      this.formatStructureJson();
+      this.projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
     }
   }
 
+  ngDoCheck(){
+    this.formatStructureJson();
+  }
+
   formatStructureJson(){
-    var tmpObj:any = this._jsPipe.transform(this.projectStructurePreview, "parse");
+    var tmpObj:any = this._jsPipe.transform(this.projectStructureJson, "parse");
 
     if(tmpObj != null){
-      this.projectStructurePreview = this._jsPipe.transform(tmpObj, "stringify");
+      this.projectStructure = tmpObj;
+      this.projectStructureJson = this._jsPipe.transform(tmpObj, "stringify");
     }
   }
 
   resetProjectStructure(){
-    this.projectStructurePreview = this._jsPipe.transform(this.projectStructure, "stringify");
+    
   }
 
   saveProjectStructure(){
-    let updatedStructure = this._jsPipe.transform(this.projectStructurePreview, "parse");
+    let updatedStructure = this._jsPipe.transform(this.projectStructureJson, "parse");
     if(updatedStructure != null){
       this.saveStructure.emit(updatedStructure);
     }
   }
 
+  saveProjectContent(){
+    this.saveContent.emit();
+  }
 }

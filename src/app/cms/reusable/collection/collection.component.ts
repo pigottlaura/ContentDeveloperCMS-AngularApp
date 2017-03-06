@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-collection',
@@ -12,13 +12,19 @@ export class CollectionComponent implements OnInit {
   @Input() viewContent:boolean;
   @Input() topLevelCollection:Boolean = false;
   @Input() subCollection:boolean = false;
+  @Input() encapsulationPath:string;
+  @Output() contentChanged:EventEmitter<Object> = new EventEmitter<Object>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onChanges(changes){
-    console.log(changes);
+  itemContentChanged(contentData){
+    this.contentChanged.emit(contentData);
+  }
+
+  collectionContentChanged(contentData){
+    this.contentChanged.emit(contentData);
   }
 }

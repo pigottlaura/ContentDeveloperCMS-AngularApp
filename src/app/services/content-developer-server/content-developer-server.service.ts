@@ -31,7 +31,6 @@ export class ContentDeveloperServerService {
   }
 
   updateProjectStructure(projectId:number, userId:number, projectStructure:Object){
-    console.log("Save in CDService");
     let requestUrl = this._serverUrl + "/feeds/" + projectId;
     return this._http.put(requestUrl, {structure: projectStructure}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
@@ -39,6 +38,26 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         console.log(responseObject);
         this._currentProjectData.structure = responseObject;
+      });
+  }
+
+  updateProjectContent(projectId:number, userId:number, projectContent:Object, encapsulationPath:string=""){
+    let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
+    return this._http.put(requestUrl, {content: projectContent}, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project contrent")
+      .do(responseObject => {
+        console.log(responseObject);
+      });
+  }
+
+  createProjectContent(projectId:number, userId:number, projectContent:Object, encapsulationPath:string=""){
+    let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
+    return this._http.post(requestUrl, {content: projectContent}, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content")
+      .do(responseObject => {
+        console.log(responseObject);
       });
   }
 

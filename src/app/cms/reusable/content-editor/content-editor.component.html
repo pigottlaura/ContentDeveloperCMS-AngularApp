@@ -15,10 +15,12 @@
       <h2>{{currentCollectionName}}</h2>
       <app-collection
         [topLevelCollection]="true"
+        [encapsulationPath]="currentCollectionName"
         [collection]="currentCollectionName"
         [projectContent]="projectContent"
         [projectStructure]="projectStructure"
-        [viewContent]="viewContent">
+        [viewContent]="viewContent"
+        (contentChanged)="projectContentChanged($event)">
       </app-collection>
     </ng-container>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { ContentDeveloperServerService } from './../services/content-developer-server/content-developer-server.service';
 
 
@@ -12,8 +12,8 @@ export class CmsComponent implements OnInit {
   @Input() userId:number;
   @Input() accessLevel: number;
 
-  projectContent:Object;
-  projectStructure:Object;
+  @Input() projectContent:Object;
+  @Input() projectStructure:Object;
 
   constructor(private _cdServer:ContentDeveloperServerService) {}
 
@@ -26,15 +26,25 @@ export class CmsComponent implements OnInit {
     );
   }
 
-  saveProjectStructure(updatedStructure){
-    if(updatedStructure != null){
-      this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
-      responseObject => {
-          this.projectStructure = responseObject;
-          console.log("Structure Saved!!");
-        }
-      );
-    }
+  saveProjectStructure(updatedProjectStructure){
+    console.log("About to update");
+    this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedProjectStructure).subscribe(
+    responseObject => {
+        this.projectStructure = responseObject;
+        console.log("Structure Saved!!");
+      }
+    );
   }
 
+  saveProjectContent(e){
+    console.log(this.projectContent);
+    this._cdServer.updateProjectContent(this.projectId, this.userId, this.projectContent).subscribe(
+      responseObject => {
+        this.projectContent = responseObject;
+        console.log("Content Saved!!");
+      }
+    )
+  }
+
+  
 }

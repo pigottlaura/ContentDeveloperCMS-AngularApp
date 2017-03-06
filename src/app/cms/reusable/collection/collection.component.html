@@ -1,13 +1,15 @@
 <h3 *ngIf="subCollection">{{collection}}</h3>
-<br *ngIf="projectStructure != null && projectStructure[collection].input_type == 'textarea'">
+<br *ngIf="projectStructure != null && (projectStructure[collection] != null && (projectStructure[collection].input_type == 'textarea' || projectStructure[collection].type == 'html'))">
 <div [class]="subCollection ? 'subCollection ' + collection : 'inline'">
   <ng-container *ngIf="projectStructure != null && projectStructure[collection] != null">
-    <ng-container *ngIf="projectStructure[collection] != null && projectStructure[collection].items == null">
+    <ng-container *ngIf="projectStructure[collection] != null && projectStructure[collection].items == null && encapsulationPath != null">
       <app-collection-item
+        [encapsulationPath]="encapsulationPath"
         [itemName]="collection"
         [itemStructure]="projectStructure[collection]"
-        [itemContent]="projectContent != null ? projectContent[collection] : null"
-        [viewContent]="viewContent">
+        [itemContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection] : null"
+        [viewContent]="viewContent"
+        (itemContentChanged)="collectionContentChanged($event)">
       </app-collection-item>
     </ng-container>
     
@@ -16,11 +18,14 @@
       <ng-container *ngIf="projectStructure[collection].type == 'object'">
         <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
           <app-collection
+            [encapsulationPath]="encapsulationPath + '/' + collectionItemName"
             [subCollection]="projectStructure[collection].items[collectionItemName].type == 'object' || projectStructure[collection].items[collectionItemName].type == 'array'"
             [collection]="collectionItemName"
             [projectStructure]="projectStructure[collection].items"
             [projectContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection] : null"
-            [viewContent]="viewContent">
+            [viewContent]="viewContent"
+            (itemContentChanged)="itemContentChanged($event)"
+            (contentChanged)="collectionContentChanged($event)">
           </app-collection>
         </ng-container>
       </ng-container>
@@ -28,14 +33,20 @@
       <ng-container *ngIf="projectStructure[collection].type == 'array'">
         <ng-container *ngIf="projectContent != null && projectContent[collection] != null && viewContent">
           <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
+            <div class="collection">
               <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
                 <app-collection
+                  [subCollection]="projectStructure[collection].items[collectionItemName].type == 'array'"
+                  [encapsulationPath]="encapsulationPath + '/' + index + '/' + collectionItemName"
                   [collection]="collectionItemName"
                   [projectStructure]="projectStructure[collection].items"
-                  [projectContent]="projectContent[collection][collectionItemName] != null ? projectContent[collection][collectionItemName][index] : null"
-                  [viewContent]="viewContent">
+                  [projectContent]="projectContent[collection][index] != null ? projectContent[collection][index] : null"
+                  [viewContent]="viewContent"
+                  (itemContentChanged)="collectionContentChanged($event)"
+                  (contentChanged)="collectionContentChanged($event)">
                 </app-collection>
               </ng-container>
+            </div>
           </ng-container>
         </ng-container>
 
@@ -43,27 +54,36 @@
               <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
                 <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type != 'object' && projectStructure[collection].items[collectionItemName].type != 'array'">
                     <app-collection
+                      [encapsulationPath]="projectStructure[collection].type == 'array' ? encapsulationPath + '/0/' + collectionItemName : encapsulationPath + '/' + collectionItemName"
                       [collection]="collectionItemName"
                       [projectStructure]="projectStructure[collection].items"
-                      [viewContent]="viewContent">
+                      [viewContent]="viewContent"
+                      (itemContentChanged)="collectionContentChanged($event)"
+                      (contentChanged)="collectionContentChanged($event)">
                     </app-collection>
                 </ng-container>
                 
                 <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'object'">
                   <app-collection
+                    [encapsulationPath]="encapsulationPath + '/' + collectionItemName"
                     [subCollection]="true"
                     [collection]="collectionItemName"
                     [projectStructure]="projectStructure[collection].items"
-                    [viewContent]="viewContent">
+                    [viewContent]="viewContent"
+                    (itemContentChanged)="collectionContentChanged($event)"
+                    (contentChanged)="collectionContentChanged($event)">
                   </app-collection>
                 </ng-container>
 
                 <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'array'">
                   <app-collection
+                    [encapsulationPath]="encapsulationPath + '/0/' + collectionItemName"
                     [subCollection]="true"
                     [collection]="collectionItemName"
                     [projectStructure]="projectStructure[collection].items"
-                    [viewContent]="viewContent">
+                    [viewContent]="viewContent"
+                    (itemContentChanged)="collectionContentChanged($event)"
+                    (contentChanged)="collectionContentChanged($event)">
                   </app-collection>
                 </ng-container>
               </ng-container>

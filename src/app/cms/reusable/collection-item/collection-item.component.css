@@ -5,3 +5,6 @@ img {
     vertical-align: top;
     border: 1px solid black;
 }
+textarea {
+    width: 100%;
+}

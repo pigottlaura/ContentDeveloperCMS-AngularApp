@@ -2,18 +2,22 @@
     <br *ngIf="itemStructure.input_type == 'textarea'">
     <label>{{itemName}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
       <input
-        *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'input'"
+        *ngIf="(itemStructure.input_type == null || itemStructure.input_type == 'input') && itemStructure.type != 'html'"
         [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
-        [value]="itemContent == null || viewContent == false || itemStructure.attributes.type == 'file' ? '' : itemContent">
+        [(ngModel)]="itemContent"
+        (change)="contentChanged($event)">
         <img
           *ngIf="itemStructure.attributes.type == 'file' && viewContent && itemContent != null"
           [src]="itemContent">
       <textarea
-        *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'textarea'"
-        [value]="itemContent == null || viewContent == false ? '' : itemContent">
+        *ngIf="itemStructure.input_type == 'textarea' || itemStructure.type == 'html'"
+        [(ngModel)]="itemContent"
+        (change)="contentChanged($event)">
       </textarea>
       <select
-        *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
+        *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'"
+        [(ngModel)]="itemContent"
+        (change)="contentChanged($event)">
         <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
           <option
             *ngFor="let option of itemStructure.attributes.options"

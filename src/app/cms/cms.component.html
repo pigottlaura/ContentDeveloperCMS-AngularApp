@@ -1,11 +1,12 @@
 <app-cms-admin
     *ngIf="accessLevel == 1"
-    [projectContent]="projectContent"
-    [projectStructure]="projectStructure"
-    (saveStructure)="saveProjectStructure($event)">
+    [(projectContent)]="projectContent"
+    [(projectStructure)]="projectStructure"
+    (saveStructure)="saveProjectStructure($event)"
+    (saveContent)="saveProjectContent($event)">
 </app-cms-admin>
 <app-cms-editor
     *ngIf="accessLevel == 2"
-    [projectContent]="projectContent"
+    [(projectContent)]="projectContent"
     [projectStructure]="projectStructure">
 </app-cms-editor>
