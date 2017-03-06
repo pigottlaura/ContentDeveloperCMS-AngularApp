@@ -4,6 +4,7 @@
   <ng-container *ngIf="projectStructure != null && projectStructure[collection] != null">
     <ng-container *ngIf="projectStructure[collection] != null && projectStructure[collection].items == null && encapsulationPath != null">
       <app-collection-item
+        [class]="encapsulationPath.split('/').join(' ')"
         [encapsulationPath]="encapsulationPath"
         [itemName]="collection"
         [itemStructure]="projectStructure[collection]"
