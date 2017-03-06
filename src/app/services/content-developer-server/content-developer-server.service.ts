@@ -20,7 +20,7 @@ export class ContentDeveloperServerService {
 
   loadProjectContentAndStructure(projectId:number, userId:number){
     console.log("Reloading project content and structure");
-    let requestUrl = this._serverUrl + "/feeds/" + projectId;
+    let requestUrl = this._serverUrl + "/feeds/" + projectId + "?include=structure,content,history";
     return this._http.get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
