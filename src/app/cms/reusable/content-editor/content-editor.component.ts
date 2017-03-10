@@ -15,6 +15,12 @@ export class ContentEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(this.currentCollectionName == null) {
+      for(let collection in this.projectStructure){
+        this.viewCollection(collection);
+        break;
+      }
+    }
   }
 
   viewCollection(collection){

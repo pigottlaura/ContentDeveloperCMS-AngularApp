@@ -5,7 +5,7 @@
       <ul *ngIf="projectStructure != null">
         <li *ngFor="let collection of projectStructure | keyValArray : 'keys'"
             (click)="viewCollection(collection)"
-            [class]="(collection === currentCollection) || (currentCollection == null && index == 0) ? 'active' : ''">
+            [class]="collection === currentCollection ? 'active' : ''">
           {{collection}}
         </li>
       </ul>
