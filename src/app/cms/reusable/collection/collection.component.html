@@ -1,4 +1,4 @@
-<h3 *ngIf="subCollection">{{collection}}</h3>
+<h3 *ngIf="subCollection">{{collection | title}}</h3>
 <br *ngIf="projectStructure != null && (projectStructure[collection] != null && (projectStructure[collection].input_type == 'textarea' || projectStructure[collection].type == 'html'))">
 <div [class]="subCollection ? 'subCollection ' + collection : 'inline'">
   <ng-container *ngIf="projectStructure != null && projectStructure[collection] != null">

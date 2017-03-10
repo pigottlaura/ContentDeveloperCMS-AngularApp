@@ -1,6 +1,6 @@
 <ng-container *ngIf="itemStructure.attributes != null">
   <br *ngIf="itemStructure.input_type == 'textarea'">
-  <label>{{itemName}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
+  <label>{{itemName | title}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
     <input
       *ngIf="(itemStructure.input_type == null || itemStructure.input_type == 'input') && itemStructure.type != 'html'"
       [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
@@ -21,8 +21,9 @@
       <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
         <option
           *ngFor="let option of itemStructure.attributes.options"
+          [value]="option"
           [selected]="itemContent != null && viewContent != false && option == itemContent">
-          {{option}}
+          {{option | title}}
         </option>
       </ng-container>
     </select>

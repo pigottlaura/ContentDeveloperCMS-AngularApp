@@ -8,6 +8,9 @@ import { HttpModule } from '@angular/http';
 import { KeyValArrayPipe } from './pipes/key-val-array.pipe';
 import { CustomJsonPipe } from './pipes/custom-json.pipe';
 import { CloneObjectPipe } from './pipes/clone-object.pipe';
+import { UpperCamelCasePipe } from './pipes/upper-camel-case.pipe';
+import { UnderscoreToSpacePipe } from './pipes/underscore-to-space.pipe';
+import { TitlePipe } from './pipes/title.pipe';
 
 // Services
 import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
@@ -45,7 +48,10 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
     ContentViewComponent,
     HistoryViewComponent,
     SettingsViewComponent,
-    CloneObjectPipe
+    CloneObjectPipe,
+    UpperCamelCasePipe,
+    UnderscoreToSpacePipe,
+    TitlePipe
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,10 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
   providers: [
     ContentDeveloperServerService,
     CustomJsonPipe,
-    CloneObjectPipe
+    CloneObjectPipe,
+    UpperCamelCasePipe,
+    UnderscoreToSpacePipe,
+    TitlePipe
   ],
   bootstrap: [AppComponent]
 })

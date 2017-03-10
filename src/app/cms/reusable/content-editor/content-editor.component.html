@@ -10,13 +10,13 @@
           <li *ngFor="let collection of projectStructure | keyValArray : 'keys'"
               (click)="viewCollection(collection)"
               [class]="collection === currentCollection ? 'active' : ''">
-            {{collection}}
+            {{collection | title}}
           </li>
         </ul>
     </div>
     <div class="col-10-12">
       <ng-container *ngIf="currentCollectionName != null">
-        <h2>{{currentCollectionName}}</h2>
+        <h2>{{currentCollectionName | title}}</h2>
         <app-collection
           [topLevelCollection]="true"
           [encapsulationPath]="currentCollectionName"
