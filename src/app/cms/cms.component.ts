@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { ContentDeveloperServerService } from './../services/content-developer-server/content-developer-server.service';
 
-
 @Component({
   selector: 'app-cms',
   templateUrl: './cms.component.html',
@@ -15,17 +14,17 @@ export class CmsComponent implements OnInit {
   projectContent:Object;
   projectStructure:Object;
 
-  constructor(private _cdServer:ContentDeveloperServerService) {}
+  constructor(private _cdService:ContentDeveloperServerService) {}
 
   ngOnInit() {
     this.loadProjectContentAndStructure();
   }
 
   loadProjectContentAndStructure(){
-    this._cdServer.loadProjectContentAndStructure(this.projectId, this.userId).subscribe(
+    this._cdService.loadProjectContentAndStructure(this.projectId, this.userId).subscribe(
       responseObject => {
-        this.projectContent = responseObject.content;
-        this.projectStructure = responseObject.structure;
+        this.resetProjectStructure();
+        this.resetProjectContent();
         console.log("Project Content and Structure Loaded!");
       }
     );
@@ -33,9 +32,9 @@ export class CmsComponent implements OnInit {
 
   saveProjectStructure(updatedStructure){
     console.log("About to save structure");
-    this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
+    this._cdService.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
     responseObject => {
-        this.projectStructure = responseObject;
+        this.resetProjectStructure();
         console.log("Structure Saved!!");
       }
     );
@@ -43,11 +42,19 @@ export class CmsComponent implements OnInit {
 
   saveProjectContent(){
     console.log("About to save content");
-    this._cdServer.updateProjectContent(this.projectId, this.userId, this.projectContent).subscribe(
+    this._cdService.updateProjectContent(this.projectId, this.userId, this.projectContent).subscribe(
       responseObject => {
-        this.projectContent = responseObject;
+        this.resetProjectContent();
         console.log("Content Saved!!");
       }
     )
+  }
+
+  resetProjectContent(){
+    this.projectContent = this._cdService.getCurrentProjectContent();
+  }
+
+  resetProjectStructure(){
+    this.projectStructure = this._cdService.getCurrentProjectStructure();
   }
 }

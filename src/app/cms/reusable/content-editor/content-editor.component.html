@@ -1,27 +1,32 @@
-<div
-    class="row"
-    *ngIf="projectStructure != null">
-  <div class="col-2-12">
-      <ul *ngIf="projectStructure != null">
-        <li *ngFor="let collection of projectStructure | keyValArray : 'keys'"
-            (click)="viewCollection(collection)"
-            [class]="collection === currentCollection ? 'active' : ''">
-          {{collection}}
-        </li>
-      </ul>
+<div *ngIf="projectStructure != null">
+  <div *ngIf="viewContent" class="row">
+    <button (click)="saveProjectContent()">Save</button>
+    <button (click)="resetProjectContent()">Reset</button>
   </div>
-  <div class="col-10-12">
-    <ng-container *ngIf="currentCollectionName != null">
-      <h2>{{currentCollectionName}}</h2>
-      <app-collection
-        [topLevelCollection]="true"
-        [encapsulationPath]="currentCollectionName"
-        [collection]="currentCollectionName"
-        [projectContent]="projectContent"
-        [projectStructure]="projectStructure"
-        [viewContent]="viewContent"
-        (contentChanged)="projectContentChanged($event)">
-      </app-collection>
-    </ng-container>
+
+  <div class="row">
+    <div class="col-2-12">
+        <ul *ngIf="projectStructure != null">
+          <li *ngFor="let collection of projectStructure | keyValArray : 'keys'"
+              (click)="viewCollection(collection)"
+              [class]="collection === currentCollection ? 'active' : ''">
+            {{collection}}
+          </li>
+        </ul>
+    </div>
+    <div class="col-10-12">
+      <ng-container *ngIf="currentCollectionName != null">
+        <h2>{{currentCollectionName}}</h2>
+        <app-collection
+          [topLevelCollection]="true"
+          [encapsulationPath]="currentCollectionName"
+          [collection]="currentCollectionName"
+          [projectContent]="projectContent"
+          [projectStructure]="projectStructure"
+          [viewContent]="viewContent"
+          (contentChanged)="projectContentChanged($event)">
+        </app-collection>
+      </ng-container>
+    </div>
   </div>
 </div>

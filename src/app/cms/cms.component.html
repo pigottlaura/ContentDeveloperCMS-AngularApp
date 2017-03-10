@@ -3,7 +3,9 @@
     [(projectContent)]="projectContent"
     [(projectStructure)]="projectStructure"
     (adminRequestToSaveStructure)="saveProjectStructure($event)"
+    (adminRequestToResetStructure)="resetProjectStructure()"
     (adminRequestToSaveContent)="saveProjectContent()"
+    (adminRequestToResetContent)="resetProjectContent()"
     (saveContent)="saveProjectContent($event)">
 </app-cms-admin>
 <app-cms-editor

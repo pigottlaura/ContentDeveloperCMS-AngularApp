@@ -8,6 +8,7 @@ import { CustomJsonPipe } from "./../../../pipes/custom-json.pipe";
 export class StructureViewComponent implements OnChanges, DoCheck {
   @Input() projectStructure;
   @Output() viewRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() viewRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   private _projectStructureJson;
   
   constructor(private _jsPipe:CustomJsonPipe) {}
@@ -32,7 +33,7 @@ export class StructureViewComponent implements OnChanges, DoCheck {
   }
 
   resetProjectStructure(){
-    
+    this.viewRequestToResetStructure.emit();
   }
 
   saveProjectStructure(){

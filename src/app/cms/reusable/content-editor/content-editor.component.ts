@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-content-editor',
@@ -9,6 +9,8 @@ export class ContentEditorComponent implements OnInit {
   @Input() viewContent:boolean;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
+  @Output() requestToSaveProjectContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
   currentCollection:Object;
   currentCollectionName:string;
 
@@ -30,6 +32,14 @@ export class ContentEditorComponent implements OnInit {
 
   projectContentChanged(contentData){ 
     this.updateProjectContent(this.projectContent, contentData);
+  }
+
+  saveProjectContent(){
+    this.requestToSaveProjectContent.emit();
+  }
+
+  resetProjectContent(){
+    this.requestToResetProjectContent.emit();
   }
 
   updateProjectContent(currentContent, newContentData){

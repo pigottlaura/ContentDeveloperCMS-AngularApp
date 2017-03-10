@@ -9,10 +9,15 @@ export class ContentViewComponent {
   @Input() projectStructure;
   @Input() projectContent;
   @Output() viewRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() viewRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
 
-  saveProjectContent(){
+  requestToSaveProjectContent(){
     this.viewRequestToSaveContent.emit();
+  }
+
+  requestToResetProjectContent(){
+    this.viewRequestToResetContent.emit();
   }
 }

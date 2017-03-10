@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { ContentDeveloperServerService } from "./../../services/content-developer-server/content-developer-server.service";
 
 @Component({
@@ -6,36 +6,38 @@ import { ContentDeveloperServerService } from "./../../services/content-develope
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   @Input() projectStructure = {};
   @Input() projectContent = {};
   @Output() adminRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() adminRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   @Output() adminRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() adminRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
   private _view:string = "structure";
 
   constructor (private _cdService:ContentDeveloperServerService){}
-
-  ngOnInit(){
-    
-  }
 
   changeView(toView:string){
     this._view = toView;
   }
 
   resetContent(){
-    this.projectContent = this._cdService.getCurrentProjectContent();
-  }
-
-  resetStructure(){
-    this.projectStructure = this._cdService.getCurrentProjectStructure();
+    this.adminRequestToResetContent.emit();
   }
 
   viewRequestToSaveStructure(updatedStructure){
     this.adminRequestToSaveStructure.emit(updatedStructure);
   }
 
+  viewRequestToResetStructure(){
+    this.adminRequestToResetStructure.emit();
+  }
+
   viewRequestToSaveContent(){
     this.adminRequestToSaveContent.emit();
+  }
+
+  viewRequestToResetContent(){
+    this.adminRequestToResetContent.emit();
   }
 }

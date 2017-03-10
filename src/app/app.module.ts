@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 // Pipes
 import { KeyValArrayPipe } from './pipes/key-val-array.pipe';
 import { CustomJsonPipe } from './pipes/custom-json.pipe';
+import { CloneObjectPipe } from './pipes/clone-object.pipe';
 
 // Services
 import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
@@ -43,7 +44,8 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
     StructureViewComponent,
     ContentViewComponent,
     HistoryViewComponent,
-    SettingsViewComponent
+    SettingsViewComponent,
+    CloneObjectPipe
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
   ],
   providers: [
     ContentDeveloperServerService,
-    CustomJsonPipe
+    CustomJsonPipe,
+    CloneObjectPipe
   ],
   bootstrap: [AppComponent]
 })
