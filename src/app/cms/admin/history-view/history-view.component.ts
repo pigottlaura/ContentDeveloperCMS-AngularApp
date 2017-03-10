@@ -12,13 +12,17 @@ export class HistoryViewComponent {
   @Output() viewRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
 
   revertToCommit(revertData){
+    let updatedData = {};
+    updatedData.commit_message = revertData.commit_message;
+    updatedData[revertData.for] = revertData.object;
+
     switch(revertData.for){
       case "structure": {
-        this.viewRequestToSaveStructure.emit(revertData.object);
+        this.viewRequestToSaveStructure.emit(updatedData);
         break;
       }
       case "content": {
-        this.viewRequestToSaveContent.emit(revertData.object);
+        this.viewRequestToSaveContent.emit(updatedData);
         break;
       }
     }

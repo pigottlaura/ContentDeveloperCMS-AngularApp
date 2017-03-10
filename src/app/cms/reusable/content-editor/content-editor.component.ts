@@ -9,7 +9,7 @@ export class ContentEditorComponent implements OnInit {
   @Input() viewContent:boolean;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
-  @Output() requestToSaveProjectContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
   currentCollection:Object;
   currentCollectionName:string;
@@ -35,7 +35,10 @@ export class ContentEditorComponent implements OnInit {
   }
 
   saveProjectContent(){
-    this.requestToSaveProjectContent.emit();
+    let contentData = {
+      commit_message: "Update to content of '" + this.currentCollectionName + "'"
+    }
+    this.requestToSaveProjectContent.emit(contentData);
   }
 
   resetProjectContent(){

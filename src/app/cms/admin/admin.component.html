@@ -20,7 +20,7 @@
 		*ngIf="_view == 'content'"
 		[projectStructure]="projectStructure"
 		[(projectContent)]="projectContent"
-		(viewRequestToSaveContent)="viewRequestToSaveContent()"
+		(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
 		(viewRequestToResetContent)="viewRequestToResetContent()">
 	</app-content-view>
 

@@ -6,7 +6,7 @@
         [viewContent]="true"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
-        (requestToSaveProjectContent)="requestToSaveProjectContent()"
+        (requestToSaveProjectContent)="requestToSaveProjectContent($event)"
         (requestToResetProjectContent)="requestToResetProjectContent()">
       </app-content-editor>
     </div>

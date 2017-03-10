@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ContentDeveloperServerService } from "./../../../services/content-developer-server/content-developer-server.service";
+import { ShortenerPipe } from "./../../../pipes/shortener.pipe";
 
 @Component({
   selector: 'app-history-display',
@@ -14,7 +15,7 @@ export class HistoryDisplayComponent {
   private _previewHistoryObject:Object;
   private _previewHistoryHash:string;
 
-  constructor(private _cdService:ContentDeveloperServerService){}
+  constructor(private _cdService:ContentDeveloperServerService, private _sPipe:ShortenerPipe){}
 
   preview(historyObject){
     this._previewHistoryObject = this._cdService.getContentofCommit(historyObject.hash, this.historyOf).subscribe(
@@ -28,7 +29,7 @@ export class HistoryDisplayComponent {
   revert(){
     let revertData = {
       for: this.historyOf,
-      hash: this._previewHistoryHash,
+      commit_message: "Project " + this.historyOf + " rolled back to commit id: " + this._sPipe.transform(this._previewHistoryHash, 6),
       object: this._previewHistoryObject
     }
     this.revertToCommit.emit(revertData);

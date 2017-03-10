@@ -33,9 +33,10 @@ export class CmsComponent implements OnInit {
     );
   }
 
-  saveProjectStructure(updatedStructure){
+  saveProjectStructure(structureData){
+    let commitMessage = structureData != null ? structureData.commit_message : null;
     console.log("About to save structure");
-    this._cdService.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
+    this._cdService.updateProjectStructure(this.projectId, this.userId, structureData.structure, commitMessage).subscribe(
     responseObject => {
         console.log("Structure Saved!!");
         this.resetProjectStructure();
@@ -44,10 +45,12 @@ export class CmsComponent implements OnInit {
     );
   }
 
-  saveProjectContent(updatedContent=null){
-    updatedContent = updatedContent != null ? updatedContent : this.projectContent;
+  saveProjectContent(contentData=null){
+    let updatedContent = contentData != null && contentData.content != null ? contentData.content : this.projectContent;
+    let commitMessage = contentData != null ? contentData.commit_message : null;
     console.log("About to save content");
-    this._cdService.updateProjectContent(this.projectId, this.userId, updatedContent).subscribe(
+    console.log(contentData);
+    this._cdService.updateProjectContent(this.projectId, this.userId, updatedContent, commitMessage).subscribe(
       responseObject => {
         console.log("Content Saved!!");
         this.resetProjectContent();

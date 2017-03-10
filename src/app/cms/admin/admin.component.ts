@@ -13,7 +13,7 @@ export class AdminComponent {
   @Input() projectContentHistory:Object;
   @Output() adminRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() adminRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
-  @Output() adminRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() adminRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() adminRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
   private _view:string = "structure";
 
@@ -36,6 +36,7 @@ export class AdminComponent {
   }
 
   viewRequestToSaveContent(updatedContent=null){
+    console.log("ADMIN " + updatedContent);
     this.adminRequestToSaveContent.emit(updatedContent);
   }
 

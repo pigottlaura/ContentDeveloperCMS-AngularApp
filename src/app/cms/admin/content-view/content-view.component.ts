@@ -13,8 +13,8 @@ export class ContentViewComponent {
 
   constructor() {}
 
-  requestToSaveProjectContent(){
-    this.viewRequestToSaveContent.emit();
+  requestToSaveProjectContent(contentData){
+    this.viewRequestToSaveContent.emit(contentData);
   }
 
   requestToResetProjectContent(){

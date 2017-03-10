@@ -36,9 +36,14 @@ export class ContentDeveloperServerService {
     return loadProjectContentAndStructureObservable;
   }
 
-  updateProjectStructure(projectId:number, userId:number, projectStructure:Object):Observable<Object>{
+  updateProjectStructure(projectId:number, userId:number, projectStructure:Object, commitMessage:string=null):Observable<Object>{
+    console.log(commitMessage);
     let requestUrl = this._serverUrl + "/feeds/" + projectId;
-    let structureUpdateObservable = this._http.put(requestUrl, {structure: projectStructure}, {headers: this._headers})
+    let structureUpdateObservable = this._http
+      .put(requestUrl, {
+          structure: projectStructure,
+          commit_message: commitMessage
+        },{headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
@@ -49,9 +54,14 @@ export class ContentDeveloperServerService {
     return structureUpdateObservable;
   }
 
-  updateProjectContent(projectId:number, userId:number, projectContent:Object, encapsulationPath:string=""):Observable<Object>{
+  updateProjectContent(projectId:number, userId:number, projectContent:Object, commitMessage:string=null, encapsulationPath:string=""):Observable<Object>{
+    console.log(commitMessage);
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
-    let contentUpdateObservable = this._http.put(requestUrl, {content: projectContent}, {headers: this._headers})
+    let contentUpdateObservable = this._http
+      .put(requestUrl, {
+          content: projectContent,
+          commit_message: commitMessage
+        }, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
       .do(responseObject => {
