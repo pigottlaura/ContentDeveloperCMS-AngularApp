@@ -7,8 +7,10 @@ import { ContentDeveloperServerService } from "./../../services/content-develope
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
-  @Input() projectStructure = {};
-  @Input() projectContent = {};
+  @Input() projectStructure:Object;
+  @Input() projectContent:Object;
+  @Input() projectStructureHistory:Object;
+  @Input() projectContentHistory:Object;
   @Output() adminRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() adminRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   @Output() adminRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
@@ -33,8 +35,8 @@ export class AdminComponent {
     this.adminRequestToResetStructure.emit();
   }
 
-  viewRequestToSaveContent(){
-    this.adminRequestToSaveContent.emit();
+  viewRequestToSaveContent(updatedContent=null){
+    this.adminRequestToSaveContent.emit(updatedContent);
   }
 
   viewRequestToResetContent(){

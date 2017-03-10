@@ -16,6 +16,12 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+table, td, th, .scrollable {
+    border: 1px solid #aaa;
+}
+th {
+    text-align: left;
+}
 
 /* Alerts */
 .warning {

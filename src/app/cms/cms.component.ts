@@ -13,6 +13,8 @@ export class CmsComponent implements OnInit {
 
   projectContent:Object;
   projectStructure:Object;
+  projectContentHistory:Object;
+  projectStructureHistory:Object;
 
   constructor(private _cdService:ContentDeveloperServerService) {}
 
@@ -21,11 +23,12 @@ export class CmsComponent implements OnInit {
   }
 
   loadProjectContentAndStructure(){
-    this._cdService.loadProjectContentAndStructure(this.projectId, this.userId).subscribe(
+    this._cdService.loadProjectContentStructureHistory(this.projectId, this.userId).subscribe(
       responseObject => {
+        console.log("Project Content and Structure Loaded!");
         this.resetProjectStructure();
         this.resetProjectContent();
-        console.log("Project Content and Structure Loaded!");
+        this.resetProjectHistory();
       }
     );
   }
@@ -34,18 +37,21 @@ export class CmsComponent implements OnInit {
     console.log("About to save structure");
     this._cdService.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
     responseObject => {
-        this.resetProjectStructure();
         console.log("Structure Saved!!");
+        this.resetProjectStructure();
+        this.resetProjectHistory();
       }
     );
   }
 
-  saveProjectContent(){
+  saveProjectContent(updatedContent=null){
+    updatedContent = updatedContent != null ? updatedContent : this.projectContent;
     console.log("About to save content");
-    this._cdService.updateProjectContent(this.projectId, this.userId, this.projectContent).subscribe(
+    this._cdService.updateProjectContent(this.projectId, this.userId, updatedContent).subscribe(
       responseObject => {
-        this.resetProjectContent();
         console.log("Content Saved!!");
+        this.resetProjectContent();
+        this.resetProjectHistory();
       }
     )
   }
@@ -56,5 +62,13 @@ export class CmsComponent implements OnInit {
 
   resetProjectStructure(){
     this.projectStructure = this._cdService.getCurrentProjectStructure();
+  }
+  
+  resetProjectHistory(){
+    console.log("Project History Reset!!");
+    this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
+    this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
+    //console.log(this.projectStructureHistory[0]);
+    //console.log(this.projectContentHistory[0]);
   }
 }

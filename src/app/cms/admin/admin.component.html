@@ -25,7 +25,11 @@
 	</app-content-view>
 
 	<app-history-view
-		*ngIf="_view == 'history'">
+		*ngIf="_view == 'history'"
+		[projectStructureHistory]="projectStructureHistory"
+		[projectContentHistory]="projectContentHistory"
+		(viewRequestToSaveStructure)="viewRequestToSaveStructure($event)"
+		(viewRequestToSaveContent)="viewRequestToSaveContent($event)">
 	</app-history-view>
 
 	<app-settings-view

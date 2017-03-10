@@ -1,3 +1,17 @@
-<p>
-  history-view works!
-</p>
+<div class="row">
+  <app-history-display
+    [history]="projectStructureHistory"
+    [historyOf]="'structure'"
+    [showPreview]="true"
+    (revertToCommit)="revertToCommit($event)">
+  </app-history-display>
+</div>
+
+<div class="row">
+  <app-history-display
+    [history]="projectContentHistory"
+    [historyOf]="'content'"
+    [showPreview]="true"
+    (revertToCommit)="revertToCommit($event)">
+  </app-history-display>
+</div>

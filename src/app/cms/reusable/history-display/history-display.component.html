@@ -1,0 +1,38 @@
+<h2 *ngIf="historyOf">{{historyOf | upperCamelCase }}History</h2>
+<div *ngIf="history != null" class="row">
+  <div [class]="showPreview ? 'col-8-12' : 'col-12-12'">
+    <table>
+      <thead>
+        <tr>
+          <th>Commit ID</th>
+          <th>Date</th>
+          <th>Changes</th>
+          <th>Made By</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollable">
+      <table>
+        <tbody>
+          <tr
+            *ngFor="let commit of history | keyValArray : 'values'"
+            [class]="_previewHistoryHash == commit.hash ? 'selected' : ''">
+            <td>{{commit.hash | shortener : 6}}</td>
+            <td>{{commit.date | customDate : false : true}}</td>
+            <td>{{commit.message.split(" (HEAD ->")[0]}}</td>
+            <td>{{commit.author_name}}</td>
+            <td><button (click)="preview(commit)">Preview</button></td>
+          </tr>
+        </tbody>
+      </table>  
+    </div>
+  </div>
+  <div *ngIf="showPreview" class="col-4-12">
+    <button (click)="clear()">Clear Preview</button>
+    <button (click)="revert()">Revert to this {{historyOf | upperCamelCase}}</button>
+    <textarea
+      [value]="_previewHistoryObject != null ? (_previewHistoryObject | customJson : 'stringify') : ''">
+    </textarea>
+  </div>
+</div>

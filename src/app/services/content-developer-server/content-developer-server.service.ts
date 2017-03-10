@@ -11,6 +11,7 @@ import 'rxjs/add/observable/throw';
 export class ContentDeveloperServerService {
   private _serverUrl = "http://localhost:3000";
   private _currentProjectData;
+  private _currentProjectId;
   private _headers:Headers;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe) {
@@ -19,14 +20,17 @@ export class ContentDeveloperServerService {
     this._headers.append("Content-Type", "application/json");
   }
 
-  loadProjectContentAndStructure(projectId:number, userId:number):Observable<Object>{
+  loadProjectContentStructureHistory(projectId:number, userId:number):Observable<Object>{
     console.log("Reloading project content and structure");
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "?include=structure,content,history";
     let loadProjectContentAndStructureObservable =  this._http.get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
       .do(responseObject => {
+        this._currentProjectId = projectId;
         this._currentProjectData = responseObject;
+        this._currentProjectData.content_history = this._currentProjectData.content_history.all;
+        this._currentProjectData.structure_history = this._currentProjectData.structure_history.all;
       });
 
     return loadProjectContentAndStructureObservable;
@@ -38,8 +42,8 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
-        console.log(responseObject);
         this._currentProjectData.structure = responseObject;
+        this.refreshProjectHistory(projectId);
       });
     
     return structureUpdateObservable;
@@ -49,16 +53,48 @@ export class ContentDeveloperServerService {
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
     let contentUpdateObservable = this._http.put(requestUrl, {content: projectContent}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project contrent")
+      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
       .do(responseObject => {
         if(encapsulationPath.length == 0){
           this._currentProjectData.content = responseObject;
+          this.refreshProjectHistory(projectId);
         } else {
           // Deal with encapsulated data
         }        
       });
 
     return contentUpdateObservable;
+  }
+
+  refreshProjectHistory(projectId:number):void{
+    let requestUrl = this._serverUrl + "/feeds/" + projectId + "?include=history";
+    let contentUpdateObservable = this._http.get(requestUrl, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error refreshing project history")
+      .do(responseObject => {
+        this._currentProjectData.content_history = responseObject.content_history.all;
+        this._currentProjectData.structure_hisory = responseObject.structure_history.all;     
+      });
+  }
+
+  getContentofCommit(commitHash:string, historyOf:string){
+    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=previewCommit&commit_hash=" + commitHash + "&historyof=" + historyOf;
+    let commitContentObservable = this._http.get(requestUrl, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content")
+      .do(responseObject => {
+        switch(historyOf) {
+          case "structure": {
+            this._currentProjectData.structure = responseObject;
+            break;
+          }
+          case "content": {
+            this._currentProjectData.content = responseObject;
+            break;
+          }
+        }
+      });
+    return commitContentObservable;
   }
 
   createProjectContent(projectId:number, userId:number, projectContent:Object, encapsulationPath:string=""):Observable<Object>{
@@ -73,11 +109,19 @@ export class ContentDeveloperServerService {
     return createContentObservable;
   }
 
-  getCurrentProjectContent(){
+  getCurrentProjectContent():Object{
     return this._coPipe.transform(this._currentProjectData.content);
   }
 
-  getCurrentProjectStructure(){
+  getCurrentProjectStructure():Object{
     return this._coPipe.transform(this._currentProjectData.structure);
+  }
+
+  getCurrentProjectContentHistory():Object{
+    return this._coPipe.transform(this._currentProjectData.content_history);
+  }
+
+  getCurrentProjectStructureHistory():Object{
+    return this._coPipe.transform(this._currentProjectData.structure_history);
   }
 }

@@ -11,6 +11,9 @@ import { CloneObjectPipe } from './pipes/clone-object.pipe';
 import { UpperCamelCasePipe } from './pipes/upper-camel-case.pipe';
 import { UnderscoreToSpacePipe } from './pipes/underscore-to-space.pipe';
 import { TitlePipe } from './pipes/title.pipe';
+import { ShortenerPipe } from './pipes/shortener.pipe';
+import { CustomDatePipe } from './pipes/custom-date.pipe';
+import { DoubleDigitPipe } from './pipes/double-digit.pipe';
 
 // Services
 import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
@@ -29,6 +32,8 @@ import { StructureViewComponent } from './cms/admin/structure-view/structure-vie
 import { ContentViewComponent } from './cms/admin/content-view/content-view.component';
 import { HistoryViewComponent } from './cms/admin/history-view/history-view.component';
 import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.component';
+import { HistoryDisplayComponent } from './cms/reusable/history-display/history-display.component';
+import { HistoryPreviewComponent } from './cms/reusable/history-preview/history-preview.component';
 
 
 @NgModule({
@@ -51,7 +56,12 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
     CloneObjectPipe,
     UpperCamelCasePipe,
     UnderscoreToSpacePipe,
-    TitlePipe
+    TitlePipe,
+    HistoryDisplayComponent,
+    ShortenerPipe,
+    CustomDatePipe,
+    DoubleDigitPipe,
+    HistoryPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +74,10 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
     CloneObjectPipe,
     UpperCamelCasePipe,
     UnderscoreToSpacePipe,
-    TitlePipe
+    TitlePipe,
+    ShortenerPipe,
+    CustomDatePipe,
+    DoubleDigitPipe
   ],
   bootstrap: [AppComponent]
 })
