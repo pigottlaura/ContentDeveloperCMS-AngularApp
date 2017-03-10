@@ -1,0 +1,19 @@
+<div class="col-6-12">
+  <h2>Project Structure</h2>
+  <textarea
+    *ngIf="projectStructure != null"
+    [(ngModel)]="_projectStructureJson">
+  </textarea>
+  <button (click)="formatStructureJson()">Format JSON</button>
+  <button (click)="resetProjectStructure()">Reset</button>
+  <button (click)="saveProjectStructure()">Save</button>
+</div>
+<div class="col-6-12">
+  <h2>Input Preview</h2>
+  <div *ngIf="projectStructure != null">
+    <app-content-editor
+      [viewContent]="false"
+      [projectStructure]="projectStructure">
+    </app-content-editor>
+  </div>
+</div>

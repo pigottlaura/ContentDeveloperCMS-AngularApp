@@ -2,7 +2,8 @@
     *ngIf="accessLevel == 1"
     [(projectContent)]="projectContent"
     [(projectStructure)]="projectStructure"
-    (saveStructure)="saveProjectStructure($event)"
+    (adminRequestToSaveStructure)="saveProjectStructure($event)"
+    (adminRequestToSaveContent)="saveProjectContent()"
     (saveContent)="saveProjectContent($event)">
 </app-cms-admin>
 <app-cms-editor

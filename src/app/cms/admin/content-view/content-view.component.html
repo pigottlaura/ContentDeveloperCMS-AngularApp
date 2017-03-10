@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-12-12">
+    <h2>Project Content</h2>
+    <button (click)="saveProjectContent()">Save</button>
+    <div *ngIf="projectStructure != null">
+      <app-content-editor
+        [viewContent]="true"
+        [(projectContent)]="projectContent"
+        [projectStructure]="projectStructure">
+      </app-content-editor>
+    </div>
+  </div>
+</div>

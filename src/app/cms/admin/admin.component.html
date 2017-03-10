@@ -1,23 +1,32 @@
 <div class="row">
-	<div class="col-6-12">
-		<h2>Project Structure</h2>
-		<textarea
-			*ngIf="projectStructure != null"
-			[(ngModel)]="projectStructureJson">
-		</textarea>
-		<button (click)="formatStructureJson()">Format JSON</button>
-		<button (click)="resetProjectStructure()">Reset</button>
-		<button (click)="saveProjectStructure()">Save</button>
-	</div>
-	<div class="col-6-12">
-		<h2>Project Content</h2>
-		<button (click)="saveProjectContent()">Save</button>
-		<div *ngIf="projectStructure != null">
-			<app-content-editor
-				[viewContent]="true"
-				[(projectContent)]="projectContent"
-				[projectStructure]="projectStructure">
-			</app-content-editor>
-		</div>
-	</div>
+	<nav>
+		<ul>
+			<li (click)="changeView('structure')">View as Admin</li>
+			<li (click)="changeView('content')">View as Collaborator</li>
+			<li (click)="changeView('history')">Project History</li>
+			<li (click)="changeView('settings')">Project Settings</li>
+		</ul>
+	</nav>
+</div>
+<div class="row">
+	<app-structure-view
+		*ngIf="_view == 'structure'"
+		[projectStructure]="projectStructure"
+		(viewRequestToSaveStructure)="viewRequestToSaveStructure($event)">
+	</app-structure-view>
+
+	<app-content-view
+		*ngIf="_view == 'content'"
+		[projectStructure]="projectStructure"
+		[(projectContent)]="projectContent"
+		(viewRequestToSaveContent)="viewRequestToSaveContent()">
+	</app-content-view>
+
+	<app-history-view
+		*ngIf="_view == 'history'">
+	</app-history-view>
+
+	<app-settings-view
+		*ngIf="_view == 'settings'">
+	</app-settings-view>
 </div>

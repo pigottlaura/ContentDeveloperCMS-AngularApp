@@ -14,7 +14,7 @@ export class ContentDeveloperServerService {
 
   constructor(private _http:Http) {
     this._headers = new Headers();
-    this._headers.append("user_auth_token", "af5fff5eb926e3edf536789411e8fbe270dda9179d5deedfbfbd890ee53791ec41ac5076e76eac518cc4bba9e089a274b8cad8770e24da9a6af6668bf5eec2c4e7cca32d578f8cec63be747438cd67afc42a7be8a6f301c34220fc3d241d2ecdfdb70775de8981edbbfc7e5f20de8f687a271dce464f7906147cbbb2ee23e96a6eaed316b403b362ae866539b4fcd380278aac39a3ae313bec8a799445619753e1a5402f0a71ff70f1270ac5c97199303d448d207aa7671dc871f54ee55d1dda6e1acdd777542f12a3cecf571c2b2d3773d6c22e246121d7eebca4838f3a65278ccddde601d73d4b14f7b3998922deff409a9b1814554341e52ac2b542de204e1488316642090");
+    this._headers.append("user_auth_token", "32614ac97a6c2e2b707786f65313f1a5532a3ab9218b59203751d9f31104e0c0b21b302e26be649bf9939fec6bd1629a2b50241e5302c68e3fcaa9fb838588eca1e0e207c57be33ca411fddf24a572d6ff198af04d4beb056cb8f99f8c7ffd22216ca467102fb29901d4f3abb61f21e9f2164297844c53a6e205ed693bb3ba804f7c955ba4ca8e375b95c710af49a7d1bef7f8f33abec4ea67f884a9943d6d5e7d7b9241e70b316cfe849d892326861b28b1cb996252452d534f2282484fab66a89f0b4e9e7a6295c6170c2b3ead0a5badbefe5b4917a436a35e19ef636effc230c6ceec28998c9a192ddcafe765d3c30d200fff6216dcf147adebb72e0acce81488647819623");
     this._headers.append("Content-Type", "application/json");
   }
 
@@ -25,7 +25,6 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
       .do(responseObject => {
-        console.log(responseObject);
         this._currentProjectData = responseObject;
       });
   }

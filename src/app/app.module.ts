@@ -4,6 +4,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+// Pipes
+import { KeyValArrayPipe } from './pipes/key-val-array.pipe';
+import { CustomJsonPipe } from './pipes/custom-json.pipe';
+
+// Services
+import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
+
 // Components
 import { AppComponent } from './app.component';
 import { CmsComponent } from './cms/cms.component';
@@ -14,13 +21,10 @@ import { FooterComponent } from './general/footer/footer.component';
 import { ContentEditorComponent } from './cms/reusable/content-editor/content-editor.component';
 import { CollectionComponent } from './cms/reusable/collection/collection.component';
 import { CollectionItemComponent } from './cms/reusable/collection-item/collection-item.component';
-
-// Pipes
-import { KeyValArrayPipe } from './pipes/key-val-array.pipe';
-import { CustomJsonPipe } from './pipes/custom-json.pipe';
-
-// Providers
-import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
+import { StructureViewComponent } from './cms/admin/structure-view/structure-view.component';
+import { ContentViewComponent } from './cms/admin/content-view/content-view.component';
+import { HistoryViewComponent } from './cms/admin/history-view/history-view.component';
+import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.component';
 
 
 @NgModule({
@@ -35,14 +39,21 @@ import { ContentDeveloperServerService } from './services/content-developer-serv
     KeyValArrayPipe,
     CollectionComponent,
     CollectionItemComponent,
-    CustomJsonPipe
+    CustomJsonPipe,
+    StructureViewComponent,
+    ContentViewComponent,
+    HistoryViewComponent,
+    SettingsViewComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [ContentDeveloperServerService],
+  providers: [
+    ContentDeveloperServerService,
+    CustomJsonPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

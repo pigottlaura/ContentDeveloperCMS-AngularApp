@@ -1,55 +1,41 @@
-import { Component, OnInit, Input, Output, EventEmitter, DoCheck, OnChanges } from '@angular/core';
-import { CustomJsonPipe } from "./../../pipes/custom-json.pipe";
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { ContentDeveloperServerService } from "./../../services/content-developer-server/content-developer-server.service";
 
 @Component({
   selector: 'app-cms-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
-  providers: [ CustomJsonPipe ]
+  styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, OnChanges, DoCheck {
-  @Input() projectContent;
-  @Input() projectStructure;
-  @Input() projectStructureJson;
-  @Output() saveStructure:EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() saveContent:EventEmitter<void> = new EventEmitter<void>();
-  
-  constructor(private _jsPipe:CustomJsonPipe) {}
+export class AdminComponent implements OnInit {
+  @Input() projectStructure = {};
+  @Input() projectContent = {};
+  @Output() adminRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() adminRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
+  private _view:string = "structure";
 
-  ngOnInit() {
-  }
+  constructor (private _cdService:ContentDeveloperServerService){}
 
-  ngOnChanges(changes){
-    if(changes.projectStructure){
-      this.projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
-    }
-  }
-
-  ngDoCheck(){
-    this.formatStructureJson();
-  }
-
-  formatStructureJson(){
-    var tmpObj:any = this._jsPipe.transform(this.projectStructureJson, "parse");
-
-    if(tmpObj != null){
-      this.projectStructure = tmpObj;
-      this.projectStructureJson = this._jsPipe.transform(tmpObj, "stringify");
-    }
-  }
-
-  resetProjectStructure(){
+  ngOnInit(){
     
   }
 
-  saveProjectStructure(){
-    let updatedStructure = this._jsPipe.transform(this.projectStructureJson, "parse");
-    if(updatedStructure != null){
-      this.saveStructure.emit(updatedStructure);
-    }
+  changeView(toView:string){
+    this._view = toView;
   }
 
-  saveProjectContent(){
-    this.saveContent.emit();
+  resetContent(){
+    this.projectContent = this._cdService.getCurrentProjectContent();
+  }
+
+  resetStructure(){
+    this.projectStructure = this._cdService.getCurrentProjectStructure();
+  }
+
+  viewRequestToSaveStructure(updatedStructure){
+    this.adminRequestToSaveStructure.emit(updatedStructure);
+  }
+
+  viewRequestToSaveContent(){
+    this.adminRequestToSaveContent.emit();
   }
 }

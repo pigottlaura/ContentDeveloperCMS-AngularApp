@@ -12,23 +12,28 @@ export class CmsComponent implements OnInit {
   @Input() userId:number;
   @Input() accessLevel: number;
 
-  @Input() projectContent:Object;
-  @Input() projectStructure:Object;
+  projectContent:Object;
+  projectStructure:Object;
 
   constructor(private _cdServer:ContentDeveloperServerService) {}
 
   ngOnInit() {
+    this.loadProjectContentAndStructure();
+  }
+
+  loadProjectContentAndStructure(){
     this._cdServer.loadProjectContentAndStructure(this.projectId, this.userId).subscribe(
       responseObject => {
         this.projectContent = responseObject.content;
         this.projectStructure = responseObject.structure;
+        console.log("Project Content and Structure Loaded!");
       }
     );
   }
 
-  saveProjectStructure(updatedProjectStructure){
-    console.log("About to update");
-    this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedProjectStructure).subscribe(
+  saveProjectStructure(updatedStructure){
+    console.log("About to save structure");
+    this._cdServer.updateProjectStructure(this.projectId, this.userId, updatedStructure).subscribe(
     responseObject => {
         this.projectStructure = responseObject;
         console.log("Structure Saved!!");
@@ -36,8 +41,8 @@ export class CmsComponent implements OnInit {
     );
   }
 
-  saveProjectContent(e){
-    console.log(this.projectContent);
+  saveProjectContent(){
+    console.log("About to save content");
     this._cdServer.updateProjectContent(this.projectId, this.userId, this.projectContent).subscribe(
       responseObject => {
         this.projectContent = responseObject;
@@ -45,6 +50,4 @@ export class CmsComponent implements OnInit {
       }
     )
   }
-
-  
 }
