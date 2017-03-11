@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-content-editor',
   templateUrl: './content-editor.component.html',
   styleUrls: ['./content-editor.component.css']
 })
-export class ContentEditorComponent implements OnInit {
+export class ContentEditorComponent implements OnInit, OnChanges {
   @Input() viewContent:boolean;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
@@ -17,10 +17,14 @@ export class ContentEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if(this.currentCollectionName == null) {
-      for(let collection in this.projectStructure){
-        this.viewCollection(collection);
-        break;
+    this._selectFirstComponent();
+  }
+
+  ngOnChanges(changes){
+    if(changes.projectStructure){
+      if(this.projectStructure[this.currentCollectionName] == undefined){
+        this.currentCollectionName = null;
+        this._selectFirstComponent();
       }
     }
   }
@@ -60,5 +64,14 @@ export class ContentEditorComponent implements OnInit {
       currentContent = currentContent[encapsulationKeys[i]];
     }
     currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
+  }
+
+  private _selectFirstComponent(){
+    if(this.currentCollectionName == null) {
+      for(let collection in this.projectStructure){
+        this.viewCollection(collection);
+        break;
+      }
+    }
   }
 }
