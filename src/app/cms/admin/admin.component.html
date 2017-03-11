@@ -33,6 +33,7 @@
 	</app-history-view>
 
 	<app-settings-view
-		*ngIf="_view == 'settings'">
+		*ngIf="_view == 'settings'"
+		[(projectSettings)]="projectSettings">
 	</app-settings-view>
 </div>

@@ -11,6 +11,7 @@ import 'rxjs/add/observable/throw';
 export class ContentDeveloperServerService {
   private _serverUrl = "http://localhost:3000";
   private _currentProjectData;
+  private _currentProjectSettings;
   private _currentProjectId;
   private _headers:Headers;
 
@@ -23,7 +24,8 @@ export class ContentDeveloperServerService {
   loadProjectContentStructureHistory(projectId:number, userId:number):Observable<Object>{
     console.log("Reloading project content and structure");
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "?include=structure,content,history";
-    let loadProjectContentAndStructureObservable =  this._http.get(requestUrl, {headers: this._headers})
+    let loadProjectContentAndStructureObservable =  this._http
+      .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
       .do(responseObject => {
@@ -36,14 +38,22 @@ export class ContentDeveloperServerService {
     return loadProjectContentAndStructureObservable;
   }
 
+  loadProjectSettings(projectId:number, userId:number):Observable<Object>{
+    let requestUrl = this._serverUrl + "/feeds/" + projectId + "?allSettings";
+    let projectSettingsObservable =  this._http
+      .get(requestUrl, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error))
+      .do(responseObject => this._currentProjectSettings = responseObject);
+
+    return projectSettingsObservable;
+  }
+
   updateProjectStructure(projectId:number, userId:number, projectStructure:Object, commitMessage:string=null):Observable<Object>{
     console.log(commitMessage);
     let requestUrl = this._serverUrl + "/feeds/" + projectId;
     let structureUpdateObservable = this._http
-      .put(requestUrl, {
-          structure: projectStructure,
-          commit_message: commitMessage
-        },{headers: this._headers})
+      .put(requestUrl, {structure: projectStructure, commit_message: commitMessage},{headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
@@ -58,10 +68,7 @@ export class ContentDeveloperServerService {
     console.log(commitMessage);
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
     let contentUpdateObservable = this._http
-      .put(requestUrl, {
-          content: projectContent,
-          commit_message: commitMessage
-        }, {headers: this._headers})
+      .put(requestUrl, {content: projectContent, commit_message: commitMessage}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
       .do(responseObject => {
@@ -78,7 +85,8 @@ export class ContentDeveloperServerService {
 
   refreshProjectHistory(projectId:number):void{
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "?include=history";
-    let contentUpdateObservable = this._http.get(requestUrl, {headers: this._headers})
+    let contentUpdateObservable = this._http
+      .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error refreshing project history")
       .do(responseObject => {
@@ -89,7 +97,8 @@ export class ContentDeveloperServerService {
 
   getContentofCommit(commitHash:string, historyOf:string){
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=previewCommit&commit_hash=" + commitHash + "&historyof=" + historyOf;
-    let commitContentObservable = this._http.get(requestUrl, {headers: this._headers})
+    let commitContentObservable = this._http
+      .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content")
       .do(responseObject => {
@@ -109,7 +118,8 @@ export class ContentDeveloperServerService {
 
   createProjectContent(projectId:number, userId:number, projectContent:Object, encapsulationPath:string=""):Observable<Object>{
     let requestUrl = this._serverUrl + "/feeds/" + projectId + "/" + encapsulationPath;
-    let createContentObservable = this._http.post(requestUrl, {content: projectContent}, {headers: this._headers})
+    let createContentObservable = this._http
+      .post(requestUrl, {content: projectContent}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content")
       .do(responseObject => {
@@ -125,6 +135,10 @@ export class ContentDeveloperServerService {
 
   getCurrentProjectStructure():Object{
     return this._coPipe.transform(this._currentProjectData.structure);
+  }
+
+  getCurrentProjectSettings():Object{
+    return this._coPipe.transform(this._currentProjectSettings);
   }
 
   getCurrentProjectContentHistory():Object{

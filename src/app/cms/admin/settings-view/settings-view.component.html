@@ -1,3 +1,127 @@
-<p>
-  settings-view works!
-</p>
+<h2>Project Settings</h2>
+<button (click)="saveAllProjectSettings()">Save All</button>
+
+<div *ngIf="projectSettings != null">
+  <div class="row">
+    <h3>General</h3>
+
+    <div class="col-6-12">
+      <div class="row">
+        <label>Project Name:
+          <input #pnInput type="text" [(ngModel)]="projectSettings.projectName">
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Maximum Content Cache Time (in milliseconds)
+          <input #pmcInput type="number" [(ngModel)]="projectSettings.max_cache_age">ms
+        </label>
+      </div>
+    </div>
+
+    <div class="col-6-12">
+      <div class="row">
+        <label>Custom Content Editor CSS
+          <textarea #cssInput [(ngModel)]="projectSettings.custom_css">
+          </textarea>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Collaborators</h3>
+    <div class="col-6-12">
+      <div class="row">
+        <h4>Add Collaborator</h4>
+        <label>Email Address:
+          <input #acEmailInput type="text">
+        </label>
+        <label>Access Level
+          <select #acAccessInput>
+            <option
+              *ngFor="let accessLevel of projectSettings.access_levels"
+              [value]="accessLevel.access_level_int">
+              {{accessLevel.access_level_name}}
+            </option>
+          </select>
+        </label>
+        <button (click)="addCollaborator(acEmailInput.value, acAccessInput.value)">Add Collaborator</button>
+      </div>
+      <div class="row">
+        <h4>Project Collaborators</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Access Level</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let collaborator of projectSettings.collaborators">
+              <td>{{collaborator.display_name}}</td>
+              <td>
+                <select #calInput>
+                  <option
+                    *ngFor="let accessLevel of projectSettings.access_levels"
+                    [value]="accessLevel.access_level_int"
+                    [selected]="accessLevel.access_level_int == collaborator.access_level_int">
+                    {{accessLevel.access_level_name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button (click)="deleteCollaborator(collaborator)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-6-12">
+      <div class="row">
+        <h4>Customise Access Levels</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Access Level Name</th>
+              <th>Access Level Int</th>
+              <th>In Use</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let accessLevel of projectSettings.access_levels">
+              <td>
+                <input type="text" [(ngModel)]="accessLevel.access_level_name">
+              </td>
+              <td>
+                <span *ngIf="accessLevel.access_level_int <= 3">{{accessLevel.access_level_int}}</span>
+                <input *ngIf="accessLevel.access_level_int == null || accessLevel.access_level_int > 3" type="number" [(ngModel)]="accessLevel.access_level_int">
+              </td>
+              <td>{{accessLevel.in_use ? "Yes" : "No"}}</td>
+              <td>
+                <span *ngIf="accessLevel.new == null">
+                  <button
+                    (click)="updateAccessLevel(accessLevel)">Update</button>
+                  <button
+                    *ngIf="accessLevel.access_level_int > 3"
+                    (click)="deleteAccessLevel(accessLevel.access_level_int)">Delete</button>
+                </span>
+                <span *ngIf="accessLevel.new != null">
+                  <button
+                    (click)="createNewAccessLevel(accessLevel)">Save</button>
+                  <button
+                    (click)="cancelAddingAccessLevel(accessLevel)">Cancel</button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button (click)="addNewAccessLevel()">Add New Access Level</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,11 +15,13 @@ export class CmsComponent implements OnInit {
   projectStructure:Object;
   projectContentHistory:Object;
   projectStructureHistory:Object;
+  projectSettings:Object;
 
   constructor(private _cdService:ContentDeveloperServerService) {}
 
   ngOnInit() {
     this.loadProjectContentAndStructure();
+    this.loadProjectSettings();
   }
 
   loadProjectContentAndStructure(){
@@ -31,6 +33,11 @@ export class CmsComponent implements OnInit {
         this.resetProjectHistory();
       }
     );
+  }
+
+  loadProjectSettings(){
+    this._cdService.loadProjectSettings(this.projectId, this.userId).subscribe(
+      responseObject => this.resetProjectSettings());
   }
 
   saveProjectStructure(structureData){
@@ -67,6 +74,10 @@ export class CmsComponent implements OnInit {
     this.projectStructure = this._cdService.getCurrentProjectStructure();
   }
   
+  resetProjectSettings(){
+    this.projectSettings = this._cdService.getCurrentProjectSettings();
+  }
+
   resetProjectHistory(){
     console.log("Project History Reset!!");
     this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
