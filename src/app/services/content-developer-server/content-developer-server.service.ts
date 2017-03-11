@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ContentDeveloperServerService {
-  private _serverUrl = "http://localhost:3000";
+  private _serverUrl = "./..";
   private _currentProjectContentStructureHistory;
   private _currentProjectSettings;
   private _currentProjectId;
@@ -26,7 +26,7 @@ export class ContentDeveloperServerService {
     let getLoginUrlObservable = this._http
       .get(requestUrl)
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error getting login url")
+      .catch(error => Observable.throw(error) || "Unknown error getting login url")
       .do(responseObject=> responseObject.loginUrl);
     return getLoginUrlObservable;
   }
@@ -36,15 +36,17 @@ export class ContentDeveloperServerService {
     let loadUserObservable = this._http
       .get(requestUrl)
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error getting users details")
+      .catch(error => Observable.throw(error) || "Unknown error getting users details")
       .do(responseObject => this._currentUser = responseObject.user);
     return loadUserObservable;
   }
 
   logout(){
     let logoutUrl = this._serverUrl + "/admin/logout";
-    this._http.get(logoutUrl)
-      .catch(error => Observable.throw(error.json().error) || "Unknown error when logging user out");
+    this._http
+      .get(logoutUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
     this._currentUser = null;
     this.leaveProject();
   }
@@ -162,6 +164,15 @@ export class ContentDeveloperServerService {
         }
       });
     return commitContentObservable;
+  }
+
+  createNewProject(projectName:string, template:string=""):Observable<any>{
+    let requestUrl = this._serverUrl + "/feeds/?action=createProject";
+    let createProjectObservable = this._http
+      .post(requestUrl, {project_name: projectName, template: template}, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content");
+    return createProjectObservable;
   }
 
   createProjectContent(projectContent:Object, encapsulationPath:string=""):Observable<Object>{

@@ -18,6 +18,17 @@ export class UserProjectsComponent implements OnInit {
     );
   }
 
+  createNewProject(projectNameInput, template=""){
+    if(projectNameInput.value.length > 0){
+      this._cdService.createNewProject(projectNameInput.value, template).subscribe(
+        responseObject => {
+          this.editProject(responseObject.new_project_id, projectNameInput.value, 1);
+          projectNameInput.value = "";
+        }
+      );
+    }    
+  }
+
   editProject(projectId:number, projectName:string, userAccessLevel:number){
     let projectData = {
       projectId: projectId,

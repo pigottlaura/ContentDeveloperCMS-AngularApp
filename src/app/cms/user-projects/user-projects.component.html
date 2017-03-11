@@ -31,13 +31,13 @@
   <div class="col-4-12">
     <h2>Create a New Project</h2>
     <h3>Project Name</h3>
-    <input type="text">
+    <input #pnInput type="text">
     
     <h3>Templates</h3>
     <span class="templates">
-      <button (click)="createNewProject()">No Template</button>
-      <button (click)="createNewProject('website_template')">Website Template</button>
-      <button (click)="createNewProject('mediaitems_template')">Media Items Template</button>
+      <button (click)="createNewProject(pnInput)">No Template</button>
+      <button (click)="createNewProject(pnInput, 'website_template')">Website Template</button>
+      <button (click)="createNewProject(pnInput, 'mediaitems_template')">Media Items Template</button>
     </span>
   </div>
 </div>
