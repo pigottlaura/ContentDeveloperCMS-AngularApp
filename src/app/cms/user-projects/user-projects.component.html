@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-8-12">
+    <div *ngIf="_userProjects != null">
+      <table>
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Access Level</th>
+            <th>Last Modified</th>
+            <th>Last Modified By</th>
+            <th>Options</th>			
+          </tr>
+        </thead>
+      </table>
+
+      <div class="scrollable">
+        <table>
+          <tbody>
+            <tr *ngFor="let project of _userProjects">
+              <td>{{project.project_name}}</td>
+              <td>{{project.access_level_name}}</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td><button (click)="editProject(project.project_id, project.access_level_int)">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-4-12">
+    <h2>Create a New Project</h2>
+    <h3>Project Name</h3>
+    <input type="text">
+    
+    <h3>Templates</h3>
+    <span class="templates">
+      <button (click)="createNewProject()">No Template</button>
+      <button (click)="createNewProject('website_template')">Website Template</button>
+      <button (click)="createNewProject('mediaitems_template')">Media Items Template</button>
+    </span>
+  </div>
+</div>

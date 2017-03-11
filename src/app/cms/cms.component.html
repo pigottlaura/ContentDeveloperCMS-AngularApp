@@ -1,18 +1,26 @@
-<app-cms-admin
-    *ngIf="accessLevel == 1"
-    [(projectStructure)]="projectStructure"
-    [(projectContent)]="projectContent"
-    [projectStructureHistory]="projectStructureHistory"
-    [projectContentHistory]="projectContentHistory"
-    [(projectSettings)]="projectSettings"
-    (adminRequestToSaveStructure)="saveProjectStructure($event)"
-    (adminRequestToResetStructure)="resetProjectStructure()"
-    (adminRequestToSaveContent)="saveProjectContent($event)"
-    (adminRequestToResetContent)="resetProjectContent()"
-    (adminRequestToRefreshSettings)="loadProjectSettings()">
-</app-cms-admin>
-<app-cms-editor
-    *ngIf="accessLevel == 2"
-    [(projectContent)]="projectContent"
-    [projectStructure]="projectStructure">
-</app-cms-editor>
+<ng-container *ngIf="_projectId == null && _userAccessLevel == null">
+    <app-user-projects
+        (viewProject)="viewProject($event)"></app-user-projects>
+</ng-container>
+
+<ng-container *ngIf="_projectId != null && _userAccessLevel != null">
+    <button (click)="viewUserProjects()">Back to all Projects</button>
+    <app-cms-admin
+        *ngIf="_userAccessLevel == 1"
+        [(projectStructure)]="projectStructure"
+        [(projectContent)]="projectContent"
+        [projectStructureHistory]="projectStructureHistory"
+        [projectContentHistory]="projectContentHistory"
+        [(projectSettings)]="projectSettings"
+        (adminRequestToSaveStructure)="saveProjectStructure($event)"
+        (adminRequestToResetStructure)="resetProjectStructure()"
+        (adminRequestToSaveContent)="saveProjectContent($event)"
+        (adminRequestToResetContent)="resetProjectContent()"
+        (adminRequestToRefreshSettings)="loadProjectSettings()">
+    </app-cms-admin>
+    <app-cms-editor
+        *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
+        [(projectContent)]="projectContent"
+        [projectStructure]="projectStructure">
+    </app-cms-editor>
+</ng-container>

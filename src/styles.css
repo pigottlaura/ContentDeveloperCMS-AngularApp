@@ -43,6 +43,9 @@ th {
 .selected {
     background-color: #a9a9a9;
 }
+.scrollable {
+    overflow-y: scroll;
+}
 
 /* Dragging */
 [draggable="true"]:before {

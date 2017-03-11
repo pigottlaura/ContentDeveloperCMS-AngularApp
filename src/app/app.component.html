@@ -1,14 +1,9 @@
 <app-header [user]="user"></app-header>
-    <ng-container *ngIf="userId == null">
+    <ng-container *ngIf="user == null">
         <button (click)="simulateLogin()">Google Login</button>
     </ng-container>
 
-    <ng-container *ngIf="userId != null && projectId == null">
-        list of projects
-        <button (click)="simulateProject()">Project 1</button>
-    </ng-container>
-
-    <ng-container *ngIf="userId != null && projectId != null">
-        <app-cms [projectId]="projectId" [userId]="userId" [accessLevel]="accessLevel"></app-cms>
+    <ng-container *ngIf="user != null">
+        <app-cms></app-cms>
     </ng-container>
 <app-footer></app-footer>

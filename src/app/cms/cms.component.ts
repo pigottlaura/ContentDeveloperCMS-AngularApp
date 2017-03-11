@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, Input, DoCheck } from '@angular/core';
 import { ContentDeveloperServerService } from './../services/content-developer-server/content-developer-server.service';
 
 @Component({
@@ -6,26 +6,31 @@ import { ContentDeveloperServerService } from './../services/content-developer-s
   templateUrl: './cms.component.html',
   styleUrls: ['./cms.component.css']
 })
-export class CmsComponent implements OnInit {
-  @Input() projectId:number;
-  @Input() userId:number;
-  @Input() accessLevel: number;
-
+export class CmsComponent {
   projectContent:Object;
   projectStructure:Object;
   projectContentHistory:Object;
   projectStructureHistory:Object;
   projectSettings:Object;
+  private _projectId:number;
+  private _userAccessLevel:number;
 
   constructor(private _cdService:ContentDeveloperServerService) {}
 
-  ngOnInit() {
+  viewProject(projectData){
+    this._projectId = projectData.projectId;
+    this._userAccessLevel = projectData.userAccessLevel;
     this.loadProjectContentAndStructure();
     this.loadProjectSettings();
   }
 
+  viewUserProjects(){
+    this._projectId = null
+    this._userAccessLevel = null;
+  }
+
   loadProjectContentAndStructure(){
-    this._cdService.loadProjectContentStructureHistory(this.projectId, this.userId).subscribe(
+    this._cdService.loadProjectContentStructureHistory(this._projectId).subscribe(
       responseObject => {
         console.log("Project Content and Structure Loaded!");
         this.resetProjectStructure();
@@ -43,7 +48,7 @@ export class CmsComponent implements OnInit {
   saveProjectStructure(structureData){
     let commitMessage = structureData != null ? structureData.commit_message : null;
     console.log("About to save structure");
-    this._cdService.updateProjectStructure(this.projectId, structureData.structure, commitMessage).subscribe(
+    this._cdService.updateProjectStructure(structureData.structure, commitMessage).subscribe(
     responseObject => {
         console.log("Structure Saved!!");
         this.resetProjectStructure();
@@ -56,7 +61,7 @@ export class CmsComponent implements OnInit {
     let updatedContent = contentData != null && contentData.content != null ? contentData.content : this.projectContent;
     let commitMessage = contentData != null ? contentData.commit_message : null;
     console.log("About to save content");
-    this._cdService.updateProjectContent(this.projectId, updatedContent, commitMessage).subscribe(
+    this._cdService.updateProjectContent(updatedContent, commitMessage).subscribe(
       responseObject => {
         console.log("Content Saved!!");
         this.resetProjectContent();

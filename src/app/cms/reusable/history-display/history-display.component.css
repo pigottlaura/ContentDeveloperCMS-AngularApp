@@ -6,7 +6,6 @@ th:nth-child(5), td:nth-child(5) {width: 10%;}
 
 .scrollable {
     max-height: 200px;
-    overflow-y: scroll;
 }
 
 textarea {

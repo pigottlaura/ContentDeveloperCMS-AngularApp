@@ -1,0 +1,15 @@
+th:nth-child(1), td:nth-child(1) {width: 30%;}
+th:nth-child(2), td:nth-child(2) {width: 20%;}
+th:nth-child(3), td:nth-child(3) {width: 20%;}
+th:nth-child(4), td:nth-child(4) {width: 20%;}
+th:nth-child(5), td:nth-child(5) {width: 10%;}
+
+.templates button {
+    cursor: pointer;
+    text-align: left;
+    background-color: #000;
+    color: #FFF;
+    padding: 3%;
+    display: block;
+    width: 100%;
+}
