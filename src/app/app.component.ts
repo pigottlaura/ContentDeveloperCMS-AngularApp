@@ -1,22 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ContentDeveloperServerService } from "./services/content-developer-server/content-developer-server.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  user:Object;
+export class AppComponent implements OnInit {
+  user;
+  pageTitle:string = "Content Developer CMS";
 
-  simulateLogin(){
-    this.user = {
-      displayName: "Laura Pigott",
-      google_profile_image_url: "https://lh6.googleusercontent.com/-t9ILliXmgR0/AAAAAAAAAAI/AAAAAAAABz8/yQLTE3cHG3E/photo.jpg"
-    }
+  constructor(private _cdService:ContentDeveloperServerService){}
+
+  ngOnInit(){
+    this._cdService.loadUser().subscribe(
+      responseObject => {
+        this.user = this._cdService.getCurrentUser();
+        if(this.user == {}){
+          this.user = null;
+        }
+      }
+    )
   }
 
-  simulateProject(){
-    this.projectId = 1;
-    this.accessLevel = 1;
+  logout(){
+    this.user = null;
+    this._cdService.logout();
+  }
+
+  updatePageTitle(title:string){
+    this.pageTitle = title;
   }
 }

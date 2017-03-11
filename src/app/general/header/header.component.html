@@ -4,9 +4,9 @@
   </div>
   <div *ngIf="user != null" class="col-4-12 right">
     <span>{{user.displayName}}</span>
-    <button>
-      <a href="/admin/logout">Logout</a>
-    </button>
-    <img src="{{user.google_profile_image_url}} + '&sz=50'">
+    <button (click)="logoutClicked()">Logout</button>
+    <img 
+      *ngIf="user.profileImage != null"
+      [src]="user.profileImage + '&sz=50'">
   </div>
 </div>

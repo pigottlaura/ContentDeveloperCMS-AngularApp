@@ -35,6 +35,7 @@ import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.c
 import { HistoryDisplayComponent } from './cms/reusable/history-display/history-display.component';
 import { HistoryPreviewComponent } from './cms/reusable/history-preview/history-preview.component';
 import { UserProjectsComponent } from './cms/user-projects/user-projects.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { UserProjectsComponent } from './cms/user-projects/user-projects.compone
     CustomDatePipe,
     DoubleDigitPipe,
     HistoryPreviewComponent,
-    UserProjectsComponent
+    UserProjectsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

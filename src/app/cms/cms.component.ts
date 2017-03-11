@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck } from '@angular/core';
+import { Component, Output, EventEmitter, DoCheck } from '@angular/core';
 import { ContentDeveloperServerService } from './../services/content-developer-server/content-developer-server.service';
 
 @Component({
@@ -7,26 +7,38 @@ import { ContentDeveloperServerService } from './../services/content-developer-s
   styleUrls: ['./cms.component.css']
 })
 export class CmsComponent {
+  @Output() requestToUpdatePageTitle:EventEmitter<string> = new EventEmitter<string>();
   projectContent:Object;
   projectStructure:Object;
   projectContentHistory:Object;
   projectStructureHistory:Object;
   projectSettings:Object;
+
   private _projectId:number;
+  private _projectName:string;
   private _userAccessLevel:number;
 
   constructor(private _cdService:ContentDeveloperServerService) {}
 
   viewProject(projectData){
     this._projectId = projectData.projectId;
+    this._projectName = projectData.projectName;
     this._userAccessLevel = projectData.userAccessLevel;
     this.loadProjectContentAndStructure();
     this.loadProjectSettings();
+    this.updatePageTitle(this._projectName);
+    
+  }
+
+  updatePageTitle(title:string){
+    this.requestToUpdatePageTitle.emit(title);
   }
 
   viewUserProjects(){
     this._projectId = null
     this._userAccessLevel = null;
+    this._cdService.leaveProject();
+    this.updatePageTitle("My Projects");
   }
 
   loadProjectContentAndStructure(){

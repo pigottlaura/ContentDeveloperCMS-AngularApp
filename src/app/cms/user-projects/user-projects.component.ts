@@ -14,16 +14,14 @@ export class UserProjectsComponent implements OnInit {
 
   ngOnInit() {
     this._cdService.loadUserProjects().subscribe(
-      responesObject => {
-        this._userProjects = responesObject;
-        console.log(this._userProjects);
-      }
-    )
+      responesObject => this._userProjects = responesObject
+    );
   }
 
-  editProject(projectId:number, userAccessLevel:number){
+  editProject(projectId:number, projectName:string, userAccessLevel:number){
     let projectData = {
       projectId: projectId,
+      projectName:projectName,
       userAccessLevel: userAccessLevel
     }
     this.viewProject.emit(projectData);

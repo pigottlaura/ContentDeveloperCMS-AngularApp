@@ -1,9 +1,14 @@
-<app-header [user]="user"></app-header>
-    <ng-container *ngIf="user == null">
-        <button (click)="simulateLogin()">Google Login</button>
-    </ng-container>
+<app-header
+    [user]="user"
+    [pageTitle]="pageTitle"
+    (requestToLogout)="logout()"></app-header>
 
-    <ng-container *ngIf="user != null">
-        <app-cms></app-cms>
-    </ng-container>
+    <app-login
+        *ngIf="user == null">
+    </app-login>
+
+    <app-cms 
+        *ngIf="user != null"
+        (requestToUpdatePageTitle)="updatePageTitle($event)">
+    </app-cms>
 <app-footer></app-footer>

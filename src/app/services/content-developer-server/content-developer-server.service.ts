@@ -13,6 +13,7 @@ export class ContentDeveloperServerService {
   private _currentProjectContentStructureHistory;
   private _currentProjectSettings;
   private _currentProjectId;
+  private _currentUser;
   private _headers:Headers;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe) {
@@ -20,6 +21,34 @@ export class ContentDeveloperServerService {
     this._headers.append("Content-Type", "application/json");
   }
   
+  getLoginUrl():Observable<any>{
+    let requestUrl = this._serverUrl + "/admin/loginUrl";
+    let getLoginUrlObservable = this._http
+      .get(requestUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting login url")
+      .do(responseObject=> responseObject.loginUrl);
+    return getLoginUrlObservable;
+  }
+  
+  loadUser():Observable<Object> {
+    let requestUrl = this._serverUrl + "/admin/user";
+    let loadUserObservable = this._http
+      .get(requestUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting users details")
+      .do(responseObject => this._currentUser = responseObject.user);
+    return loadUserObservable;
+  }
+
+  logout(){
+    let logoutUrl = this._serverUrl + "/admin/logout";
+    this._http.get(logoutUrl)
+      .catch(error => Observable.throw(error.json().error) || "Unknown error when logging user out");
+    this._currentUser = null;
+    this.leaveProject();
+  }
+
   loadUserProjects():Observable<Object> {
     let requestUrl = this._serverUrl + "/feeds/?action=collaborators";
     let loadUserProjectsObservable = this._http
@@ -240,6 +269,10 @@ export class ContentDeveloperServerService {
     return addNewCollaboratorObservable;
   }
 
+  getCurrentUser():Object{
+    return this._currentUser;
+  }
+
   getCurrentProjectContent():Object{
     return this._coPipe.transform(this._currentProjectContentStructureHistory.content);
   }
@@ -258,5 +291,11 @@ export class ContentDeveloperServerService {
 
   getCurrentProjectStructureHistory():Object{
     return this._coPipe.transform(this._currentProjectContentStructureHistory.structure_history);
+  }
+  
+  leaveProject(){
+    this._currentProjectId = null;
+    this._currentProjectContentStructureHistory = null;
+    this._currentProjectSettings = null;
   }
 }
