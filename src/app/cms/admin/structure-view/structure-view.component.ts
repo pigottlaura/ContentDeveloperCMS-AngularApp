@@ -39,7 +39,10 @@ export class StructureViewComponent implements OnChanges, DoCheck {
   saveProjectStructure(){
     this.projectStructure = this._jsPipe.transform(this._projectStructureJson, "parse");
     if(this.projectStructure != null){
-      this.viewRequestToSaveStructure.emit(this.projectStructure);
+      var structureData = {
+        structure: this.projectStructure
+      }
+      this.viewRequestToSaveStructure.emit(structureData);
     }
   }
 }

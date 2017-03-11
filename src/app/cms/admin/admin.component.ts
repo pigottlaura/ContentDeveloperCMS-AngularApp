@@ -16,6 +16,8 @@ export class AdminComponent {
   @Output() adminRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   @Output() adminRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() adminRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() adminRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
+
   private _view:string = "structure";
 
   constructor (private _cdService:ContentDeveloperServerService){}
@@ -42,5 +44,9 @@ export class AdminComponent {
 
   viewRequestToResetContent(){
     this.adminRequestToResetContent.emit();
+  }
+
+  viewRequestToRefreshSettings(){
+    this.adminRequestToRefreshSettings.emit();
   }
 }

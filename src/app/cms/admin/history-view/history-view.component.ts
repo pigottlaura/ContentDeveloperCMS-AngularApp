@@ -12,7 +12,7 @@ export class HistoryViewComponent {
   @Output() viewRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
 
   revertToCommit(revertData){
-    let updatedData = {};
+    let updatedData:any = {};
     updatedData.commit_message = revertData.commit_message;
     updatedData[revertData.for] = revertData.object;
 

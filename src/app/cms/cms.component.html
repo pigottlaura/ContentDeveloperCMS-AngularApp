@@ -8,7 +8,8 @@
     (adminRequestToSaveStructure)="saveProjectStructure($event)"
     (adminRequestToResetStructure)="resetProjectStructure()"
     (adminRequestToSaveContent)="saveProjectContent($event)"
-    (adminRequestToResetContent)="resetProjectContent()">
+    (adminRequestToResetContent)="resetProjectContent()"
+    (adminRequestToRefreshSettings)="loadProjectSettings()">
 </app-cms-admin>
 <app-cms-editor
     *ngIf="accessLevel == 2"
