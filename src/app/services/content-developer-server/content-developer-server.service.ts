@@ -85,7 +85,9 @@ export class ContentDeveloperServerService {
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
-      .do(responseObject => this._currentProjectSettings = responseObject);
+      .do(responseObject => {
+        this._currentProjectSettings = responseObject;
+      });
 
     return loadProjectSettingsObservable;
   }
@@ -97,6 +99,31 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
       .do(responseObject => console.log("Project settings updated!!"));
+
+    return updateProjectSettingsObservable;
+  }
+  
+  loadAdminSettings(){
+    let requestUrl = this._serverUrl + "/admin/settings/" + this._currentProjectId;
+    let loadAdminSettingsObservable = this._http
+      .get(requestUrl, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error))
+      .do(responseObject => {
+        this._currentProjectSettings.update_origins = responseObject.update_origins;
+        this._currentProjectSettings.read_origins = responseObject.read_origins;
+      });
+
+    return loadAdminSettingsObservable;
+  }
+
+  updateAdminSettings(updateOrigins=null, readOrigins=null):Observable<Object>{
+    let requestUrl = this._serverUrl + "/admin/settings/" + this._currentProjectId;
+    let updateProjectSettingsObservable =  this._http
+      .put(requestUrl, {update_origins: updateOrigins, read_origins: readOrigins}, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error))
+      .do(responseObject => console.log("Admin settings updated!!"));
 
     return updateProjectSettingsObservable;
   }

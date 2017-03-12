@@ -17,6 +17,18 @@
           <input #pmcInput type="number" [(ngModel)]="projectSettings.max_cache_age">ms
         </label>
       </div>
+
+      <div class="row">
+        <label>Allowed Update Origins:
+          <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Allowed Read Origins:
+          <textarea [(ngModel)]="projectSettings.read_origins"></textarea>
+        </label>
+      </div>
     </div>
 
     <div class="col-6-12">

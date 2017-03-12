@@ -54,7 +54,15 @@ export class CmsComponent {
 
   loadProjectSettings(){
     this._cdService.loadProjectSettings().subscribe(
-      responseObject => this.resetProjectSettings());
+      responseObject => {
+        this._cdService.loadAdminSettings().subscribe(
+          responseObject => {
+            this.resetProjectSettings();
+            console.log(this.projectSettings);
+          }
+        );        
+      }
+    );
   }
 
   saveProjectStructure(structureData){

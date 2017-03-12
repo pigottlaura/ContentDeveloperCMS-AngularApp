@@ -35,12 +35,10 @@ export class SettingsViewComponent {
 
   addNewAccessLevel(accessLevelNameInput, accessLevelIntInput){
     var requestedAccessLevel = accessLevelIntInput.value;
-
-    /*
+    
     while(this._accessLevelExists(requestedAccessLevel)){
       requestedAccessLevel++;
     }
-    */
     
     this._cdService.createAccessLevel(requestedAccessLevel, accessLevelNameInput.value).subscribe(
       responseObject => {
@@ -66,10 +64,15 @@ export class SettingsViewComponent {
       this.projectSettings.max_cache_age,
       this.projectSettings.custom_css
     ).subscribe(
-      responseObject => {
-        console.log("Project settings updated!!");
-        this.settingsUpdated.emit();
-    });
+      responseObject => this.settingsUpdated.emit()
+    );
+
+    this._cdService.updateAdminSettings(
+      this.projectSettings.update_origins,
+      this.projectSettings.read_origins
+    ).subscribe(
+      responseObject => this.settingsUpdated.emit()
+    );
 
     var currentProjectSettings = this._cdService.getCurrentProjectSettings();
 
