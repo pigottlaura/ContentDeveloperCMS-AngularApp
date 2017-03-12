@@ -318,6 +318,16 @@ export class ContentDeveloperServerService {
     return loadMediaItemsObservable;
   }
 
+  uploadMediaItem(mediaItemFile){
+    var formData:FormData = new FormData();
+    formData.append("file", mediaItemFile);
+    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=mediaItems";
+    let uploadMediaItemObservable = this._http
+      .post(requestUrl, formData)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error) || "Unknown error uploading media item");
+    return uploadMediaItemObservable;
+  }
   getCurrentUser():Object{
     return this._currentUser;
   }

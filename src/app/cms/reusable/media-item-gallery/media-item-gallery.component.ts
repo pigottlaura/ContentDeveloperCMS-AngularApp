@@ -36,8 +36,6 @@ export class MediaItemGalleryComponent implements OnInit, OnChanges {
         if(responseObject.files != null){
           this._mediaItems = responseObject.files;
         }
-
-        console.log(responseObject);
       }
     );
   }

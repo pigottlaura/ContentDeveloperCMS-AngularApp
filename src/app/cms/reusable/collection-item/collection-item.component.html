@@ -13,7 +13,9 @@
         <input
           type="file"
           class="hi"
-          (change)="contentChanged($event)">
+          (change)="fileInputChanged($event)">
+        <span
+          *ngIf="_warning != null">{{_warning}}</span>
         <img
           *ngIf="viewContent && itemContent != null"
           [src]="itemContent">

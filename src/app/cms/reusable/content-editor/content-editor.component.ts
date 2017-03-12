@@ -67,7 +67,6 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   }
 
   showMediaItemGallery(itemEncapsulationPath){
-    console.log(itemEncapsulationPath);
     this._encapsulationPathForCurrentFileInput = itemEncapsulationPath
     this.mediaItemGalleryVisible = true;
   }
