@@ -1,0 +1,16 @@
+<div *ngIf="_mediaItems != null">
+  <h2>Available Images</h2>
+  <div class="row">
+    <button (click)="hide()">Close</button>
+    <button (click)="loadMediaItems()">Next</button>
+  </div>
+  <div>
+    <app-media-item
+        *ngFor="let mediaItem of _mediaItems"
+        [mediaItemUrl]="mediaItem.url"
+        [mediaItemName]="mediaItem.name"
+        (mediaItemClicked)="mediaItemClicked($event)"
+        [style.width]="((100 / numItemsPerRow) - 1) + '%'">
+    </app-media-item>
+  </div>
+</div>

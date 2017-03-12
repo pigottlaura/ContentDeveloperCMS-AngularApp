@@ -14,6 +14,7 @@ export class CollectionComponent implements OnInit {
   @Input() subCollection:boolean = false;
   @Input() encapsulationPath:string;
   @Output() contentChanged:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() collectionRequestToViewMediaItems:EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -26,5 +27,13 @@ export class CollectionComponent implements OnInit {
 
   collectionContentChanged(contentData){
     this.contentChanged.emit(contentData);
+  }
+
+  collectionItemRequestToViewMediaItems(itemEncapsulationPath){
+    this.collectionRequestToViewMediaItems.emit(itemEncapsulationPath);
+  }
+
+  viewMediaItems(itemEncapsulationPath){
+    this.collectionRequestToViewMediaItems.emit(itemEncapsulationPath);
   }
 }

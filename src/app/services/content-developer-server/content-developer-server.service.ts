@@ -309,6 +309,15 @@ export class ContentDeveloperServerService {
     return addNewCollaboratorObservable;
   }
 
+  loadProjectMediaItems(numItems:number, nextPageToken:string=null){
+    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=mediaItems&numFiles=" + numItems + "&nextPageToken=" + nextPageToken;
+    let loadMediaItemsObservable = this._http
+      .get(requestUrl, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project access level");
+    return loadMediaItemsObservable;
+  }
+
   getCurrentUser():Object{
     return this._currentUser;
   }

@@ -11,10 +11,10 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   @Input() projectStructure:Object;
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
+  mediaItemGalleryVisible:boolean = false;
   currentCollection:Object;
   currentCollectionName:string;
-
-  constructor() { }
+  private _encapsulationPathForCurrentFileInput:string;
 
   ngOnInit() {
     this._selectFirstComponent();
@@ -64,6 +64,26 @@ export class ContentEditorComponent implements OnInit, OnChanges {
       currentContent = currentContent[encapsulationKeys[i]];
     }
     currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
+  }
+
+  showMediaItemGallery(itemEncapsulationPath){
+    console.log(itemEncapsulationPath);
+    this._encapsulationPathForCurrentFileInput = itemEncapsulationPath
+    this.mediaItemGalleryVisible = true;
+  }
+
+  hideMediaItemGallery(){
+    this._encapsulationPathForCurrentFileInput = null;
+    this.mediaItemGalleryVisible = false;
+  }
+
+  mediaItemSelected(mediaItemUrl){
+    var contentData = {
+      path: this._encapsulationPathForCurrentFileInput,
+      content: mediaItemUrl
+    }
+    this.updateProjectContent(this.projectContent, contentData);
+    this.hideMediaItemGallery();
   }
 
   private _selectFirstComponent(){

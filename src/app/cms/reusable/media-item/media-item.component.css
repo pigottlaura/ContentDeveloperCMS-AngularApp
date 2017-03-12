@@ -1,0 +1,10 @@
+:host {
+    display: inline-block;
+}
+img {
+    box-sizing: border-box;
+    min-height: 100px;
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid #000;
+}

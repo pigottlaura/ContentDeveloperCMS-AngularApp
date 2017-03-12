@@ -36,6 +36,8 @@ import { HistoryDisplayComponent } from './cms/reusable/history-display/history-
 import { HistoryPreviewComponent } from './cms/reusable/history-preview/history-preview.component';
 import { UserProjectsComponent } from './cms/user-projects/user-projects.component';
 import { LoginComponent } from './login/login.component';
+import { MediaItemGalleryComponent } from './cms/reusable/media-item-gallery/media-item-gallery.component';
+import { MediaItemComponent } from './cms/reusable/media-item/media-item.component';
 
 
 @NgModule({
@@ -65,7 +67,9 @@ import { LoginComponent } from './login/login.component';
     DoubleDigitPipe,
     HistoryPreviewComponent,
     UserProjectsComponent,
-    LoginComponent
+    LoginComponent,
+    MediaItemGalleryComponent,
+    MediaItemComponent
   ],
   imports: [
     BrowserModule,
