@@ -58,9 +58,11 @@
                     (collectionRequestToViewMediaItems)="viewMediaItems($event)">
                   </app-collection>
                 </ng-container>
+                <button (click)="deleteItem(encapsulationPath, index)">Delete</button>
               </div>
             </ng-container>
           </app-draggable-container>
+          <button (click)="addNewItem(encapsulationPath, projectStructure[collection].type)"> Add {{collection}}</button>
         </ng-container>
 
         <ng-container *ngIf="projectContent == null || projectContent[collection] == null || viewContent == false">
