@@ -1,35 +1,31 @@
-import { Component, Input, Output, EventEmitter, OnChanges, DoCheck } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CustomJsonPipe } from "./../../../pipes/custom-json.pipe";
 @Component({
   selector: 'app-structure-view',
   templateUrl: './structure-view.component.html',
   styleUrls: ['./structure-view.component.css']
 })
-export class StructureViewComponent implements OnChanges, DoCheck {
+export class StructureViewComponent implements OnChanges {
   @Input() projectStructure;
   @Output() viewRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() viewRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
-  private _projectStructureJson;
+  projectStructureJson;
+  formatJson:boolean = false;
   
   constructor(private _jsPipe:CustomJsonPipe) {}
 
   ngOnChanges(changes){
-    if(changes.projectStructure){
-      this._projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
+    if(changes.projectStructure && this.projectStructureJson == null){
+      this.projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
     }
   }
 
-  ngDoCheck(){
-    this.formatStructureJson();
+  formatJsonClicked(){
+    this.formatJson = true;
   }
 
-  formatStructureJson(){
-    var tmpObj:any = this._jsPipe.transform(this._projectStructureJson, "parse");
-
-    if(tmpObj != null){
-      this.projectStructure = tmpObj;
-      this._projectStructureJson = this._jsPipe.transform(tmpObj, "stringify");
-    }
+  codeUpdated(updatedProjectStructure){
+    this.projectStructure = updatedProjectStructure;
   }
 
   resetProjectStructure(){
@@ -37,7 +33,6 @@ export class StructureViewComponent implements OnChanges, DoCheck {
   }
 
   saveProjectStructure(){
-    this.projectStructure = this._jsPipe.transform(this._projectStructureJson, "parse");
     if(this.projectStructure != null){
       var structureData = {
         structure: this.projectStructure
@@ -48,6 +43,6 @@ export class StructureViewComponent implements OnChanges, DoCheck {
 
   structureCollectionTabsReordered(reorderedProjectStructure){
     this.projectStructure = reorderedProjectStructure;
-    this._projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
+    this.projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
   }
 }

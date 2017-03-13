@@ -1,10 +1,11 @@
 <div class="col-6-12">
   <h2>Project Structure</h2>
-  <textarea
-    *ngIf="projectStructure != null"
-    [(ngModel)]="_projectStructureJson">
-  </textarea>
-  <button (click)="formatStructureJson()">Format JSON</button>
+  <app-code-editor
+    [(codeJson)]="projectStructureJson"
+    [(formatJson)]="formatJson"
+    (codeUpdated)="codeUpdated($event)">
+  </app-code-editor>
+  <button (click)="formatJsonClicked()">Format JSON</button>
   <button (click)="resetProjectStructure()">Reset</button>
   <button (click)="saveProjectStructure()">Save</button>
 </div>

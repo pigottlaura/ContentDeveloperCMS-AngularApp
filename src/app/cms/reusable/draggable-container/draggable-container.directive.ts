@@ -77,7 +77,6 @@ export class DraggableContainerDirective implements AfterViewInit {
       };
       
       this.contentReordered.emit(reorderedContentData);
-      console.log(reorderedContent);
     }
   }
 
