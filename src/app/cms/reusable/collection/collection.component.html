@@ -39,7 +39,7 @@
             [itemsEncapsulationPath]="encapsulationPath"
             (itemsReordered)="itemsReordered($event)">
             <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
-              <div class="collection">
+              <div class="collection" [attr.data-key]="index">
                 <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
                   <app-collection
                     [subCollection]="projectStructure[collection].items[collectionItemName].type == 'array'"
@@ -59,45 +59,45 @@
         </ng-container>
 
         <ng-container *ngIf="projectContent == null || projectContent[collection] == null || viewContent == false">
-              <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
-                <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type != 'object' && projectStructure[collection].items[collectionItemName].type != 'array'">
-                    <app-collection
-                      [encapsulationPath]="projectStructure[collection].type == 'array' ? encapsulationPath + '/0/' + collectionItemName : encapsulationPath + '/' + collectionItemName"
-                      [collection]="collectionItemName"
-                      [projectStructure]="projectStructure[collection].items"
-                      [viewContent]="viewContent"
-                      (itemContentChanged)="collectionContentChanged($event)"
-                      (contentChanged)="collectionContentChanged($event)"
-                      (collectionRequestToViewMediaItems)="viewMediaItems($event)">
-                    </app-collection>
-                </ng-container>
-                
-                <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'object'">
-                  <app-collection
-                    [encapsulationPath]="encapsulationPath + '/' + collectionItemName"
-                    [subCollection]="true"
-                    [collection]="collectionItemName"
-                    [projectStructure]="projectStructure[collection].items"
-                    [viewContent]="viewContent"
-                    (itemContentChanged)="collectionContentChanged($event)"
-                    (contentChanged)="collectionContentChanged($event)"
-                    (collectionRequestToViewMediaItems)="viewMediaItems($event)">
-                  </app-collection>
-                </ng-container>
+          <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+            <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type != 'object' && projectStructure[collection].items[collectionItemName].type != 'array'">
+                <app-collection
+                  [encapsulationPath]="projectStructure[collection].type == 'array' ? encapsulationPath + '/0/' + collectionItemName : encapsulationPath + '/' + collectionItemName"
+                  [collection]="collectionItemName"
+                  [projectStructure]="projectStructure[collection].items"
+                  [viewContent]="viewContent"
+                  (itemContentChanged)="collectionContentChanged($event)"
+                  (contentChanged)="collectionContentChanged($event)"
+                  (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                </app-collection>
+            </ng-container>
+            
+            <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'object'">
+              <app-collection
+                [encapsulationPath]="encapsulationPath + '/' + collectionItemName"
+                [subCollection]="true"
+                [collection]="collectionItemName"
+                [projectStructure]="projectStructure[collection].items"
+                [viewContent]="viewContent"
+                (itemContentChanged)="collectionContentChanged($event)"
+                (contentChanged)="collectionContentChanged($event)"
+                (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+              </app-collection>
+            </ng-container>
 
-                <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'array'">
-                  <app-collection
-                    [encapsulationPath]="encapsulationPath + '/0/' + collectionItemName"
-                    [subCollection]="true"
-                    [collection]="collectionItemName"
-                    [projectStructure]="projectStructure[collection].items"
-                    [viewContent]="viewContent"
-                    (itemContentChanged)="collectionContentChanged($event)"
-                    (contentChanged)="collectionContentChanged($event)"
-                    (collectionRequestToViewMediaItems)="viewMediaItems($event)">
-                  </app-collection>
-                </ng-container>
-              </ng-container>
+            <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type == 'array'">
+              <app-collection
+                [encapsulationPath]="encapsulationPath + '/0/' + collectionItemName"
+                [subCollection]="true"
+                [collection]="collectionItemName"
+                [projectStructure]="projectStructure[collection].items"
+                [viewContent]="viewContent"
+                (itemContentChanged)="collectionContentChanged($event)"
+                (contentChanged)="collectionContentChanged($event)"
+                (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+              </app-collection>
+            </ng-container>
+          </ng-container>
         </ng-container>
 
       </ng-container>
