@@ -1,8 +1,4 @@
-ul {
-    list-style: none;
-    padding: 0;
-}
-li {
+.collectionTab {
     padding: 7% 1%;
     color: white;
     background-color: grey;

@@ -13,7 +13,8 @@
   <div *ngIf="projectStructure != null">
     <app-content-editor
       [viewContent]="false"
-      [projectStructure]="projectStructure">
+      [projectStructure]="projectStructure"
+      (structureCollectionTabsReordered)="structureCollectionTabsReordered($event)">
     </app-content-editor>
   </div>
 </div>

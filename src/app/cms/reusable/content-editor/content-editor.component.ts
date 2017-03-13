@@ -11,6 +11,8 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   @Input() projectStructure:Object;
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() structureCollectionTabsReordered:EventEmitter<Object> = new EventEmitter<Object>();
+
   mediaItemGalleryVisible:boolean = false;
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
@@ -83,6 +85,10 @@ export class ContentEditorComponent implements OnInit, OnChanges {
     this.hideMediaItemGallery();
   }
 
+  collectionTabsReordered(updatedTabOrder){
+    this.structureCollectionTabsReordered.emit(updatedTabOrder.content);
+  }
+  
   private _selectFirstComponent(){
     if(this.currentCollectionName == null) {
       for(let collection in this.projectStructure){

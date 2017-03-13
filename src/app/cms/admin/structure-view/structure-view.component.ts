@@ -45,4 +45,9 @@ export class StructureViewComponent implements OnChanges, DoCheck {
       this.viewRequestToSaveStructure.emit(structureData);
     }
   }
+
+  structureCollectionTabsReordered(reorderedProjectStructure){
+    this.projectStructure = reorderedProjectStructure;
+    this._projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
+  }
 }

@@ -6,13 +6,20 @@
 
   <div class="row">
     <div class="col-2-12">
-        <ul *ngIf="projectStructure != null">
-          <li *ngFor="let collection of projectStructure | keyValArray : 'keys'"
+        <div *ngIf="projectStructure != null">
+          <app-draggable-container
+            [content]="projectStructure"
+            [contentEncapsulationPath]=""
+            [contentType]="object"
+            (contentReordered)="collectionTabsReordered($event)">
+            <div *ngFor="let collection of projectStructure | keyValArray : 'keys'"
+              draggable="true"
+              [attr.data-key]="collection"
               (click)="viewCollection(collection)"
-              [class]="collection === currentCollectionName ? 'active' : ''">
-            {{collection | title}}
-          </li>
-        </ul>
+              [class]="(collection === currentCollectionName ? 'active ' : '')  + 'collectionTab'">{{collection | title}}
+            </div>
+          </app-draggable-container>
+        </div>
     </div>
     <div class="col-10-12">
       <ng-container *ngIf="currentCollectionName != null">
