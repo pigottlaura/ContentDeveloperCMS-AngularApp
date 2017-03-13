@@ -36,4 +36,8 @@ export class CollectionComponent implements OnInit {
   viewMediaItems(itemEncapsulationPath){
     this.collectionRequestToViewMediaItems.emit(itemEncapsulationPath);
   }
+
+  itemsReordered(collectionEncapsulationPath){
+    console.log(collectionEncapsulationPath + " has been reordered");
+  }
 }

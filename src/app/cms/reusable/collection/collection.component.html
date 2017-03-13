@@ -35,23 +35,27 @@
 
       <ng-container *ngIf="projectStructure[collection].type == 'array'">
         <ng-container *ngIf="projectContent != null && projectContent[collection] != null && viewContent">
-          <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
-            <div class="collection">
-              <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
-                <app-collection
-                  [subCollection]="projectStructure[collection].items[collectionItemName].type == 'array'"
-                  [encapsulationPath]="encapsulationPath + '/' + index + '/' + collectionItemName"
-                  [collection]="collectionItemName"
-                  [projectStructure]="projectStructure[collection].items"
-                  [projectContent]="projectContent[collection][index] != null ? projectContent[collection][index] : null"
-                  [viewContent]="viewContent"
-                  (itemContentChanged)="collectionContentChanged($event)"
-                  (contentChanged)="collectionContentChanged($event)"
-                  (collectionRequestToViewMediaItems)="viewMediaItems($event)">
-                </app-collection>
-              </ng-container>
-            </div>
-          </ng-container>
+          <app-draggable-container
+            [itemsEncapsulationPath]="encapsulationPath"
+            (itemsReordered)="itemsReordered($event)">
+            <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
+              <div class="collection">
+                <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
+                  <app-collection
+                    [subCollection]="projectStructure[collection].items[collectionItemName].type == 'array'"
+                    [encapsulationPath]="encapsulationPath + '/' + index + '/' + collectionItemName"
+                    [collection]="collectionItemName"
+                    [projectStructure]="projectStructure[collection].items"
+                    [projectContent]="projectContent[collection][index] != null ? projectContent[collection][index] : null"
+                    [viewContent]="viewContent"
+                    (itemContentChanged)="collectionContentChanged($event)"
+                    (contentChanged)="collectionContentChanged($event)"
+                    (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                  </app-collection>
+                </ng-container>
+              </div>
+            </ng-container>
+          </app-draggable-container>
         </ng-container>
 
         <ng-container *ngIf="projectContent == null || projectContent[collection] == null || viewContent == false">

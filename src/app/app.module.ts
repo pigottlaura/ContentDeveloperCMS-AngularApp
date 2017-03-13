@@ -38,6 +38,7 @@ import { UserProjectsComponent } from './cms/user-projects/user-projects.compone
 import { LoginComponent } from './login/login.component';
 import { MediaItemGalleryComponent } from './cms/reusable/media-item-gallery/media-item-gallery.component';
 import { MediaItemComponent } from './cms/reusable/media-item/media-item.component';
+import { DraggableContainerDirective } from './cms/reusable/draggable-container/draggable-container.directive';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { MediaItemComponent } from './cms/reusable/media-item/media-item.compone
     UserProjectsComponent,
     LoginComponent,
     MediaItemGalleryComponent,
-    MediaItemComponent
+    MediaItemComponent,
+    DraggableContainerDirective
   ],
   imports: [
     BrowserModule,
