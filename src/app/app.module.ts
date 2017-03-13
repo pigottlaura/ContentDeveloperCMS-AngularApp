@@ -87,7 +87,8 @@ import { DraggableContainerDirective } from './cms/reusable/draggable-container/
     TitlePipe,
     ShortenerPipe,
     CustomDatePipe,
-    DoubleDigitPipe
+    DoubleDigitPipe,
+    KeyValArrayPipe
   ],
   bootstrap: [AppComponent]
 })

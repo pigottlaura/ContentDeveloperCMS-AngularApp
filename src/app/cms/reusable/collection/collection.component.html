@@ -36,7 +36,9 @@
       <ng-container *ngIf="projectStructure[collection].type == 'array'">
         <ng-container *ngIf="projectContent != null && projectContent[collection] != null && viewContent">
           <app-draggable-container
+            [itemsCollectionName]="collection"
             [itemsEncapsulationPath]="encapsulationPath"
+            [itemsCollectionType]="projectStructure[collection].type"
             (itemsReordered)="itemsReordered($event)">
             <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
               <div class="collection" [attr.data-key]="index">

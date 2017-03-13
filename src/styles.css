@@ -50,6 +50,12 @@ th {
 /* Dragging */
 [draggable="true"]:before {
     content: "...";
+    cursor: grab;
+}
+
+.dragging {
+    background-color: #f00;
+    cursor: grabbing;
 }
 
 /* ALIGN */

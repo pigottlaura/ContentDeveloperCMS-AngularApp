@@ -12,7 +12,6 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
   mediaItemGalleryVisible:boolean = false;
-  currentCollection:Object;
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
 
@@ -30,11 +29,10 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   }
 
   viewCollection(collection){
-    this.currentCollection = collection;
     this.currentCollectionName = collection;
   }
 
-  projectContentChanged(contentData){ 
+  projectContentChanged(contentData){
     this.updateProjectContent(this.projectContent, contentData);
   }
 

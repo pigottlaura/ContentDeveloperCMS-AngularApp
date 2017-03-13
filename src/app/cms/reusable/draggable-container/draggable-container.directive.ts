@@ -4,7 +4,9 @@ import { Directive, ElementRef, AfterViewInit, Input, Output, EventEmitter, Host
   selector: 'app-draggable-container'
 })
 export class DraggableContainerDirective implements AfterViewInit {
+  @Input() itemsCollectionName:string;
   @Input() itemsEncapsulationPath:string;
+  @Input() itemsCollectionType:string;
   @Output() itemsReordered:EventEmitter<Object> = new EventEmitter<Object>();
 
   private _containerElement;
@@ -42,28 +44,17 @@ export class DraggableContainerDirective implements AfterViewInit {
   @HostListener("drop", ["$event"])
   onDrop(e){
     if(this._draggingElement != null && e.target.parentNode === this._containerElement){
-        this._containerElement.removeChild(this._draggingElement);
-        var direction:number = 0;
-        if(e.screenY < this._dragStartY){
-            direction = -1;
-            this._containerElement.insertBefore(this._draggingElement, e.target);
-        } else {
-            direction = 1;
-            this._containerElement.insertBefore(this._draggingElement, e.target.nextSibling);
-        }
+        var direction:number = e.screenY < this._dragStartY ? -1 : 1;
 
         var dragData = {
+          collectionName: this.itemsCollectionName,
+          collectionType: this.itemsCollectionType,
           path: this.itemsEncapsulationPath,
           dragDirection: direction,
           keys: {
             elementDragged: this._draggingElement.getAttribute("data-key"),
-            elementDroppedOn: e.target.getAttribute("data-key"),
-            newOrder: []
+            elementDroppedOn: e.target.getAttribute("data-key")
           }          
-        }
-
-        for(var i=0; i<this._containerElement.children.length; i++){
-          dragData.keys.newOrder.push(this._containerElement.children[i].getAttribute("data-key"));
         }
         
         this.itemsReordered.emit(dragData);
