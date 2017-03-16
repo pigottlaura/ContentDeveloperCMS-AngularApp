@@ -22,9 +22,11 @@
         *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
+        [(projectSettings)]="projectSettings"
         [customCss]="projectSettings != null ? projectSettings.custom_css : ''"
         (editorRequestToSaveContent)="saveProjectContent($event)"
-        (editorRequestToResetContent)="resetProjectContent()">
+        (editorRequestToResetContent)="resetProjectContent()"
+        (editorRequestToRefreshSettings)="loadProjectSettings()">
     </app-cms-editor>
     <app-cms-view-only
         *ngIf="_userAccessLevel == 3"

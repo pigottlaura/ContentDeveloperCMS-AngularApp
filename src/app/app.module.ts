@@ -31,7 +31,7 @@ import { CollectionItemComponent } from './cms/reusable/content/collection-item/
 import { StructureViewComponent } from './cms/cms-admin/structure-view/structure-view.component';
 import { ContentViewComponent } from './cms/reusable/content/content-view/content-view.component';
 import { HistoryViewComponent } from './cms/cms-admin/history-view/history-view.component';
-import { SettingsViewComponent } from './cms/cms-admin/settings-view/settings-view.component';
+import { SettingsViewComponent } from './cms/reusable/settings/settings-view/settings-view.component';
 import { HistoryDisplayComponent } from './cms/reusable/history/history-display/history-display.component';
 import { HistoryPreviewComponent } from './cms/reusable/history/history-preview/history-preview.component';
 import { UserProjectsComponent } from './cms/cms-user-projects/user-projects.component';
@@ -41,6 +41,9 @@ import { MediaItemComponent } from './cms/reusable/media-items/media-item/media-
 import { DraggableContainerDirective } from './cms/reusable/draggable-container/draggable-container.directive';
 import { CodeEditorComponent } from './cms/reusable/code-editor/code-editor.component';
 import { ViewOnlyComponent } from './cms/cms-view-only/view-only.component';
+import { CollaboratorsComponent } from './cms/reusable/settings/collaborators/collaborators.component';
+import { AccessLevelsComponent } from './cms/reusable/settings/access-levels/access-levels.component';
+import { NavigationComponent } from './cms/reusable/cms-navigation/navigation.component';
 
 
 @NgModule({
@@ -75,7 +78,10 @@ import { ViewOnlyComponent } from './cms/cms-view-only/view-only.component';
     MediaItemComponent,
     DraggableContainerDirective,
     CodeEditorComponent,
-    ViewOnlyComponent
+    ViewOnlyComponent,
+    CollaboratorsComponent,
+    AccessLevelsComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

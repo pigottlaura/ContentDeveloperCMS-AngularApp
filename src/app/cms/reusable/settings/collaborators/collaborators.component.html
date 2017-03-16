@@ -1,0 +1,52 @@
+<h3>Collaborators</h3>
+<div class="row">
+  <h4>Add Collaborator</h4>
+  <label>Email Address:
+    <input #acEmailInput type="text">
+  </label>
+  <br>
+  <label>Access Level
+    <select #acAccessInput>
+      <option
+        *ngFor="let accessLevel of projectSettings.access_levels"
+        [value]="accessLevel.access_level_int">
+        {{accessLevel.access_level_name}}
+      </option>
+    </select>
+  </label>
+  <br>
+  <button (click)="addCollaborator(acEmailInput, acAccessInput)">Add Collaborator</button>
+</div>
+<div class="row">
+  <h4>Project Collaborators</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Access Level</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let collaborator of projectSettings.collaborators">
+        <td>{{collaborator.display_name}}</td>
+        <td>
+          <select
+            #calInput
+            [(ngModel)]="collaborator.access_level_int">
+            <option
+              *ngFor="let accessLevel of projectSettings.access_levels"
+              [value]="accessLevel.access_level_int">
+              {{accessLevel.access_level_name}}
+            </option>
+          </select>
+        </td>
+        <td>
+          <button
+            *ngIf="_currentUserId != null && collaborator.user_id != _currentUserId"
+            (click)="deleteCollaborator(collaborator)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

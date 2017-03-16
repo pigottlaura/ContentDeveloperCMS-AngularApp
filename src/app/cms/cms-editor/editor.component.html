@@ -1,11 +1,19 @@
+<app-cms-navigation
+	(requestToChangeView)="changeView($event)"></app-cms-navigation>
 <div class="row">
-	<div class="col-12-12">
-		<app-content-view
-			[customCss]="customCss"
-			[projectStructure]="projectStructure"
-			[(projectContent)]="projectContent"
-			(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
-			(viewRequestToResetContent)="viewRequestToResetContent()">
-		</app-content-view>
-	</div>
+	<app-content-view
+		*ngIf="_view == 'content'"
+		[customCss]="customCss"
+		[projectStructure]="projectStructure"
+		[(projectContent)]="projectContent"
+		(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
+		(viewRequestToResetContent)="viewRequestToResetContent()">
+	</app-content-view>
+
+	<app-settings-view
+		*ngIf="_view == 'settings'"
+		[(projectSettings)]="projectSettings"
+		(settingsUpdated)="viewRequestToRefreshSettings($event)"
+		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
+	</app-settings-view>
 </div>

@@ -1,0 +1,10 @@
+<div class="row">
+	<nav>
+		<ul>
+			<li *ngIf="isAdmin" (click)="changeView('structure')">Structure</li>
+			<li (click)="changeView('content')">Content</li>
+			<li (click)="changeView('history')">Project History</li>
+			<li (click)="changeView('settings')">Project Settings</li>
+		</ul>
+	</nav>
+</div>

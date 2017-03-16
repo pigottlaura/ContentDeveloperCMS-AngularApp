@@ -1,13 +1,6 @@
-<div class="row">
-	<nav>
-		<ul>
-			<li (click)="changeView('structure')">View as Admin</li>
-			<li (click)="changeView('content')">View as Collaborator</li>
-			<li (click)="changeView('history')">Project History</li>
-			<li (click)="changeView('settings')">Project Settings</li>
-		</ul>
-	</nav>
-</div>
+<app-cms-navigation
+	[isAdmin]="true"
+	(requestToChangeView)="changeView($event)"></app-cms-navigation>
 <div class="row">
 	<app-structure-view
 		*ngIf="_view == 'structure'"
@@ -35,6 +28,7 @@
 
 	<app-settings-view
 		*ngIf="_view == 'settings'"
+		[isAdmin]="true"
 		[(projectSettings)]="projectSettings"
 		(settingsUpdated)="viewRequestToRefreshSettings($event)"
 		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
