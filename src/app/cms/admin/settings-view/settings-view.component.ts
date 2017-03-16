@@ -9,6 +9,7 @@ import { ContentDeveloperServerService } from "./../../../services/content-devel
 export class SettingsViewComponent {
   @Input() projectSettings;
   @Output() settingsUpdated:EventEmitter<void> = new EventEmitter<void>();
+  @Output() viewRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private _cdService:ContentDeveloperServerService){}
 
@@ -56,6 +57,10 @@ export class SettingsViewComponent {
         this.settingsUpdated.emit();
       }
     ); 
+  }
+
+  resetAllProjectSettings(){
+    this.viewRequestToRefreshSettings.emit();
   }
 
   saveAllProjectSettings(){

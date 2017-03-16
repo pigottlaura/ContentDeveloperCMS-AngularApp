@@ -18,6 +18,7 @@
 
 	<app-content-view
 		*ngIf="_view == 'content'"
+		[customCss]="projectSettings.custom_css"
 		[projectStructure]="projectStructure"
 		[(projectContent)]="projectContent"
 		(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
@@ -35,6 +36,7 @@
 	<app-settings-view
 		*ngIf="_view == 'settings'"
 		[(projectSettings)]="projectSettings"
-		(settingsUpdated)="viewRequestToRefreshSettings($event)">
+		(settingsUpdated)="viewRequestToRefreshSettings($event)"
+		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
 	</app-settings-view>
 </div>
