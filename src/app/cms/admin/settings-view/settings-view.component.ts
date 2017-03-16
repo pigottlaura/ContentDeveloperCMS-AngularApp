@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContentDeveloperServerService } from "./../../../services/content-developer-server/content-developer-server.service";
 
 @Component({
@@ -6,12 +6,18 @@ import { ContentDeveloperServerService } from "./../../../services/content-devel
   templateUrl: './settings-view.component.html',
   styleUrls: ['./settings-view.component.css']
 })
-export class SettingsViewComponent {
+export class SettingsViewComponent implements OnInit {
   @Input() projectSettings;
   @Output() settingsUpdated:EventEmitter<void> = new EventEmitter<void>();
   @Output() viewRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
+  private _currentUserId:string;
 
   constructor(private _cdService:ContentDeveloperServerService){}
+
+  ngOnInit(){
+    this._currentUserId = this._cdService.getCurrentUser().id;
+    console.log(this._cdService.getCurrentUser());
+  }
 
   addCollaborator(emailInput, accessLevelIntInput){
     console.log(emailInput.value, accessLevelIntInput.value);

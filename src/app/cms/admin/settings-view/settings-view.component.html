@@ -89,6 +89,7 @@
               </td>
               <td>
                 <button
+                  *ngIf="_currentUserId != null && collaborator.user_id != _currentUserId"
                   (click)="deleteCollaborator(collaborator)">Delete</button>
               </td>
             </tr>
