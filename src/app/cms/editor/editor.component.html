@@ -1,9 +1,11 @@
 <div class="row">
 	<div class="col-12-12">
-		<h2>Project Content</h2>
-            <app-content-editor
-			[viewContent]="true"
-			[projectContent]="projectContent"
-		></app-content-editor>
+		<app-content-view
+			[customCss]="customCss"
+			[projectStructure]="projectStructure"
+			[(projectContent)]="projectContent"
+			(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
+			(viewRequestToResetContent)="viewRequestToResetContent()">
+		</app-content-view>
 	</div>
 </div>

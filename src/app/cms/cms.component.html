@@ -21,6 +21,9 @@
     <app-cms-editor
         *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
         [(projectContent)]="projectContent"
-        [projectStructure]="projectStructure">
+        [projectStructure]="projectStructure"
+        [customCss]="projectSettings != null ? projectSettings.custom_css : ''"
+        (editorRequestToSaveContent)="saveProjectContent($event)"
+        (editorRequestToResetContent)="resetProjectContent()">
     </app-cms-editor>
 </ng-container>

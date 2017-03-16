@@ -29,7 +29,7 @@ import { ContentEditorComponent } from './cms/reusable/content-editor/content-ed
 import { CollectionComponent } from './cms/reusable/collection/collection.component';
 import { CollectionItemComponent } from './cms/reusable/collection-item/collection-item.component';
 import { StructureViewComponent } from './cms/admin/structure-view/structure-view.component';
-import { ContentViewComponent } from './cms/admin/content-view/content-view.component';
+import { ContentViewComponent } from './cms/reusable/content-view/content-view.component';
 import { HistoryViewComponent } from './cms/admin/history-view/history-view.component';
 import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.component';
 import { HistoryDisplayComponent } from './cms/reusable/history-display/history-display.component';
@@ -40,6 +40,7 @@ import { MediaItemGalleryComponent } from './cms/reusable/media-item-gallery/med
 import { MediaItemComponent } from './cms/reusable/media-item/media-item.component';
 import { DraggableContainerDirective } from './cms/reusable/draggable-container/draggable-container.directive';
 import { CodeEditorComponent } from './cms/reusable/code-editor/code-editor.component';
+import { ViewOnlyComponent } from './cms/view-only/view-only.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { CodeEditorComponent } from './cms/reusable/code-editor/code-editor.comp
     MediaItemGalleryComponent,
     MediaItemComponent,
     DraggableContainerDirective,
-    CodeEditorComponent
+    CodeEditorComponent,
+    ViewOnlyComponent
   ],
   imports: [
     BrowserModule,
