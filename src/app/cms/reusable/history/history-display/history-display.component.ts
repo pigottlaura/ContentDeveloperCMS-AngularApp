@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ContentDeveloperServerService } from "./../../../services/content-developer-server/content-developer-server.service";
-import { ShortenerPipe } from "./../../../pipes/shortener.pipe";
+import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
+import { ShortenerPipe } from "./../../../../pipes/shortener.pipe";
 
 @Component({
   selector: 'app-history-display',

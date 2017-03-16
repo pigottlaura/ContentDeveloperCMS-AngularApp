@@ -21,26 +21,26 @@ import { ContentDeveloperServerService } from './services/content-developer-serv
 // Components
 import { AppComponent } from './app.component';
 import { CmsComponent } from './cms/cms.component';
-import { AdminComponent } from './cms/admin/admin.component';
-import { EditorComponent } from './cms/editor/editor.component';
+import { AdminComponent } from './cms/cms-admin/admin.component';
+import { EditorComponent } from './cms/cms-editor/editor.component';
 import { HeaderComponent } from './general/header/header.component';
 import { FooterComponent } from './general/footer/footer.component';
-import { ContentEditorComponent } from './cms/reusable/content-editor/content-editor.component';
-import { CollectionComponent } from './cms/reusable/collection/collection.component';
-import { CollectionItemComponent } from './cms/reusable/collection-item/collection-item.component';
-import { StructureViewComponent } from './cms/admin/structure-view/structure-view.component';
-import { ContentViewComponent } from './cms/reusable/content-view/content-view.component';
-import { HistoryViewComponent } from './cms/admin/history-view/history-view.component';
-import { SettingsViewComponent } from './cms/admin/settings-view/settings-view.component';
-import { HistoryDisplayComponent } from './cms/reusable/history-display/history-display.component';
-import { HistoryPreviewComponent } from './cms/reusable/history-preview/history-preview.component';
-import { UserProjectsComponent } from './cms/user-projects/user-projects.component';
+import { ContentEditorComponent } from './cms/reusable/content/content-editor/content-editor.component';
+import { CollectionComponent } from './cms/reusable/content/collection/collection.component';
+import { CollectionItemComponent } from './cms/reusable/content/collection-item/collection-item.component';
+import { StructureViewComponent } from './cms/cms-admin/structure-view/structure-view.component';
+import { ContentViewComponent } from './cms/reusable/content/content-view/content-view.component';
+import { HistoryViewComponent } from './cms/cms-admin/history-view/history-view.component';
+import { SettingsViewComponent } from './cms/cms-admin/settings-view/settings-view.component';
+import { HistoryDisplayComponent } from './cms/reusable/history/history-display/history-display.component';
+import { HistoryPreviewComponent } from './cms/reusable/history/history-preview/history-preview.component';
+import { UserProjectsComponent } from './cms/cms-user-projects/user-projects.component';
 import { LoginComponent } from './login/login.component';
-import { MediaItemGalleryComponent } from './cms/reusable/media-item-gallery/media-item-gallery.component';
-import { MediaItemComponent } from './cms/reusable/media-item/media-item.component';
+import { MediaItemGalleryComponent } from './cms/reusable/media-items/media-item-gallery/media-item-gallery.component';
+import { MediaItemComponent } from './cms/reusable/media-items/media-item/media-item.component';
 import { DraggableContainerDirective } from './cms/reusable/draggable-container/draggable-container.directive';
 import { CodeEditorComponent } from './cms/reusable/code-editor/code-editor.component';
-import { ViewOnlyComponent } from './cms/view-only/view-only.component';
+import { ViewOnlyComponent } from './cms/cms-view-only/view-only.component';
 
 
 @NgModule({

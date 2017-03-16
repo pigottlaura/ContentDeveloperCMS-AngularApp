@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ContentDeveloperServerService } from "./../../../services/content-developer-server/content-developer-server.service";
+import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
 
 @Component({
   selector: 'app-collection-item',

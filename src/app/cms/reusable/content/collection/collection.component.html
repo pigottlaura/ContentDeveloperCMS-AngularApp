@@ -45,7 +45,7 @@
             <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
               <div
                 class="collection"
-                draggable="true"
+                [draggable]="viewOnly == false"
                 [attr.data-key]="index">
                 <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
                   <app-collection
@@ -61,11 +61,15 @@
                     (collectionRequestToViewMediaItems)="viewMediaItems($event)">
                   </app-collection>
                 </ng-container>
-                <button (click)="deleteItem(encapsulationPath, index)">Delete</button>
+                <button
+                  *ngIf="viewOnly == false"
+                  (click)="deleteItem(encapsulationPath, index)">Delete</button>
               </div>
             </ng-container>
           </app-draggable-container>
-          <button (click)="addNewItem(encapsulationPath, projectStructure[collection].type)"> Add {{collection}}</button>
+          <button
+            *ngIf="viewOnly == false"
+            (click)="addNewItem(encapsulationPath, projectStructure[collection].type)"> Add {{collection}}</button>
         </ng-container>
 
         <ng-container *ngIf="projectContent == null || projectContent[collection] == null || viewContent == false">

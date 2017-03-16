@@ -34,18 +34,24 @@
       [disabled]="viewOnly">
     </textarea>
 
-    <select
-      *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'"
-      [(ngModel)]="itemContent"
-      (change)="contentChanged($event)">
-      <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
-        <option
-          *ngFor="let option of itemStructure.attributes.options"
-          [value]="option"
-          [selected]="itemContent != null && viewContent != false && option == itemContent">
-          {{option | title}}
-        </option>
-      </ng-container>
-    </select>
+    <ng-container *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
+      <select
+        *ngIf="viewOnly == false"
+        [(ngModel)]="itemContent"
+        (change)="contentChanged($event)">
+        <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
+          <option
+            *ngFor="let option of itemStructure.attributes.options"
+            [value]="option"
+            [selected]="itemContent != null && viewContent != false && option == itemContent">
+            {{option | title}}
+          </option>
+        </ng-container>
+      </select>
+      <input
+        *ngIf="viewOnly"
+        [value]="itemContent"
+        disabled="true">
+    </ng-container>
   </label>
 </ng-container>

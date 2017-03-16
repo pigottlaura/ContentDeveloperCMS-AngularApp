@@ -22,7 +22,7 @@ export class DraggableContainerDirective implements AfterViewInit {
     for(var i=0; i<this._containerElement.children.length; i++){
       // Setting the draggable property of each child of the draggable 
       // container to true, so that it can be dragged
-      this._containerElement.children[i].setAttribute("draggable", "true");
+      //this._containerElement.children[i].setAttribute("draggable", "true");
     }
   }
 

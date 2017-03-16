@@ -27,6 +27,7 @@
         (editorRequestToResetContent)="resetProjectContent()">
     </app-cms-editor>
     <app-cms-view-only
+        *ngIf="_userAccessLevel == 3"
         [projectContent]="projectContent"
         [projectStructure]="projectStructure"
         [customCss]="projectSettings != null ? projectSettings.custom_css : ''">
