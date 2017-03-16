@@ -1,5 +1,5 @@
 <div *ngIf="projectStructure != null">
-  <div *ngIf="viewContent" class="row">
+  <div *ngIf="viewContent && viewOnly == false" class="row">
     <button (click)="saveProjectContent()">Save</button>
     <button (click)="resetProjectContent()">Reset</button>
   </div>
@@ -13,7 +13,7 @@
             [contentType]="object"
             (contentReordered)="collectionTabsReordered($event)">
             <div *ngFor="let collection of projectStructure | keyValArray : 'keys'"
-              draggable="true"
+              [draggable]="viewContent == false"
               [attr.data-key]="collection"
               (click)="viewCollection(collection)"
               [class]="(collection === currentCollectionName ? 'active ' : '')  + 'collectionTab'">{{collection | title}}
@@ -31,6 +31,7 @@
           [projectContent]="projectContent"
           [projectStructure]="projectStructure"
           [viewContent]="viewContent"
+          [viewOnly]="viewOnly"
           (contentChanged)="projectContentChanged($event)"
           (collectionRequestToViewMediaItems)="showMediaItemGallery($event)">
         </app-collection>

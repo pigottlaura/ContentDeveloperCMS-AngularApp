@@ -7,19 +7,22 @@
         *ngIf="itemStructure.type != 'html' && itemStructure.attributes.type != 'file'"
         [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
         [(ngModel)]="itemContent"
-        (change)="contentChanged($event)">
+        (change)="contentChanged($event)"
+        [disabled]="viewOnly">
       
       <ng-container *ngIf="itemStructure.attributes.type == 'file'">
         <input
+          *ngIf="viewOnly == false"
           type="file"
           class="hi"
           (change)="fileInputChanged($event)">
         <span
           *ngIf="_warning != null">{{_warning}}</span>
         <img
-          *ngIf="viewContent && itemContent != null"
+          *ngIf="viewContent && viewOnly == false && itemContent != null"
           [src]="itemContent">
-        <button 
+        <button
+          *ngIf="viewOnly == false" 
           (click)="viewAvailableMediaItems()">Select Image</button>
       </ng-container>
     </ng-container>
@@ -27,7 +30,8 @@
     <textarea
       *ngIf="itemStructure.input_type == 'textarea' || itemStructure.type == 'html'"
       [(ngModel)]="itemContent"
-      (change)="contentChanged($event)">
+      (change)="contentChanged($event)"
+      [disabled]="viewOnly">
     </textarea>
 
     <select

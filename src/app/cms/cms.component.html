@@ -26,4 +26,9 @@
         (editorRequestToSaveContent)="saveProjectContent($event)"
         (editorRequestToResetContent)="resetProjectContent()">
     </app-cms-editor>
+    <app-cms-view-only
+        [projectContent]="projectContent"
+        [projectStructure]="projectStructure"
+        [customCss]="projectSettings != null ? projectSettings.custom_css : ''">
+    </app-cms-view-only>
 </ng-container>

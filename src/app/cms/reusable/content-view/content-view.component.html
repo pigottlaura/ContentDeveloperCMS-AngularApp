@@ -4,6 +4,7 @@
     <div *ngIf="projectStructure != null">
       <app-content-editor
         [viewContent]="true"
+        [viewOnly]="viewOnly"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
         (requestToSaveProjectContent)="requestToSaveProjectContent($event)"

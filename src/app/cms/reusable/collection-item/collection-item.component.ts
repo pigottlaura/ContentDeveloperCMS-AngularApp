@@ -11,6 +11,7 @@ export class CollectionItemComponent {
   @Input() itemStructure:Object;
   @Input() itemContent:Object;
   @Input() viewContent:boolean;
+  @Input() viewOnly:boolean = false;
   @Input() encapsulationPath:string;
   @Output() itemContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() collectionItemRequestToViewMediaItems:EventEmitter<string> = new EventEmitter<string>();

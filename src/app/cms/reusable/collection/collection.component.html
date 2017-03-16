@@ -10,6 +10,7 @@
         [itemStructure]="projectStructure[collection]"
         [itemContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection] : null"
         [viewContent]="viewContent"
+        [viewOnly]="viewOnly"
         (itemContentChanged)="collectionContentChanged($event)"
         (collectionItemRequestToViewMediaItems)="collectionItemRequestToViewMediaItems($event)">
       </app-collection-item>
@@ -26,6 +27,7 @@
             [projectStructure]="projectStructure[collection].items"
             [projectContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection] : null"
             [viewContent]="viewContent"
+            [viewOnly]="viewOnly"
             (itemContentChanged)="itemContentChanged($event)"
             (contentChanged)="collectionContentChanged($event)"
             (collectionRequestToViewMediaItems)="viewMediaItems($event)">
@@ -53,6 +55,7 @@
                     [projectStructure]="projectStructure[collection].items"
                     [projectContent]="projectContent[collection][index] != null ? projectContent[collection][index] : null"
                     [viewContent]="viewContent"
+                    [viewOnly]="viewOnly"
                     (itemContentChanged)="collectionContentChanged($event)"
                     (contentChanged)="collectionContentChanged($event)"
                     (collectionRequestToViewMediaItems)="viewMediaItems($event)">
@@ -73,6 +76,7 @@
                   [collection]="collectionItemName"
                   [projectStructure]="projectStructure[collection].items"
                   [viewContent]="viewContent"
+                  [viewOnly]="viewOnly"
                   (itemContentChanged)="collectionContentChanged($event)"
                   (contentChanged)="collectionContentChanged($event)"
                   (collectionRequestToViewMediaItems)="viewMediaItems($event)">
@@ -86,6 +90,7 @@
                 [collection]="collectionItemName"
                 [projectStructure]="projectStructure[collection].items"
                 [viewContent]="viewContent"
+                [viewOnly]="viewOnly"
                 (itemContentChanged)="collectionContentChanged($event)"
                 (contentChanged)="collectionContentChanged($event)"
                 (collectionRequestToViewMediaItems)="viewMediaItems($event)">
@@ -99,6 +104,7 @@
                 [collection]="collectionItemName"
                 [projectStructure]="projectStructure[collection].items"
                 [viewContent]="viewContent"
+                [viewOnly]="viewOnly"
                 (itemContentChanged)="collectionContentChanged($event)"
                 (contentChanged)="collectionContentChanged($event)"
                 (collectionRequestToViewMediaItems)="viewMediaItems($event)">

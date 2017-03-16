@@ -9,6 +9,7 @@ export class ContentViewComponent implements OnChanges {
   @Input() projectStructure;
   @Input() projectContent;
   @Input() customCss:string;
+  @Input() viewOnly:boolean = false;
   @Output() viewRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();
   @Output() viewRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
   private _styleElement:HTMLStyleElement;

@@ -10,6 +10,7 @@ export class CollectionComponent {
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
   @Input() viewContent:boolean;
+  @Input() viewOnly:boolean = false;
   @Input() topLevelCollection:Boolean = false;
   @Input() subCollection:boolean = false;
   @Input() encapsulationPath:string;
