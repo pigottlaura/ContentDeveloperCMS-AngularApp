@@ -45,6 +45,7 @@ import { CollaboratorsComponent } from './cms/reusable/settings/collaborators/co
 import { AccessLevelsComponent } from './cms/reusable/settings/access-levels/access-levels.component';
 import { NavigationComponent } from './cms/reusable/cms-navigation/navigation.component';
 import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwyg-html.component';
+import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upload.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwy
     CollaboratorsComponent,
     AccessLevelsComponent,
     NavigationComponent,
-    WysiwygHtmlComponent
+    WysiwygHtmlComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,7 @@
         [itemContent]="projectContent != null && projectContent[collection] != null ? projectContent[collection] : null"
         [viewContent]="viewContent"
         [viewOnly]="viewOnly"
-        (itemContentChanged)="collectionContentChanged($event)"
-        (collectionItemRequestToViewMediaItems)="collectionItemRequestToViewMediaItems($event)">
+        (itemContentChanged)="collectionContentChanged($event)">
       </app-collection-item>
     </ng-container>
     
@@ -29,8 +28,7 @@
             [viewContent]="viewContent"
             [viewOnly]="viewOnly"
             (itemContentChanged)="itemContentChanged($event)"
-            (contentChanged)="collectionContentChanged($event)"
-            (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+            (contentChanged)="collectionContentChanged($event)">
           </app-collection>
         </ng-container>
       </ng-container>
@@ -57,8 +55,7 @@
                     [viewContent]="viewContent"
                     [viewOnly]="viewOnly"
                     (itemContentChanged)="collectionContentChanged($event)"
-                    (contentChanged)="collectionContentChanged($event)"
-                    (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                    (contentChanged)="collectionContentChanged($event)">
                   </app-collection>
                 </ng-container>
                 <button
@@ -82,8 +79,7 @@
                   [viewContent]="viewContent"
                   [viewOnly]="viewOnly"
                   (itemContentChanged)="collectionContentChanged($event)"
-                  (contentChanged)="collectionContentChanged($event)"
-                  (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                  (contentChanged)="collectionContentChanged($event)">
                 </app-collection>
             </ng-container>
             
@@ -96,8 +92,7 @@
                 [viewContent]="viewContent"
                 [viewOnly]="viewOnly"
                 (itemContentChanged)="collectionContentChanged($event)"
-                (contentChanged)="collectionContentChanged($event)"
-                (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                (contentChanged)="collectionContentChanged($event)">
               </app-collection>
             </ng-container>
 
@@ -110,8 +105,7 @@
                 [viewContent]="viewContent"
                 [viewOnly]="viewOnly"
                 (itemContentChanged)="collectionContentChanged($event)"
-                (contentChanged)="collectionContentChanged($event)"
-                (collectionRequestToViewMediaItems)="viewMediaItems($event)">
+                (contentChanged)="collectionContentChanged($event)">
               </app-collection>
             </ng-container>
           </ng-container>

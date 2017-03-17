@@ -32,18 +32,9 @@
           [projectStructure]="projectStructure"
           [viewContent]="viewContent"
           [viewOnly]="viewOnly"
-          (contentChanged)="projectContentChanged($event)"
-          (collectionRequestToViewMediaItems)="showMediaItemGallery($event)">
+          (contentChanged)="projectContentChanged($event)">
         </app-collection>
       </ng-container>
     </div>
   </div>
-  <app-media-item-gallery
-    [class]="mediaItemGalleryVisible ? 'visible' : 'hidden'"
-    [visible]="mediaItemGalleryVisible"
-    [numItemsPerPage]=2
-    [numItemsPerRow]=3
-    (closeButtonClicked)="hideMediaItemGallery()"
-    (mediaItemSelected)="mediaItemSelected($event)">
-  </app-media-item-gallery>
 </div>

@@ -1,0 +1,21 @@
+<div
+  *ngIf="_warning != null">{{_warning}}</div>
+<input
+  *ngIf="viewOnly == false"
+  type="file"
+  #fileInput
+  (change)="fileInputChanged(fileInput)">
+<button
+  *ngIf="viewOnly == false" 
+  (click)="showMediaItemGallery()">Select Image</button>
+<img
+  *ngIf="viewContent && viewOnly == false && itemContent != null"
+  [src]="itemContent">
+
+<app-media-item-gallery
+    *ngIf="_mediaItemGalleryVisible"
+    [numItemsPerPage]=9
+    [numItemsPerRow]=3
+    (closeButtonClicked)="hideMediaItemGallery()"
+    (mediaItemSelected)="mediaItemSelected($event)">
+</app-media-item-gallery>

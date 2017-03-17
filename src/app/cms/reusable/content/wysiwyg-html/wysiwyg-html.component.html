@@ -1,10 +1,10 @@
 <div>
-  <button (click)="_addImage()">Image</button>
-  <button (click)="_addHeading('h1')">H1</button>
-  <button (click)="_addHeading('h2')">H2</button>
-  <button (click)="_addHeading('h3')">H3</button>
-  <button (click)="_addLink()">Hyperlink</button>
-  <button (click)="_clearAllContent()">Clear All</button>
+  <button (click)="addImage()">Image</button>
+  <button (click)="addHeading('h1')">H1</button>
+  <button (click)="addHeading('h2')">H2</button>
+  <button (click)="addHeading('h3')">H3</button>
+  <button (click)="addLink()">Hyperlink</button>
+  <button (click)="clearAllContent()">Clear All</button>
 </div>
 
 <div *ngIf="viewContent">
@@ -18,26 +18,13 @@
       </label>
     </div>
     <div class="row">
-      <div class="col-6-12">
-        <label>
-          <button (click)="_viewImages()">View Images</button>
-          or
-          <input
-            #imgFileInput
-            type="file"
-            (change)="_fileInputChanged(imgFileInput)">
-        </label>
-      </div>
-      <div class="col-6-12">
-        <img 
-          *ngIf="_imageUrl != null"
-          class="imgThumbnail"
-          [src]="_imageUrl">
-      </div>
+      <app-file-upload
+        [viewContent]="viewContent"
+        (fileChanged)="imageSelected($event)"></app-file-upload>
     </div>
     <div class="row">
-      <button (click)="_insertImage(imgFileInput, altTextInput)">Insert</button>
-      <button (click)="_cancel()">Cancel</button>
+      <button (click)="insertImage(altTextInput)">Insert</button>
+      <button (click)="cancel()">Cancel</button>
     </div>
   </div>
 
@@ -51,8 +38,8 @@
       </label>
     </div>
     <div class="row">
-      <button (click)="_insertHeading(hTextInput)">Insert</button>
-      <button (click)="_cancel()">Cancel</button>
+      <button (click)="insertHeading(hTextInput)">Insert</button>
+      <button (click)="cancel()">Cancel</button>
     </div>
   </div>
 
@@ -69,8 +56,15 @@
       </label>
     </div>
     <div class="row">
-      <button (click)="_insertLink(linkTextInput, linkHrefInput)">Insert</button>
-      <button (click)="_cancel()">Cancel</button>
+      <button (click)="insertLink(linkTextInput, linkHrefInput)">Insert</button>
+      <button (click)="cancel()">Cancel</button>
     </div>
   </div>
 </div>
+
+<textarea
+  *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'textarea'"
+  [(ngModel)]="itemContent"
+  (change)="contentChanged($event)"
+  [disabled]="viewOnly">
+</textarea>

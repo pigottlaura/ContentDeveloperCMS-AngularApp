@@ -13,11 +13,9 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectContent:EventEmitter<void> = new EventEmitter<void>();
   @Output() structureCollectionTabsReordered:EventEmitter<Object> = new EventEmitter<Object>();
-
-  mediaItemGalleryVisible:boolean = false;
+  
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
-  private _mediaItemsSelectedCallback:Function;
 
   ngOnInit() {
     this._selectFirstComponent();
@@ -66,35 +64,6 @@ export class ContentEditorComponent implements OnInit, OnChanges {
       currentContent = currentContent[encapsulationKeys[i]];
     }
     currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
-  }
-
-  showMediaItemGallery(eventPayload){
-    if(typeof eventPayload === "function"){
-      this._mediaItemsSelectedCallback = eventPayload;
-      this._encapsulationPathForCurrentFileInput = null;
-    } else {
-      this._encapsulationPathForCurrentFileInput = eventPayload;
-    }
-    this.mediaItemGalleryVisible = true;
-  }
-
-  hideMediaItemGallery(){
-    this._encapsulationPathForCurrentFileInput = null;
-    this.mediaItemGalleryVisible = false;
-  }
-
-  mediaItemSelected(mediaItemUrl){
-    if(this._mediaItemsSelectedCallback != null){
-      this._mediaItemsSelectedCallback(mediaItemUrl);
-      this._mediaItemsSelectedCallback = null;
-    } else {
-      var contentData = {
-        path: this._encapsulationPathForCurrentFileInput,
-        content: mediaItemUrl
-      }
-      this.updateProjectContent(this.projectContent, contentData);
-    }    
-    this.hideMediaItemGallery();
   }
 
   collectionTabsReordered(updatedTabOrder){

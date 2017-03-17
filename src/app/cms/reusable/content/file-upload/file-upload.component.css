@@ -1,0 +1,23 @@
+input[type="file"]{
+    width: 86px;
+}
+
+img {
+    width: 100px;
+    min-height: 80px;
+    height: auto;
+    vertical-align: top;
+    border: 1px solid black;
+}
+img[src="null"]{
+    display: none;
+}
+
+app-media-item-gallery {
+    width: 50%;
+    height: 300px;
+    top: 0;
+    right: 0;
+    overflow-y: scroll;
+    position: absolute;    
+}

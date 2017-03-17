@@ -1,63 +1,53 @@
 <ng-container *ngIf="itemStructure.attributes != null">
   <br *ngIf="itemStructure.input_type == 'textarea'">
-  <app-wysiwyg-html
-    *ngIf="itemStructure.type == 'html' && viewOnly == false"
-    [viewContent]="viewContent"
-    (wysiwygRequestToViewMediaItems)="viewAvailableMediaItems($event)"
-    (wysiwygFileInputChanged)="fileInputChanged($event)"></app-wysiwyg-html>
   <label>{{itemName | title}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
-
-    <ng-container *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'input'">
+    <ng-container *ngIf="itemStructure.type != 'html'">
       <input
-        *ngIf="itemStructure.type != 'html' && itemStructure.attributes.type != 'file'"
+        *ngIf="(itemStructure.input_type == null || itemStructure.input_type == 'input') && itemStructure.attributes.type != 'file'"
         [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
         [(ngModel)]="itemContent"
         (change)="contentChanged($event)"
         [disabled]="viewOnly">
-      
-      <ng-container *ngIf="itemStructure.attributes.type == 'file'">
-        <input
+
+      <textarea
+        *ngIf="itemStructure.input_type == 'textarea'"
+        [(ngModel)]="itemContent"
+        (change)="contentChanged($event)"
+        [disabled]="viewOnly">
+      </textarea>
+
+      <ng-container *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
+        <select
           *ngIf="viewOnly == false"
-          type="file"
-          class="hi"
-          (change)="fileInputChanged($event)">
-        <span
-          *ngIf="_warning != null">{{_warning}}</span>
-        <img
-          *ngIf="viewContent && viewOnly == false && itemContent != null"
-          class="imgThumbnail"
-          [src]="itemContent">
-        <button
-          *ngIf="viewOnly == false" 
-          (click)="viewAvailableMediaItems()">Select Image</button>
+          [(ngModel)]="itemContent"
+          (change)="contentChanged($event)">
+          <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
+            <option
+              *ngFor="let option of itemStructure.attributes.options"
+              [value]="option"
+              [selected]="itemContent != null && viewContent != false && option == itemContent">
+              {{option | title}}
+            </option>
+          </ng-container>
+        </select>
+        <input
+          *ngIf="viewOnly"
+          [value]="itemContent"
+          disabled="true">
       </ng-container>
     </ng-container>
-
-    <textarea
-      *ngIf="itemStructure.input_type == 'textarea' || itemStructure.type == 'html'"
-      [(ngModel)]="itemContent"
-      (change)="contentChanged($event)"
-      [disabled]="viewOnly">
-    </textarea>
-
-    <ng-container *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
-      <select
-        *ngIf="viewOnly == false"
-        [(ngModel)]="itemContent"
-        (change)="contentChanged($event)">
-        <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
-          <option
-            *ngFor="let option of itemStructure.attributes.options"
-            [value]="option"
-            [selected]="itemContent != null && viewContent != false && option == itemContent">
-            {{option | title}}
-          </option>
-        </ng-container>
-      </select>
-      <input
-        *ngIf="viewOnly"
-        [value]="itemContent"
-        disabled="true">
-    </ng-container>
   </label>
+  <app-wysiwyg-html
+    *ngIf="itemStructure.type == 'html' && viewOnly == false"
+    [viewContent]="viewContent"
+    [itemStructure]="itemStructure"
+    [(itemContent)]="itemContent"
+    (wysiwygContentChanged)="contentChanged($event)"></app-wysiwyg-html>
+  <app-file-upload
+    *ngIf="itemStructure.attributes.type == 'file'"
+    [viewOnly]="viewOnly"
+    [viewContent]="viewContent"
+    [(itemContent)]="itemContent"
+    (fileChanged)="contentChanged($event)">
+  </app-file-upload>
 </ng-container>

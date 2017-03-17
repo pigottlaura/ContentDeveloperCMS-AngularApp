@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
 
 @Component({
   selector: 'app-collection-item',
@@ -14,46 +13,16 @@ export class CollectionItemComponent {
   @Input() viewOnly:boolean = false;
   @Input() encapsulationPath:string;
   @Output() itemContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() collectionItemRequestToViewMediaItems:EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _cdService:ContentDeveloperServerService){}
-
-  contentChanged(){  
-    this.itemContentChanged.emit({path: this.encapsulationPath, content:this.itemContent});
-  }
-
-  viewAvailableMediaItems(callbackFunction:Function=null){
-    if(callbackFunction != null){
-      this.collectionItemRequestToViewMediaItems.emit(callbackFunction);
+  contentChanged(updatedContent=null){
+    if(updatedContent != null){
+      this.itemContentChanged.emit({path: this.encapsulationPath, content:updatedContent});
     } else {
-      this.collectionItemRequestToViewMediaItems.emit(this.encapsulationPath);
+      this.itemContentChanged.emit({path: this.encapsulationPath, content:this.itemContent});
     }
   }
-  
-  fileInputChanged(eventPayload){
-    var fileToUpload = null;
-    if(eventPayload.srcElement != null){
-      if(eventPayload.srcElement.files != null && eventPayload.srcElement.files.length > 0){
-        fileToUpload = eventPayload.srcElement.files[0];
-        eventPayload.srcElement.value = "";
-      }
-    } else {
-      fileToUpload = eventPayload.file;
-    }
-    
-    this._cdService.uploadMediaItem(fileToUpload).subscribe(
-      responseObject => {
-        if(responseObject.fileUrl != null){
-          if(eventPayload.callback != null){
-            eventPayload.callback(responseObject.fileUrl);
-          } else {
-            this.itemContent = responseObject.fileUrl;
-            this.contentChanged();
-          }
-          
-        }
-      }
-    );
-    
+
+  wysiwygContentChanged(content){
+    console.log(content);
   }
 }

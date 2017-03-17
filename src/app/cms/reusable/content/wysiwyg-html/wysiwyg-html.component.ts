@@ -1,98 +1,81 @@
-import { Component, DoCheck, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-wysiwyg-html',
   templateUrl: './wysiwyg-html.component.html',
   styleUrls: ['./wysiwyg-html.component.css']
 })
-export class WysiwygHtmlComponent implements DoCheck {
+export class WysiwygHtmlComponent {
   @Input() viewContent:boolean;
+  @Input() itemContent;
+  @Input() itemStructure;
   @Output() wysiwygRequestToViewMediaItems:EventEmitter<Function> = new EventEmitter<Function>();
-  @Output() wysiwygFileInputChanged:EventEmitter<Object> = new EventEmitter<Object>();
-  static staticImageUrl:string;
+  @Output() wysiwygContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
   private _insertType:string;
   private _imageUrl:string;
   private _headingType:string;
   private _newElement:string;
 
-  // Public method, used as a callback from the content-editor component, when an image
-  // is selected from the media-item-gallery
-  imageSelected(imageUrl){
-    // Storing the resulting imageURL on a static property of this class, as when this
-    // method is envoked by the content-editor component, the "this" now refers to the 
-    // content-editor component.
-    WysiwygHtmlComponent.staticImageUrl = imageUrl;
-    console.log(WysiwygHtmlComponent.staticImageUrl);
-  }
-
-  ngDoCheck(){
-    if(this._imageUrl != WysiwygHtmlComponent.staticImageUrl){
-      this._imageUrl = WysiwygHtmlComponent.staticImageUrl;
-    }
-  }
-
-  private _addImage(){
-    this._clear();
+  addImage(){
+    this.clear();
     this._insertType = "image";
   }
 
-  private _addHeading(headingType){
-    this._clear();
+  addHeading(headingType){
+    this.clear();
     this._headingType = headingType;
     this._insertType = "heading";
   }
 
-  private _addLink(){
-    this._clear();
+  addLink(){
+    this.clear();
     this._insertType = "link";
   }
 
-  private _clearAllContent(){
+  clearAllContent(){
     console.log("Clear all Content");
-    this._clear();
+    this.clear();
   }
 
-  private _fileInputChanged(fileInput:HTMLInputElement){
-    if(fileInput.files.length > 0){
-      this.wysiwygFileInputChanged.emit({file: fileInput.files[0], callback: this.imageSelected});
-    }
+  viewImages(){
+    this.wysiwygRequestToViewMediaItems.emit();
   }
 
-  private _viewImages(){
-    console.log(typeof this.imageSelected);
-    this.wysiwygRequestToViewMediaItems.emit(this.imageSelected);
+  imageSelected(imageUrl){
+    this._imageUrl = imageUrl;
+    console.log("WYSIWYG - " + this._imageUrl);
   }
-
-  private _insertImage(imgFileInput:HTMLInputElement, altTextInput:HTMLInputElement) {
+  
+  insertImage(altTextInput:HTMLInputElement) {
     console.log("Insert Image");
     if(this._imageUrl != null){
       this._newElement = "<img src='" + this._imageUrl + "' alt='" + altTextInput.value + "'>";
       console.log(this._newElement);
-      this._clear([imgFileInput, altTextInput]);
+      this.clear([altTextInput]);
     }
   }
 
-  private _insertHeading(hTextInput:HTMLInputElement){
+  insertHeading(hTextInput:HTMLInputElement){
     console.log("Insert Heading - " + this._headingType);
     this._newElement = "<" + this._headingType + ">" + hTextInput.value + "</" + this._headingType + ">";
     console.log(this._newElement);
 
-    this._clear([hTextInput]);
+    this.clear([hTextInput]);
   }
 
-  private _insertLink(linkTextInput:HTMLInputElement, linkHrefInput:HTMLInputElement){
+  insertLink(linkTextInput:HTMLInputElement, linkHrefInput:HTMLInputElement){
     console.log("Insert Link");
     this._newElement = "<a href='" + linkHrefInput.value + "'>" + linkTextInput.value + "</a>";
     console.log(this._newElement);
-    this._clear([linkTextInput, linkHrefInput]);
+    this.clear([linkTextInput, linkHrefInput]);
   }
 
-  private _cancel(){
-    this._clear();
+  cancel(){
+    this.clear();
   }
 
-  private _clear(inputs:HTMLInputElement[]=[]){
-    this._insertType = this._headingType = this._newElement = WysiwygHtmlComponent.staticImageUrl = this._imageUrl = null;
+  clear(inputs:HTMLInputElement[]=[]){
+    this._insertType = this._headingType = this._newElement = this._imageUrl = null;
     for(let input of inputs){
       input.value = "";
     }
