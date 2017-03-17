@@ -61,7 +61,7 @@
                 </ng-container>
                 <button
                   *ngIf="viewOnly == false"
-                  (click)="deleteItem(collection, index)">Delete</button>
+                  (click)="deleteItem(encapsulationPath, index)">Delete</button>
               </div>
             </ng-container>
           </app-draggable-container>

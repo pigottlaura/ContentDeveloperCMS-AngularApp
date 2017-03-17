@@ -28,12 +28,12 @@ export class CollectionComponent {
   }
 
   deleteItem(encapsulationPath, index){
-    if(this.projectContent[encapsulationPath] != null){
-      switch(this.projectContent[encapsulationPath].constructor.name.toLowerCase()){
+    if(this.projectContent[this.collection] != null){
+      switch(this.projectContent[this.collection].constructor.name.toLowerCase()){
         case "array":{
-          this.projectContent[encapsulationPath].splice(index, 1);
-          this.projectContent[encapsulationPath] = this.projectContent[encapsulationPath].slice();
-          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[encapsulationPath]});
+          this.projectContent[this.collection].splice(index, 1);
+          this.projectContent[this.collection] = this.projectContent[this.collection].slice();
+          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
           break;
         }
       }
