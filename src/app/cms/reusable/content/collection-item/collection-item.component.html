@@ -38,10 +38,10 @@
     </ng-container>
   </label>
   <app-wysiwyg-html
-    *ngIf="itemStructure.type == 'html' && viewOnly == false"
+    *ngIf="itemStructure.type == 'html'"
     [viewContent]="viewContent"
-    [itemStructure]="itemStructure"
-    [(itemContent)]="itemContent"
+    [viewOnly]="viewOnly"
+    [itemContent]="itemContent"
     (wysiwygContentChanged)="contentChanged($event)"></app-wysiwyg-html>
   <app-file-upload
     *ngIf="itemStructure.attributes.type == 'file'"

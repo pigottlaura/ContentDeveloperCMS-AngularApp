@@ -4,6 +4,7 @@
   <button (click)="addHeading('h2')">H2</button>
   <button (click)="addHeading('h3')">H3</button>
   <button (click)="addLink()">Hyperlink</button>
+  <button (click)="undoLastChange()" [disabled]="_lastChange == null">Undo</button>
   <button (click)="clearAllContent()">Clear All</button>
 </div>
 
@@ -62,9 +63,18 @@
   </div>
 </div>
 
-<textarea
-  *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'textarea'"
-  [(ngModel)]="itemContent"
-  (change)="contentChanged($event)"
-  [disabled]="viewOnly">
-</textarea>
+<div
+  *ngIf="viewContent && viewOnly == false"
+  id="wysiwyg-input"
+  class="input"
+  #textareaInput
+  contenteditable="true"
+  (click)="updateCursorPosition()"
+  (change)="updateCursorPosition()"
+  (keyup)="updateCursorPosition()">
+</div>
+
+<div
+  *ngIf="viewContent == false || viewOnly"
+  class="input">
+</div>
