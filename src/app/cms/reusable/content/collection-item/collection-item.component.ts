@@ -15,14 +15,10 @@ export class CollectionItemComponent {
   @Output() itemContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
 
   contentChanged(updatedContent=null){
-    if(updatedContent != null){
+    if(updatedContent != null && updatedContent.constructor.name.toLowerCase() != "event"){
       this.itemContentChanged.emit({path: this.encapsulationPath, content:updatedContent});
     } else {
       this.itemContentChanged.emit({path: this.encapsulationPath, content:this.itemContent});
     }
-  }
-
-  wysiwygContentChanged(content){
-    console.log(content);
   }
 }

@@ -2,7 +2,8 @@ label {
     display: block;
 }
 div.input {
-    height: 200px;
+    min-height: 200px;
+    resize: vertical;
     overflow-y: scroll;
     border: 1px solid black;
 }

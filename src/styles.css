@@ -69,7 +69,7 @@ th {
     float: right;
 }
 .inline {
-    display: inline-block;
+    display: inline;
 }
 
 /* GRID */

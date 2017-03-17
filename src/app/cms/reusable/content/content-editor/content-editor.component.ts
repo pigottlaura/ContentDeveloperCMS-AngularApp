@@ -50,20 +50,22 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   }
 
   updateProjectContent(currentContent, newContentData){
-    var encapsulationKeys = newContentData.path.split("/");
-    for(var i=0; i<encapsulationKeys.length - 1; i++){
-      if(currentContent[encapsulationKeys[i]] == null){
-        if(isNaN(encapsulationKeys[i + 1])){
-          currentContent[encapsulationKeys[i]] = {};
-        } else {
-          if(currentContent == null || currentContent.constructor.name.toLowerCase() != "array"){
-            currentContent[encapsulationKeys[i]] = [];            
+    if(this.viewContent && this.viewOnly == false){
+      var encapsulationKeys = newContentData.path.split("/");
+      for(var i=0; i<encapsulationKeys.length - 1; i++){
+        if(currentContent[encapsulationKeys[i]] == null){
+          if(isNaN(encapsulationKeys[i + 1])){
+            currentContent[encapsulationKeys[i]] = {};
+          } else {
+            if(currentContent == null || currentContent.constructor.name.toLowerCase() != "array"){
+              currentContent[encapsulationKeys[i]] = [];            
+            }
           }
         }
+        currentContent = currentContent[encapsulationKeys[i]];
       }
-      currentContent = currentContent[encapsulationKeys[i]];
+      currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
     }
-    currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
   }
 
   collectionTabsReordered(updatedTabOrder){
