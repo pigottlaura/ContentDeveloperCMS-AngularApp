@@ -47,6 +47,7 @@
                 [attr.data-key]="index">
                 <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
                   <app-collection
+                    *ngIf="projectContent[collection][index] != null"
                     [subCollection]="projectStructure[collection].items[collectionItemName].type == 'array'"
                     [encapsulationPath]="encapsulationPath + '/' + index + '/' + collectionItemName"
                     [collection]="collectionItemName"
@@ -60,16 +61,13 @@
                 </ng-container>
                 <button
                   *ngIf="viewOnly == false"
-                  (click)="deleteItem(encapsulationPath, index)">Delete</button>
+                  (click)="deleteItem(collection, index)">Delete</button>
               </div>
             </ng-container>
           </app-draggable-container>
-          <button
-            *ngIf="viewOnly == false"
-            (click)="addNewItem(encapsulationPath, projectStructure[collection].type)"> Add {{collection}}</button>
         </ng-container>
 
-        <ng-container *ngIf="projectContent == null || projectContent[collection] == null || viewContent == false">
+        <ng-container *ngIf="(projectContent == null || projectContent[collection] == null || viewContent == false) && projectStructure[collection].type != 'array'">
           <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
             <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type != 'object' && projectStructure[collection].items[collectionItemName].type != 'array'">
                 <app-collection
@@ -111,6 +109,9 @@
           </ng-container>
         </ng-container>
 
+        <button
+            *ngIf="viewOnly == false"
+            (click)="addNewItem(encapsulationPath, projectStructure[collection])"> Add {{collection | title}}</button>
       </ng-container>
 
     </ng-container>

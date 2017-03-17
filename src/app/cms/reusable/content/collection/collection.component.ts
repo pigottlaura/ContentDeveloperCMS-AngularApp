@@ -32,6 +32,8 @@ export class CollectionComponent {
       switch(this.projectContent[encapsulationPath].constructor.name.toLowerCase()){
         case "array":{
           this.projectContent[encapsulationPath].splice(index, 1);
+          this.projectContent[encapsulationPath] = this.projectContent[encapsulationPath].slice();
+          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[encapsulationPath]});
           break;
         }
       }
@@ -39,24 +41,35 @@ export class CollectionComponent {
   }
 
   addNewItem(encapsulationPath, contentType){
-    if(this.projectContent[encapsulationPath] != null){
-      if(this.projectStructure[encapsulationPath] != null){
-        if(this.projectStructure[encapsulationPath].items != null){
-          if(this.projectStructure[encapsulationPath].type != null && this.projectStructure[encapsulationPath].type == "array"){
-            var newItem = this._createNewItem(this.projectStructure[encapsulationPath].items);
-            this.projectContent[encapsulationPath].push(newItem);
-            this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[encapsulationPath]});
-          }
+    if(this.projectStructure[this.collection] != null){
+      if(this.projectContent == null){
+        this.projectContent = this._createNewItem(this.projectStructure);
+      }
+      if(this.projectContent[this.collection] == null){
+        this.projectContent[this.collection] = this._createNewItem(this.projectStructure[this.collection]);
+      }
+      if(this.projectStructure[this.collection].items != null){
+        if(this.projectStructure[this.collection].type != null && this.projectStructure[this.collection].type == "array"){
+          var newItem = this._createNewItem(this.projectStructure[this.collection].items);
+          this.projectContent[this.collection].push(newItem);
+          this.projectContent[this.collection] = this.projectContent[this.collection].slice();
+          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
         }
       }
     }
   }
 
   private _createNewItem(itemsStructure){
-    var newItem = {};
-    for(var attribute in itemsStructure){
-      newItem[attribute] = null;
+    var newItem;
+    if(itemsStructure.type == "array"){
+      newItem = [];
+    } else {
+      newItem = {};
+      for(var attribute in itemsStructure){
+        newItem[attribute] = null;
+      }
     }
+    
     return newItem;
   }
 }
