@@ -15,7 +15,7 @@ export class CollectionComponent {
   @Input() subCollection:boolean = false;
   @Input() encapsulationPath:string;
   @Output() contentChanged:EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() collectionRequestToViewMediaItems:EventEmitter<string> = new EventEmitter<string>();
+  @Output() collectionRequestToViewMediaItems:EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
@@ -28,12 +28,12 @@ export class CollectionComponent {
     this.contentChanged.emit(contentData);
   }
 
-  collectionItemRequestToViewMediaItems(itemEncapsulationPath){
-    this.collectionRequestToViewMediaItems.emit(itemEncapsulationPath);
+  collectionItemRequestToViewMediaItems(eventPayload){
+    this.collectionRequestToViewMediaItems.emit(eventPayload);
   }
 
-  viewMediaItems(itemEncapsulationPath){
-    this.collectionRequestToViewMediaItems.emit(itemEncapsulationPath);
+  viewMediaItems(eventPayload){
+    this.collectionRequestToViewMediaItems.emit(eventPayload);
   }
 
   deleteItem(encapsulationPath, index){

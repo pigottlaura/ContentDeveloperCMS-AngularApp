@@ -1,0 +1,76 @@
+<div>
+  <button (click)="_addImage()">Image</button>
+  <button (click)="_addHeading('h1')">H1</button>
+  <button (click)="_addHeading('h2')">H2</button>
+  <button (click)="_addHeading('h3')">H3</button>
+  <button (click)="_addLink()">Hyperlink</button>
+  <button (click)="_clearAllContent()">Clear All</button>
+</div>
+
+<div *ngIf="viewContent">
+  <div *ngIf="_insertType == 'image'">
+    <div class="row">
+      <h3>Image</h3>
+    </div>
+    <div class="row">
+      <label>Alt Text:
+        <input #altTextInput type="text">
+      </label>
+    </div>
+    <div class="row">
+      <div class="col-6-12">
+        <label>
+          <button (click)="_viewImages()">View Images</button>
+          or
+          <input
+            #imgFileInput
+            type="file"
+            (change)="_fileInputChanged(imgFileInput)">
+        </label>
+      </div>
+      <div class="col-6-12">
+        <img 
+          *ngIf="_imageUrl != null"
+          class="imgThumbnail"
+          [src]="_imageUrl">
+      </div>
+    </div>
+    <div class="row">
+      <button (click)="_insertImage(imgFileInput, altTextInput)">Insert</button>
+      <button (click)="_cancel()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="_insertType == 'heading'">
+    <div class="row">
+      <h3>Heading {{_headingType}}</h3>
+    </div>
+    <div class="row">
+      <label>Heading Text
+        <input #hTextInput type="text">
+      </label>
+    </div>
+    <div class="row">
+      <button (click)="_insertHeading(hTextInput)">Insert</button>
+      <button (click)="_cancel()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="_insertType == 'link'">
+    <div class="row">
+      <h3>Hyperlink</h3>
+    </div>
+    <div class="row">
+      <label>Link Text
+        <input #linkTextInput type="text">
+      </label>
+      <label>Link To
+        <input #linkHrefInput type="text">
+      </label>
+    </div>
+    <div class="row">
+      <button (click)="_insertLink(linkTextInput, linkHrefInput)">Insert</button>
+      <button (click)="_cancel()">Cancel</button>
+    </div>
+  </div>
+</div>

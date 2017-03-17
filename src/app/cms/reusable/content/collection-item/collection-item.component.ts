@@ -14,7 +14,7 @@ export class CollectionItemComponent {
   @Input() viewOnly:boolean = false;
   @Input() encapsulationPath:string;
   @Output() itemContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() collectionItemRequestToViewMediaItems:EventEmitter<string> = new EventEmitter<string>();
+  @Output() collectionItemRequestToViewMediaItems:EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private _cdService:ContentDeveloperServerService){}
 
@@ -22,22 +22,38 @@ export class CollectionItemComponent {
     this.itemContentChanged.emit({path: this.encapsulationPath, content:this.itemContent});
   }
 
-  viewAvailableMediaItems(){
-    this.collectionItemRequestToViewMediaItems.emit(this.encapsulationPath);
+  viewAvailableMediaItems(callbackFunction:Function=null){
+    if(callbackFunction != null){
+      this.collectionItemRequestToViewMediaItems.emit(callbackFunction);
+    } else {
+      this.collectionItemRequestToViewMediaItems.emit(this.encapsulationPath);
+    }
   }
   
-  fileInputChanged(event){
-    if(event.srcElement.files != null && event.srcElement.files.length > 0){
-      this._cdService.uploadMediaItem(event.srcElement.files[0]).subscribe(
-        responseObject => {
-          if(responseObject.fileUrl != null){
-            event.srcElement.value = "";
+  fileInputChanged(eventPayload){
+    var fileToUpload = null;
+    if(eventPayload.srcElement != null){
+      if(eventPayload.srcElement.files != null && eventPayload.srcElement.files.length > 0){
+        fileToUpload = eventPayload.srcElement.files[0];
+        eventPayload.srcElement.value = "";
+      }
+    } else {
+      fileToUpload = eventPayload.file;
+    }
+    
+    this._cdService.uploadMediaItem(fileToUpload).subscribe(
+      responseObject => {
+        if(responseObject.fileUrl != null){
+          if(eventPayload.callback != null){
+            eventPayload.callback(responseObject.fileUrl);
+          } else {
             this.itemContent = responseObject.fileUrl;
             this.contentChanged();
           }
+          
         }
-      );
-    }
+      }
+    );
     
   }
 }

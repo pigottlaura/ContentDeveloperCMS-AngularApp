@@ -1,5 +1,10 @@
 <ng-container *ngIf="itemStructure.attributes != null">
   <br *ngIf="itemStructure.input_type == 'textarea'">
+  <app-wysiwyg-html
+    *ngIf="itemStructure.type == 'html' && viewOnly == false"
+    [viewContent]="viewContent"
+    (wysiwygRequestToViewMediaItems)="viewAvailableMediaItems($event)"
+    (wysiwygFileInputChanged)="fileInputChanged($event)"></app-wysiwyg-html>
   <label>{{itemName | title}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
 
     <ng-container *ngIf="itemStructure.input_type == null || itemStructure.input_type == 'input'">
@@ -20,6 +25,7 @@
           *ngIf="_warning != null">{{_warning}}</span>
         <img
           *ngIf="viewContent && viewOnly == false && itemContent != null"
+          class="imgThumbnail"
           [src]="itemContent">
         <button
           *ngIf="viewOnly == false" 

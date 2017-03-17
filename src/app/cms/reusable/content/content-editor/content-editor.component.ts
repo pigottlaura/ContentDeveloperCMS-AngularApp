@@ -17,6 +17,7 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   mediaItemGalleryVisible:boolean = false;
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
+  private _mediaItemsSelectedCallback:Function;
 
   ngOnInit() {
     this._selectFirstComponent();
@@ -67,8 +68,13 @@ export class ContentEditorComponent implements OnInit, OnChanges {
     currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
   }
 
-  showMediaItemGallery(itemEncapsulationPath){
-    this._encapsulationPathForCurrentFileInput = itemEncapsulationPath
+  showMediaItemGallery(eventPayload){
+    if(typeof eventPayload === "function"){
+      this._mediaItemsSelectedCallback = eventPayload;
+      this._encapsulationPathForCurrentFileInput = null;
+    } else {
+      this._encapsulationPathForCurrentFileInput = eventPayload;
+    }
     this.mediaItemGalleryVisible = true;
   }
 
@@ -78,11 +84,16 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   }
 
   mediaItemSelected(mediaItemUrl){
-    var contentData = {
-      path: this._encapsulationPathForCurrentFileInput,
-      content: mediaItemUrl
-    }
-    this.updateProjectContent(this.projectContent, contentData);
+    if(this._mediaItemsSelectedCallback != null){
+      this._mediaItemsSelectedCallback(mediaItemUrl);
+      this._mediaItemsSelectedCallback = null;
+    } else {
+      var contentData = {
+        path: this._encapsulationPathForCurrentFileInput,
+        content: mediaItemUrl
+      }
+      this.updateProjectContent(this.projectContent, contentData);
+    }    
     this.hideMediaItemGallery();
   }
 
