@@ -10,8 +10,8 @@
           <tr>
             <th>Project Name</th>
             <th>Access Level</th>
-            <th>Last Modified</th>
             <th>Last Modified By</th>
+            <th>Last Modified On</th>
             <th>Options</th>			
           </tr>
         </thead>
@@ -23,9 +23,9 @@
             <tr *ngFor="let project of _userProjects">
               <td>{{project.project_name}}</td>
               <td>{{project.access_level_name}}</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td><button (click)="editProject(project.project_id, project.project_name, project.access_level_int)">Edit</button></td>
+              <td>{{project.last_modified_by}}</td>
+              <td>{{project.last_modified_on != null ? (project.last_modified_on | customDate : false : true) : "&nbsp;"}}</td>
+              <td><button (click)="editProject(project.project_id, project.project_name, project.access_level_int)">{{project.access_level_int == 3 ? "View" : "Edit"}}</button></td>
             </tr>
           </tbody>
         </table>
