@@ -10,8 +10,8 @@ export class CmsComponent {
   @Output() requestToUpdatePageTitle:EventEmitter<string> = new EventEmitter<string>();
   projectContent:Object;
   projectStructure:Object;
-  projectContentHistory:Object;
-  projectStructureHistory:Object;
+  projectContentHistory:any[];
+  projectStructureHistory:any[];
   projectSettings:Object;
 
   private _projectId:number;
@@ -103,10 +103,12 @@ export class CmsComponent {
   }
 
   resetProjectHistory(){
-    console.log("Project History Reset!!");
-    this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
-    this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
-    //console.log(this.projectStructureHistory[0]);
-    //console.log(this.projectContentHistory[0]);
+    this._cdService.refreshProjectHistory().subscribe(
+      responseObject => {
+        console.log("Project History Reset!!");
+        this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
+        this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
+      }
+    );
   }
 }

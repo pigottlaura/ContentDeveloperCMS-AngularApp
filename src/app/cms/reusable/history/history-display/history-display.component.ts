@@ -8,7 +8,7 @@ import { ShortenerPipe } from "./../../../../pipes/shortener.pipe";
   styleUrls: ['./history-display.component.css']
 })
 export class HistoryDisplayComponent {
-  @Input() history:Object;
+  @Input() history:any[];
   @Input() historyOf:string;
   @Input() showPreview:boolean = false;
   @Output() revertToCommit:EventEmitter<Object> = new EventEmitter<Object>();

@@ -72,8 +72,8 @@ export class ContentDeveloperServerService {
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
       .do(responseObject => {
         this._currentProjectContentStructureHistory = responseObject;
-        this._currentProjectContentStructureHistory.content_history = this._currentProjectContentStructureHistory.content_history.all;
-        this._currentProjectContentStructureHistory.structure_history = this._currentProjectContentStructureHistory.structure_history.all;
+        this._currentProjectContentStructureHistory.content_history = this._currentProjectContentStructureHistory.content_history;
+        this._currentProjectContentStructureHistory.structure_history = this._currentProjectContentStructureHistory.structure_history;
       });
 
     return loadProjectContentAndStructureObservable;
@@ -162,16 +162,17 @@ export class ContentDeveloperServerService {
     return contentUpdateObservable;
   }
 
-  refreshProjectHistory():void{
+  refreshProjectHistory():Observable<Object>{
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?include=history";
-    let contentUpdateObservable = this._http
+    let refreshProjectHistoryObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error refreshing project history")
       .do(responseObject => {
-        this._currentProjectContentStructureHistory.content_history = responseObject.content_history.all;
-        this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history.all;     
+        this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
+        this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history;     
       });
+    return refreshProjectHistoryObservable;
   }
 
   getContentofCommit(commitHash:string, historyOf:string){
@@ -344,12 +345,12 @@ export class ContentDeveloperServerService {
     return this._coPipe.transform(this._currentProjectSettings);
   }
 
-  getCurrentProjectContentHistory():Object{
-    return this._coPipe.transform(this._currentProjectContentStructureHistory.content_history);
+  getCurrentProjectContentHistory():any[]{
+    return this._currentProjectContentStructureHistory.content_history;
   }
 
-  getCurrentProjectStructureHistory():Object{
-    return this._coPipe.transform(this._currentProjectContentStructureHistory.structure_history);
+  getCurrentProjectStructureHistory():any[]{
+    return this._currentProjectContentStructureHistory.structure_history;
   }
   
   leaveProject(){

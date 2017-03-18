@@ -16,7 +16,7 @@
       <table>
         <tbody>
           <tr
-            *ngFor="let commit of history | keyValArray : 'values'"
+            *ngFor="let commit of history"
             [class]="_previewHistoryHash == commit.hash ? 'selected' : ''">
             <td>{{commit.hash | shortener : 6}}</td>
             <td>{{commit.date | customDate : false : true}}</td>

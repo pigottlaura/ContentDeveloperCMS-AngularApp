@@ -33,7 +33,6 @@ import { ContentViewComponent } from './cms/reusable/content/content-view/conten
 import { HistoryViewComponent } from './cms/cms-admin/history-view/history-view.component';
 import { SettingsViewComponent } from './cms/reusable/settings/settings-view/settings-view.component';
 import { HistoryDisplayComponent } from './cms/reusable/history/history-display/history-display.component';
-import { HistoryPreviewComponent } from './cms/reusable/history/history-preview/history-preview.component';
 import { UserProjectsComponent } from './cms/cms-user-projects/user-projects.component';
 import { LoginComponent } from './login/login.component';
 import { MediaItemGalleryComponent } from './cms/reusable/media-items/media-item-gallery/media-item-gallery.component';
@@ -73,7 +72,6 @@ import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upl
     ShortenerPipe,
     CustomDatePipe,
     DoubleDigitPipe,
-    HistoryPreviewComponent,
     UserProjectsComponent,
     LoginComponent,
     MediaItemGalleryComponent,
