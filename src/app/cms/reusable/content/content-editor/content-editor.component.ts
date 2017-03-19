@@ -6,8 +6,8 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
   styleUrls: ['./content-editor.component.css']
 })
 export class ContentEditorComponent implements OnInit, OnChanges {
-  @Input() viewOnly:boolean;
-  @Input() viewContent:boolean;
+  @Input() viewOnly:boolean=false;
+  @Input() viewContent:boolean=true;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();

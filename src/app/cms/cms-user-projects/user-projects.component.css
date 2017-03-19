@@ -13,3 +13,8 @@ th:nth-child(5), td:nth-child(5) {width: 10%;}
     display: block;
     width: 100%;
 }
+
+.scrollable {
+    max-height: 400px;
+    max-height: 60vh;
+}
