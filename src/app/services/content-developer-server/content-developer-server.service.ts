@@ -176,7 +176,7 @@ export class ContentDeveloperServerService {
   }
 
   getContentofCommit(commitHash:string, historyOf:string){
-    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=previewCommit&commit_hash=" + commitHash + "&historyof=" + historyOf;
+    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=previewCommit&commitHash=" + commitHash + "&historyOf=" + historyOf;
     let commitContentObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
