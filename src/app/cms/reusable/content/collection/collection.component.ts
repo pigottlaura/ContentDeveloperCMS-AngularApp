@@ -28,32 +28,36 @@ export class CollectionComponent {
   }
 
   deleteItem(encapsulationPath, index){
-    if(this.projectContent[this.collection] != null){
-      switch(this.projectContent[this.collection].constructor.name.toLowerCase()){
-        case "array":{
-          this.projectContent[this.collection].splice(index, 1);
-          this.projectContent[this.collection] = this.projectContent[this.collection].slice();
-          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
-          break;
+    if(this.viewContent){
+      if(this.projectContent[this.collection] != null){
+        switch(this.projectContent[this.collection].constructor.name.toLowerCase()){
+          case "array":{
+            this.projectContent[this.collection].splice(index, 1);
+            this.projectContent[this.collection] = this.projectContent[this.collection].slice();
+            this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
+            break;
+          }
         }
       }
     }
   }
 
   addNewItem(encapsulationPath, contentType){
-    if(this.projectStructure[this.collection] != null){
-      if(this.projectContent == null){
-        this.projectContent = this._createNewItem(this.projectStructure);
-      }
-      if(this.projectContent[this.collection] == null){
-        this.projectContent[this.collection] = this._createNewItem(this.projectStructure[this.collection]);
-      }
-      if(this.projectStructure[this.collection].items != null){
-        if(this.projectStructure[this.collection].type != null && this.projectStructure[this.collection].type == "array"){
-          var newItem = this._createNewItem(this.projectStructure[this.collection].items);
-          this.projectContent[this.collection].push(newItem);
-          this.projectContent[this.collection] = this.projectContent[this.collection].slice();
-          this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
+    if(this.viewContent){
+      if(this.projectStructure[this.collection] != null){
+        if(this.projectContent == null){
+          this.projectContent = this._createNewItem(this.projectStructure);
+        }
+        if(this.projectContent[this.collection] == null){
+          this.projectContent[this.collection] = this._createNewItem(this.projectStructure[this.collection]);
+        }
+        if(this.projectStructure[this.collection].items != null){
+          if(this.projectStructure[this.collection].type != null && this.projectStructure[this.collection].type == "array"){
+            var newItem = this._createNewItem(this.projectStructure[this.collection].items);
+            this.projectContent[this.collection].push(newItem);
+            this.projectContent[this.collection] = this.projectContent[this.collection].slice();
+            this.collectionContentChanged({path: encapsulationPath, content: this.projectContent[this.collection]});
+          }
         }
       }
     }

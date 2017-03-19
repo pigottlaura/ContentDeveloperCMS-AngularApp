@@ -67,7 +67,7 @@
           </app-draggable-container>
         </ng-container>
 
-        <ng-container *ngIf="(projectContent == null || projectContent[collection] == null || viewContent == false) && projectStructure[collection].type != 'array'">
+        <ng-container *ngIf="(projectContent == null || projectContent[collection] == null) && viewContent == false">
           <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
             <ng-container *ngIf="projectStructure[collection].items[collectionItemName].type != 'object' && projectStructure[collection].items[collectionItemName].type != 'array'">
                 <app-collection
