@@ -1,13 +1,11 @@
 <div class="col-6-12">
   <h2>Project Structure</h2>
   <app-code-editor
-    [(codeJson)]="projectStructureJson"
-    [(formatJson)]="formatJson"
-    (codeUpdated)="codeUpdated($event)">
+    [codeJson]="projectStructureJson"
+    (codeUpdated)="codeUpdated($event)"
+    (requestToResetProjectStructure)="resetProjectStructure()"
+    (requestToSaveProjectStructure)="saveProjectStructure()">
   </app-code-editor>
-  <button (click)="formatJsonClicked()">Format JSON</button>
-  <button (click)="resetProjectStructure()">Reset</button>
-  <button (click)="saveProjectStructure()">Save</button>
 </div>
 <div class="col-6-12">
   <h2>Input Preview</h2>

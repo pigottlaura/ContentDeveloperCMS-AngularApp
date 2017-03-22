@@ -8,19 +8,34 @@ import { CustomJsonPipe } from "./../../../pipes/custom-json.pipe";
 })
 export class CodeEditorComponent implements DoCheck {
   @Input() codeJson:string;
-  @Input() formatJson:boolean = false;
   @Output() codeUpdated:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() requestToResetProjectStructure:EventEmitter<void> = new EventEmitter<void>();
+  @Output() requestToSaveProjectStructure:EventEmitter<void> = new EventEmitter<void>();
   private _textarea;
   private _cursorPosition;
+  private _updateFromStructure:boolean = false;
+  private _formatJson:boolean = false;
   constructor(private _jsPipe:CustomJsonPipe) { }
 
   ngDoCheck(){
     if(this._textarea != null && this._textarea.selectionStart == this.codeJson.length){
       this._textarea.setSelectionRange(this._cursorPosition, this._cursorPosition);
     }
-    if(this.formatJson){
-      this._formatStructureJson();
-    }   
+  }
+
+  formatJsonClicked(){
+    this._formatJson = true;
+    this._formatStructureJson();
+  }
+  
+  resetProjectStructureClicked(){
+    this.requestToResetProjectStructure.emit();
+    this._updateFromStructure = true;
+  }
+  
+  saveProjectStructureClicked(){
+    this.requestToSaveProjectStructure.emit();
+    this._updateFromStructure = true;
   }
 
   @HostListener("keyup", ["$event"])
@@ -84,9 +99,9 @@ export class CodeEditorComponent implements DoCheck {
 
     if(tmpObj != null){
       this.codeUpdated.emit(tmpObj);
-      if(this.formatJson){
+      if(this._formatJson){
         this.codeJson = this._jsPipe.transform(tmpObj, "stringify");
-        this.formatJson = false;
+        this._formatJson = false;
       }
     }
   }

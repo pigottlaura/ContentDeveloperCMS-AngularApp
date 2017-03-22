@@ -10,18 +10,16 @@ export class StructureViewComponent implements OnChanges {
   @Output() viewRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() viewRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   projectStructureJson;
-  formatJson:boolean = false;
   
   constructor(private _jsPipe:CustomJsonPipe) {}
 
   ngOnChanges(changes){
-    if(changes.projectStructure && this.projectStructureJson == null){
+    if(changes.projectStructure){
       this.projectStructureJson = this._jsPipe.transform(this.projectStructure, "stringify");
+      if(this.projectStructureJson != null){
+        this.projectStructureJson = this.projectStructureJson.split();
+      }
     }
-  }
-
-  formatJsonClicked(){
-    this.formatJson = true;
   }
 
   codeUpdated(updatedProjectStructure){
