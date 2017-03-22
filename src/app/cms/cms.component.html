@@ -5,6 +5,7 @@
 
 <ng-container *ngIf="_projectId != null && _userAccessLevel != null">
     <button (click)="viewUserProjects()">Back to all Projects</button>
+    <button (click)="refreshProject()">Refresh from Server</button>
     <app-cms-admin
         *ngIf="_userAccessLevel == 1"
         [(projectStructure)]="projectStructure"

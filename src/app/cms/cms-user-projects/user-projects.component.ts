@@ -13,9 +13,7 @@ export class UserProjectsComponent implements OnInit {
   constructor(private _cdService:ContentDeveloperServerService) { }
 
   ngOnInit() {
-    this._cdService.loadUserProjects().subscribe(
-      responesObject => this._userProjects = responesObject
-    );
+    this.refreshUserProjects();
   }
 
   createNewProject(projectNameInput, template=""){
@@ -38,4 +36,9 @@ export class UserProjectsComponent implements OnInit {
     this.viewProject.emit(projectData);
   }
 
+  refreshUserProjects(){
+    this._cdService.loadUserProjects().subscribe(
+      responesObject => this._userProjects = responesObject
+    );
+  }
 }

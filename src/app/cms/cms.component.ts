@@ -27,7 +27,6 @@ export class CmsComponent {
     this.loadProjectContentAndStructure();
     this.loadProjectSettings();
     this.updatePageTitle(this._projectName);
-    
   }
 
   updatePageTitle(title:string){
@@ -90,6 +89,11 @@ export class CmsComponent {
     )
   }
 
+  refreshProject(){
+    console.log("REFRESH");
+    this.loadProjectContentAndStructure();
+  }
+  
   resetProjectContent(){
     this.projectContent = this._cdService.getCurrentProjectContent();
   }

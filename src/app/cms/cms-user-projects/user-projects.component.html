@@ -1,9 +1,6 @@
+<button (click)="refreshUserProjects()">Refresh from Server</button>
 <div class="row">
   <div class="col-8-12">
-    <div *ngIf="_userProjects == null || _userProjects.length == 0">
-      You have no projects
-    </div>
-
     <div *ngIf="_userProjects != null && _userProjects.length > 0">
       <table>
         <thead>
