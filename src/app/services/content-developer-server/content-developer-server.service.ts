@@ -136,7 +136,7 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
-        this._currentProjectContentStructureHistory.structure = responseObject;
+        this._currentProjectContentStructureHistory.structure = responseObject.structure;
         this.refreshProjectHistory();
       });
     
@@ -152,7 +152,7 @@ export class ContentDeveloperServerService {
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
       .do(responseObject => {
         if(encapsulationPath.length == 0){
-          this._currentProjectContentStructureHistory.content = responseObject;
+          this._currentProjectContentStructureHistory.content = responseObject.content;
           this.refreshProjectHistory();
         } else {
           // Deal with encapsulated data
