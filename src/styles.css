@@ -27,6 +27,9 @@ th {
 .warning {
     border: 2px solid #F00;
 }
+[data-form-warning] {
+    border: 2px solid #F00;
+}
 
 /* Visible */
 .hidden {

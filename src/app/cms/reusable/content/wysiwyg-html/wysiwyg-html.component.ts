@@ -9,6 +9,7 @@ export class WysiwygHtmlComponent implements AfterViewInit {
   @Input() viewContent:boolean;
   @Input() viewOnly:boolean;
   @Input() itemContent;
+  @Input() itemAttributes;
   @Output() wysiwygRequestToViewMediaItems:EventEmitter<Function> = new EventEmitter<Function>();
   @Output() wysiwygContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
   private _insertType:string;

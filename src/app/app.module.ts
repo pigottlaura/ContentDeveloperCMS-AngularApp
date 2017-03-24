@@ -45,6 +45,7 @@ import { AccessLevelsComponent } from './cms/reusable/settings/access-levels/acc
 import { NavigationComponent } from './cms/reusable/cms-navigation/navigation.component';
 import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwyg-html.component';
 import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upload.component';
+import { FormControlDirective } from './cms/reusable/content/form-control/form-control.directive';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upl
     AccessLevelsComponent,
     NavigationComponent,
     WysiwygHtmlComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    FormControlDirective
   ],
   imports: [
     BrowserModule,

@@ -79,14 +79,17 @@ export class CmsComponent {
   saveProjectContent(contentData=null){
     let updatedContent = contentData != null && contentData.content != null ? contentData.content : this.projectContent;
     let commitMessage = contentData != null ? contentData.commit_message : null;
-    console.log("About to save content");
-    this._cdService.updateProjectContent(updatedContent, commitMessage).subscribe(
-      responseObject => {
-        console.log("Content Saved!!");
-        this.resetProjectContent();
-        this.resetProjectHistory();
-      }
-    )
+    let updateProjectObservable = this._cdService.updateProjectContent(updatedContent, commitMessage);
+    if(updateProjectObservable != null){
+      console.log("About to save content");
+      updateProjectObservable.subscribe(
+        responseObject => {
+          console.log("Content Saved!!");
+          this.resetProjectContent();
+          this.resetProjectHistory();
+        }
+      );
+    }
   }
 
   refreshProject(){

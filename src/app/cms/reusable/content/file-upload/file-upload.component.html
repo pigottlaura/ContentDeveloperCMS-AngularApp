@@ -2,9 +2,13 @@
   *ngIf="_warning != null">{{_warning}}</div>
 <input
   *ngIf="viewOnly == false"
-  type="file"
   #fileInput
-  (change)="fileInputChanged(fileInput)">
+  type="file"
+  [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
+  [class]="itemAttributes != null && itemAttributes.class != null ? itemAttributes.attributes.class : ''"
+  (change)="fileInputChanged(fileInput)"
+  [required]="itemAttributes.required != null && itemAttributes.required ? true : false"
+  appFormControl>
 <button
   *ngIf="viewOnly == false" 
   (click)="showMediaItemGallery()">Select Image</button>

@@ -65,13 +65,15 @@
 
 <div
   *ngIf="viewContent && viewOnly == false"
-  id="wysiwyg-input"
-  class="input"
   #textareaInput
   contenteditable="true"
   (click)="updateCursorPosition()"
   (change)="updateCursorPosition()"
-  (keyup)="updateCursorPosition()">
+  (keyup)="updateCursorPosition()"
+  [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : 'wysiwyg-input'"
+  [class]="(itemAttributes != null && itemAttributes.class != null ? itemAttributes.attributes.class : '') + ' input'"
+  [attr.data-required]="itemAttributes.required != null && itemAttributes.required ? true : false"
+  appFormControl>
 </div>
 
 <div

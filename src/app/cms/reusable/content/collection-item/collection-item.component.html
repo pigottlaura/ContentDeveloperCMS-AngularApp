@@ -4,23 +4,35 @@
     <ng-container *ngIf="itemStructure.type != 'html'">
       <input
         *ngIf="(itemStructure.input_type == null || itemStructure.input_type == 'input') && itemStructure.attributes.type != 'file'"
-        [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : text"
+        [type]="itemStructure.attributes.type != null ? itemStructure.attributes.type : 'text'"
         [(ngModel)]="itemContent"
         (change)="contentChanged($event)"
-        [disabled]="viewOnly">
+        [disabled]="viewOnly"
+        [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
+        [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+        [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+        appFormControl>
 
       <textarea
         *ngIf="itemStructure.input_type == 'textarea'"
         [(ngModel)]="itemContent"
         (change)="contentChanged($event)"
-        [disabled]="viewOnly">
+        [disabled]="viewOnly"
+        [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
+        [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+        [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+        appFormControl>
       </textarea>
 
       <ng-container *ngIf="itemStructure.input_type != null && itemStructure.input_type == 'select'">
         <select
           *ngIf="viewOnly == false"
           [(ngModel)]="itemContent"
-          (change)="contentChanged($event)">
+          (change)="contentChanged($event)"
+          [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
+          [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+          [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+          appFormControl>
           <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
             <option
               *ngFor="let option of itemStructure.attributes.options"
@@ -42,12 +54,14 @@
     [viewContent]="viewContent"
     [viewOnly]="viewOnly"
     [itemContent]="itemContent"
+    [itemAttributes]="itemStructure.attributes"
     (wysiwygContentChanged)="contentChanged($event)"></app-wysiwyg-html>
   <app-file-upload
     *ngIf="itemStructure.attributes.type == 'file'"
     [viewOnly]="viewOnly"
     [viewContent]="viewContent"
     [(itemContent)]="itemContent"
+    [itemAttributes]="itemStructure.attributes"
     (fileChanged)="contentChanged($event)">
   </app-file-upload>
 </ng-container>

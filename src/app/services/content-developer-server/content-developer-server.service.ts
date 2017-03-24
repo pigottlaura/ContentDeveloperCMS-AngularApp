@@ -15,6 +15,7 @@ export class ContentDeveloperServerService {
   private _currentProjectId;
   private _currentUser;
   private _headers:Headers;
+  submitContentAllowed:boolean = true;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe) {
     this._headers = new Headers();
@@ -144,22 +145,27 @@ export class ContentDeveloperServerService {
   }
 
   updateProjectContent(projectContent:Object, commitMessage:string=null, encapsulationPath:string=""):Observable<Object>{
-    console.log(projectContent);
-    let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "/" + encapsulationPath;
-    let contentUpdateObservable = this._http
-      .put(requestUrl, {content: projectContent, commit_message: commitMessage}, {headers: this._headers})
-      .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
-      .do(responseObject => {
-        if(encapsulationPath.length == 0){
-          this._currentProjectContentStructureHistory.content = responseObject.content;
-          this.refreshProjectHistory();
-        } else {
-          // Deal with encapsulated data
-        }        
-      });
+    if(this.submitContentAllowed){
+      console.log(projectContent);
+      let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "/" + encapsulationPath;
+      let contentUpdateObservable = this._http
+        .put(requestUrl, {content: projectContent, commit_message: commitMessage}, {headers: this._headers})
+        .map((responseObject: Response) => <any> responseObject.json())
+        .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
+        .do(responseObject => {
+          if(encapsulationPath.length == 0){
+            this._currentProjectContentStructureHistory.content = responseObject.content;
+            this.refreshProjectHistory();
+          } else {
+            // Deal with encapsulated data
+          }        
+        });
 
-    return contentUpdateObservable;
+      return contentUpdateObservable;
+    } else {
+      return null;
+    }
+    
   }
 
   refreshProjectHistory():Observable<Object>{

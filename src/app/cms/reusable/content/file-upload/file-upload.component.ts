@@ -10,7 +10,7 @@ export class FileUploadComponent {
   @Input() viewContent:boolean = true;
   @Input() viewOnly:boolean = false;
   @Input() itemContent;
-  @Input() itemStructure;
+  @Input() itemAttributes;
   @Output() fileChanged:EventEmitter<string> = new EventEmitter<string>();
   private _mediaItemGalleryVisible:boolean = false;
   private _warning:string;

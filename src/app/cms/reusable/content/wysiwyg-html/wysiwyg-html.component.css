@@ -1,7 +1,7 @@
 label {
     display: block;
 }
-div.input {
+#wysiwyg-input {
     min-height: 200px;
     resize: vertical;
     overflow-y: scroll;
