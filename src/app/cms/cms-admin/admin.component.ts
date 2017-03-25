@@ -12,6 +12,7 @@ export class AdminComponent {
   @Input() projectStructureHistory:Object;
   @Input() projectContentHistory:Object;
   @Input() projectSettings:Object;
+  @Output() adminNotifyingOfProjectDeletion:EventEmitter<void> = new EventEmitter<void>();
   @Output() adminRequestToSaveStructure:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() adminRequestToResetStructure:EventEmitter<void> = new EventEmitter<void>();
   @Output() adminRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
@@ -48,5 +49,9 @@ export class AdminComponent {
 
   viewRequestToRefreshSettings(){
     this.adminRequestToRefreshSettings.emit();
+  }
+
+  viewNotifyingOfProjectDeletion(){
+    this.adminNotifyingOfProjectDeletion.emit();
   }
 }

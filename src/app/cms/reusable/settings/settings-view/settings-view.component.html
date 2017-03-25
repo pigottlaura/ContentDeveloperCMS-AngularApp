@@ -57,4 +57,14 @@
         (accessLevelsUpdated)="updateSettings()"></app-access-levels>
     </div>
   </div>
+
+  <div class="row" *ngIf="isAdmin">
+    <h3>Delete Project</h3>
+    <div class="row" >
+        <label>Project Name:
+          <input #pName type="text">
+        </label>
+        <button (click)="deleteProject(pName.value)">Confirm Delete (can't undo)</button>
+    </div>
+  </div>
 </div>

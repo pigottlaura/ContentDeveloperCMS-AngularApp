@@ -17,7 +17,8 @@
         (adminRequestToResetStructure)="resetProjectStructure()"
         (adminRequestToSaveContent)="saveProjectContent($event)"
         (adminRequestToResetContent)="resetProjectContent()"
-        (adminRequestToRefreshSettings)="loadProjectSettings()">
+        (adminRequestToRefreshSettings)="loadProjectSettings()"
+        (adminNotifyingOfProjectDeletion)="projectDeleted()">
     </app-cms-admin>
     <app-cms-editor
         *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"

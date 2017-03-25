@@ -11,9 +11,23 @@ export class SettingsViewComponent {
   @Input() projectSettings;
   @Output() settingsUpdated:EventEmitter<void> = new EventEmitter<void>();
   @Output() viewRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
+  @Output() viewNotifyingOfProjectDeletion:EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private _cdService:ContentDeveloperServerService){}
   
+  deleteProject(projectName){
+    if(this.isAdmin && projectName == this.projectSettings.project_name){
+      this._cdService.deleteProject(projectName).subscribe(
+        responseObject => {
+          if(responseObject.success){
+            this.viewNotifyingOfProjectDeletion.emit();
+            console.log("Project deleted");
+          }
+        }
+      )
+    }
+  }
+
   updateSettings(){
     this.settingsUpdated.emit();
   }

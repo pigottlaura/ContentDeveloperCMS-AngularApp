@@ -118,4 +118,8 @@ export class CmsComponent {
       }
     );
   }
+
+  projectDeleted(){
+    this.viewUserProjects();
+  }
 }

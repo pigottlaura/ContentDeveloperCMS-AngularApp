@@ -284,6 +284,23 @@ export class ContentDeveloperServerService {
     return addNewCollaboratorObservable;
   }
 
+  deleteProject(projectName){
+    let requestUrl = this._serverUrl + "/admin/" + this._currentProjectId;
+    let deleteProjectObservable = this._http
+        .delete(requestUrl + "?projectName=" + projectName, {headers: this._headers})
+        .map((responseObject: Response) => <any> responseObject.json())
+        .catch(error => Observable.throw(error.json().error) || "Unknown error deleting project")
+        .do(responseObject => {
+          if(responseObject.success){
+            console.log("Project deleted");
+            this.leaveProject();
+          }          
+        });
+
+    return deleteProjectObservable;
+  }
+
+
   deleteAccessLevel(accessLevelInt){
     if(accessLevelInt > 3){
       console.log("About to delete access level " + accessLevelInt);
@@ -291,7 +308,7 @@ export class ContentDeveloperServerService {
       let deleteAccessLevelObservable = this._http
         .delete(requestUrl + "&access_level_int=" + accessLevelInt, {headers: this._headers})
         .map((responseObject: Response) => <any> responseObject.json())
-        .catch(error => Observable.throw(error.json().error) || "Unknown error creating project access level")
+        .catch(error => Observable.throw(error.json().error) || "Unknown error deleting project access level")
         .do(responseObject => {
           console.log("Access Level deleted");
           //this._currentProjectSettings.access_levels = responseObject;
