@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
         this.user = this._cdService.getCurrentUser();
         if(this.user == {}){
           this.user = null;
+        } else {
+          this.updatePageTitle("My Projects");
         }
       }
     )
@@ -28,6 +30,7 @@ export class AppComponent implements OnInit {
       response => console.log("Logout")
     );
     this.user = null
+    this.updatePageTitle("Content Developer CMS");
   }
 
   updatePageTitle(title:string){
