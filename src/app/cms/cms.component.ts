@@ -143,4 +143,8 @@ export class CmsComponent {
   projectDeleted(){
     this.viewUserProjects();
   }
+
+  viewLoginRequired(){
+    this.loginRequired.emit();
+  }
 }

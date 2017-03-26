@@ -1,6 +1,7 @@
 <ng-container *ngIf="_projectId == null && _userAccessLevel == null">
     <app-user-projects
-        (viewProject)="viewProject($event)"></app-user-projects>
+        (viewProject)="viewProject($event)"
+        (viewLoginRequired)="viewLoginRequired($event)"></app-user-projects>
 </ng-container>
 
 <ng-container *ngIf="_projectId != null && _userAccessLevel != null">

@@ -8,6 +8,7 @@ import { ContentDeveloperServerService } from "./../../services/content-develope
 })
 export class UserProjectsComponent implements OnInit {
   @Output() viewProject:EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() viewLoginRequired:EventEmitter<void> = new EventEmitter<void>();
   private _userProjects;
 
   constructor(private _cdService:ContentDeveloperServerService) { }
@@ -38,7 +39,13 @@ export class UserProjectsComponent implements OnInit {
 
   refreshUserProjects(){
     this._cdService.loadUserProjects().subscribe(
-      responesObject => this._userProjects = responesObject
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.viewLoginRequired.emit();
+        } else {
+          this._userProjects = responseObject;
+        }
+      }
     );
   }
 }
