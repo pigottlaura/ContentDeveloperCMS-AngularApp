@@ -25,8 +25,9 @@ export class AppComponent implements OnInit {
 
   logout(){
     this._cdService.logout().subscribe(
-      response => this.user = null
+      response => console.log("Logout")
     );
+    this.user = null
   }
 
   updatePageTitle(title:string){

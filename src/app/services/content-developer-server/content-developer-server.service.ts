@@ -47,8 +47,8 @@ export class ContentDeveloperServerService {
     let logoutObservable = this._http
       .get(logoutUrl)
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error) || "Unknown error when logging user out")
-      .do(response => this._currentUser = null);
+      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
+    this._currentUser = null
     this.leaveProject();
 
     return logoutObservable;
