@@ -9,6 +9,7 @@
 
     <app-cms 
         *ngIf="user != null"
-        (requestToUpdatePageTitle)="updatePageTitle($event)">
+        (requestToUpdatePageTitle)="updatePageTitle($event)"
+        (loginRequired)="loginRequired($event)">
     </app-cms>
 <app-footer></app-footer>

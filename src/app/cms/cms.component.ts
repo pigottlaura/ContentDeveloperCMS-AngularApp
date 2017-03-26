@@ -8,6 +8,7 @@ import { ContentDeveloperServerService } from './../services/content-developer-s
 })
 export class CmsComponent {
   @Output() requestToUpdatePageTitle:EventEmitter<string> = new EventEmitter<string>();
+  @Output() loginRequired:EventEmitter<void> = new EventEmitter<void>();
   projectContent:Object;
   projectStructure:Object;
   projectContentHistory:any[];
@@ -42,24 +43,32 @@ export class CmsComponent {
 
   loadProjectContentAndStructure(){
     this._cdService.loadProjectContentStructureHistory(this._projectId).subscribe(
-      responseObject => {
-        console.log("Project Content and Structure Loaded!");
-        this.resetProjectStructure();
-        this.resetProjectContent();
-        this.resetProjectHistory();
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.loginRequired.emit();
+        } else {
+          console.log("Project Content and Structure Loaded!");
+          this.resetProjectStructure();
+          this.resetProjectContent();
+          this.resetProjectHistory();
+        }
       }
     );
   }
 
   loadProjectSettings(){
     this._cdService.loadProjectSettings().subscribe(
-      responseObject => {
-        this._cdService.loadAdminSettings().subscribe(
-          responseObject => {
-            this.resetProjectSettings();
-            console.log(this.projectSettings);
-          }
-        );        
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.loginRequired.emit();
+        } else {
+          this._cdService.loadAdminSettings().subscribe(
+            responseObject => {
+              this.resetProjectSettings();
+              console.log(this.projectSettings);
+            }
+          );   
+        }     
       }
     );
   }
@@ -68,10 +77,14 @@ export class CmsComponent {
     let commitMessage = structureData != null ? structureData.commit_message : null;
     console.log("About to save structure");
     this._cdService.updateProjectStructure(structureData.structure, commitMessage).subscribe(
-    responseObject => {
-        console.log("Structure Saved!!");
-        this.resetProjectStructure();
-        this.resetProjectHistory();
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.loginRequired.emit();
+        } else {
+          console.log("Structure Saved!!");
+          this.resetProjectStructure();
+          this.resetProjectHistory();
+        }
       }
     );
   }
@@ -83,10 +96,14 @@ export class CmsComponent {
     if(updateProjectObservable != null){
       console.log("About to save content");
       updateProjectObservable.subscribe(
-        responseObject => {
-          console.log("Content Saved!!");
-          this.resetProjectContent();
-          this.resetProjectHistory();
+        (responseObject:any) => {
+          if(responseObject.loginRequired){
+            this.loginRequired.emit();
+          } else {
+            console.log("Content Saved!!");
+            this.resetProjectContent();
+            this.resetProjectHistory();
+          }
         }
       );
     }
@@ -111,10 +128,14 @@ export class CmsComponent {
 
   resetProjectHistory(){
     this._cdService.refreshProjectHistory().subscribe(
-      responseObject => {
-        console.log("Project History Reset!!");
-        this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
-        this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.loginRequired.emit();
+        } else {
+          console.log("Project History Reset!!");
+          this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
+          this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
+        }
       }
     );
   }

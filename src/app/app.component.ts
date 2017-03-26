@@ -14,12 +14,16 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     this._cdService.loadUser().subscribe(
-      responseObject => {
-        this.user = this._cdService.getCurrentUser();
-        if(this.user == {}){
-          this.user = null;
+      (responseObject:any) => {
+        if(responseObject.loginRequired){
+          this.loginRequired();
         } else {
-          this.updatePageTitle("My Projects");
+          this.user = this._cdService.getCurrentUser();
+          if(this.user == {}){
+            this.loginRequired();
+          } else {
+            this.updatePageTitle("My Projects");
+          }
         }
       }
     )
@@ -29,11 +33,15 @@ export class AppComponent implements OnInit {
     this._cdService.logout().subscribe(
       response => console.log("Logout")
     );
-    this.user = null
-    this.updatePageTitle("Content Developer CMS");
+    this.loginRequired();
   }
 
   updatePageTitle(title:string){
     this.pageTitle = title;
+  }
+
+  loginRequired(){
+    this.user = null
+    this.updatePageTitle("Content Developer CMS");
   }
 }
