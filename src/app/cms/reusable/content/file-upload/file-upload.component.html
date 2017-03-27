@@ -7,7 +7,7 @@
   [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
   [class]="itemAttributes != null && itemAttributes.class != null ? itemAttributes.attributes.class : ''"
   (change)="fileInputChanged(fileInput)"
-  [required]="itemAttributes.required != null && itemAttributes.required ? true : false"
+  [required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
   appFormControl>
 <button
   *ngIf="viewOnly == false" 
