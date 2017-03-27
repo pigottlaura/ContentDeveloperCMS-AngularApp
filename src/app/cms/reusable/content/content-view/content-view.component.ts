@@ -8,6 +8,7 @@ import { Component, OnChanges, Input, Output, EventEmitter, ElementRef } from '@
 export class ContentViewComponent implements OnChanges {
   @Input() projectStructure;
   @Input() projectContent;
+  @Input() userAccessLevel:number;
   @Input() customCss:string;
   @Input() viewOnly:boolean = false;
   @Output() viewRequestToSaveContent:EventEmitter<void> = new EventEmitter<void>();

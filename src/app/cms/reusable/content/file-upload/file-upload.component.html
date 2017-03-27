@@ -13,7 +13,7 @@
   *ngIf="viewOnly == false" 
   (click)="showMediaItemGallery()">Select Image</button>
 <img
-  *ngIf="viewContent && viewOnly == false && itemContent != null"
+  *ngIf="viewContent && itemContent != null"
   [src]="itemContent">
 
 <app-media-item-gallery

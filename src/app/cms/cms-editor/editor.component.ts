@@ -9,6 +9,7 @@ export class EditorComponent {
   @Input() projectContent;
   @Input() projectStructure;
   @Input() projectSettings;
+  @Input() userAccessLevel:number;
   @Input() customCss;
   @Output() editorRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() editorRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();

@@ -8,6 +8,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
 export class ContentEditorComponent implements OnInit, OnChanges {
   @Input() viewOnly:boolean=false;
   @Input() viewContent:boolean=true;
+  @Input() userAccessLevel:number;
   @Input() projectContent:Object;
   @Input() projectStructure:Object;
   @Output() requestToSaveProjectContent:EventEmitter<Object> = new EventEmitter<Object>();

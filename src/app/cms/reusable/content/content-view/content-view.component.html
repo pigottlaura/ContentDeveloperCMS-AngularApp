@@ -3,6 +3,7 @@
     <h2>Project Content</h2>
     <div *ngIf="projectStructure != null">
       <app-content-editor
+        [userAccessLevel]="userAccessLevel"
         [viewContent]="true"
         [viewOnly]="viewOnly"
         [(projectContent)]="projectContent"

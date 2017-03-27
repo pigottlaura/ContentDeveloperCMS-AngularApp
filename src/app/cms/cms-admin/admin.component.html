@@ -11,6 +11,7 @@
 
 	<app-content-view
 		*ngIf="_view == 'content'"
+		[userAccessLevel]="1"
 		[customCss]="projectSettings.custom_css"
 		[projectStructure]="projectStructure"
 		[(projectContent)]="projectContent"

@@ -3,6 +3,7 @@
 <div class="row">
 	<app-content-view
 		*ngIf="_view == 'content'"
+		[userAccessLevel]="userAccessLevel"
 		[customCss]="customCss"
 		[projectStructure]="projectStructure"
 		[(projectContent)]="projectContent"

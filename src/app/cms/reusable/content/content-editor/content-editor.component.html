@@ -12,19 +12,22 @@
             [contentEncapsulationPath]=""
             [contentType]="object"
             (contentReordered)="collectionTabsReordered($event)">
-            <div *ngFor="let collection of projectStructure | keyValArray : 'keys'"
-              [draggable]="viewContent == false"
-              [attr.data-key]="collection"
-              (click)="viewCollection(collection)"
-              [class]="(collection === currentCollectionName ? 'active ' : '')  + 'collectionTab'">{{collection | title}}
-            </div>
+            <ng-container *ngFor="let collection of projectStructure | keyValArray : 'keys'">
+              <div *ngIf="userAccessLevel <= 2 || projectStructure[collection].access_levels == null || (projectStructure[collection].access_levels != null && projectStructure[collection].access_levels.indexOf(userAccessLevel) > -1)"
+                [draggable]="viewContent == false"
+                [attr.data-key]="collection"
+                (click)="viewCollection(collection)"
+                [class]="(collection === currentCollectionName ? 'active ' : '')  + 'collectionTab'">{{collection | title}}
+              </div>
+            </ng-container>
           </app-draggable-container>
         </div>
     </div>
     <div class="col-10-12">
-      <ng-container *ngIf="currentCollectionName != null">
+      <ng-container *ngIf="currentCollectionName != null && (userAccessLevel <= 2 || projectStructure[currentCollectionName].access_levels == null || (projectStructure[currentCollectionName].access_levels != null && projectStructure[currentCollectionName].access_levels.indexOf(userAccessLevel) > -1))">
         <h2>{{currentCollectionName | title}}</h2>
         <app-collection
+          [userAccessLevel]="userAccessLevel"
           [topLevelCollection]="true"
           [encapsulationPath]="currentCollectionName"
           [collection]="currentCollectionName"

@@ -11,6 +11,7 @@ export class CollectionComponent {
   @Input() projectStructure:Object;
   @Input() viewContent:boolean;
   @Input() viewOnly:boolean = false;
+  @Input() userAccessLevel:number;
   @Input() topLevelCollection:Boolean = false;
   @Input() subCollection:boolean = false;
   @Input() encapsulationPath:string;

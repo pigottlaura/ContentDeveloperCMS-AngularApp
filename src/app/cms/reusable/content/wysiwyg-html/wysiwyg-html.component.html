@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="viewOnly == false">
   <button (click)="addImage()">Image</button>
   <button (click)="addHeading('h1')">H1</button>
   <button (click)="addHeading('h2')">H2</button>
@@ -8,7 +8,7 @@
   <button (click)="clearAllContent()">Clear All</button>
 </div>
 
-<div *ngIf="viewContent">
+<div *ngIf="viewContent && viewOnly == false">
   <div *ngIf="_insertType == 'image'">
     <div class="row">
       <h3>Image</h3>
@@ -70,13 +70,14 @@
   (click)="updateCursorPosition()"
   (change)="updateCursorPosition()"
   (keyup)="updateCursorPosition()"
-  [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : 'wysiwyg-input'"
-  [class]="(itemAttributes != null && itemAttributes.class != null ? itemAttributes.attributes.class : '') + ' input'"
+  id="wysiwyg-input"
+  [class]="'input' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
   [attr.data-required]="itemAttributes.required != null && itemAttributes.required ? true : false"
   appFormControl>
 </div>
 
 <div
   *ngIf="viewContent == false || viewOnly"
-  class="input">
+  class="input"
+  id="wysiwyg-input">
 </div>

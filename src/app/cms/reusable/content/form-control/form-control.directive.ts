@@ -17,12 +17,12 @@ export class FormControlDirective implements AfterViewInit, DoCheck {
     if(this._formElement != null){
       if(this._formElement.hasAttribute("required")){
         if(this._formElement.value == null || this._formElement.value.length == 0){
-          this._cdService.submitContentAllowed = false;
+          //this._cdService.submitContentAllowed = false;
           console.log("Value required for this input");
         }
       } else if(this._formElement.getAttribute("data-required") == "true"){
         if(this._formElement.innerHTML == null || this._formElement.innerHTML.length == 0){
-          this._cdService.submitContentAllowed = false;
+          //this._cdService.submitContentAllowed = false;
           console.log("Value required for this input");
         }
       }

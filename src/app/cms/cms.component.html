@@ -23,6 +23,7 @@
     </app-cms-admin>
     <app-cms-editor
         *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
+        [userAccessLevel]="_userAccessLevel"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
         [(projectSettings)]="projectSettings"

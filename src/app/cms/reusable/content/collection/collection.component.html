@@ -4,6 +4,7 @@
   <ng-container *ngIf="projectStructure != null && projectStructure[collection] != null">
     <ng-container *ngIf="projectStructure[collection] != null && projectStructure[collection].items == null && encapsulationPath != null">
       <app-collection-item
+        *ngIf="userAccessLevel <= 2 || projectStructure[collection].access_levels == null || (projectStructure[collection].access_levels != null && projectStructure[collection].access_levels.indexOf(userAccessLevel) > -1)"
         [class]="encapsulationPath.split('/').join(' ')"
         [encapsulationPath]="encapsulationPath"
         [itemName]="collection"
@@ -20,6 +21,7 @@
       <ng-container *ngIf="projectStructure[collection].type == 'object'">
         <ng-container *ngFor="let collectionItemName of projectStructure[collection].items | keyValArray : 'keys'">
           <app-collection
+            *ngIf="userAccessLevel <= 2 || projectStructure[collection].items[collectionItemName].access_levels == null || (projectStructure[collection].items[collectionItemName].access_levels != null && projectStructure[collection].items[collectionItemName].access_levels.indexOf(userAccessLevel) > -1)"
             [encapsulationPath]="encapsulationPath + '/' + collectionItemName"
             [subCollection]="projectStructure[collection].items[collectionItemName].type == 'object' || projectStructure[collection].items[collectionItemName].type == 'array'"
             [collection]="collectionItemName"
@@ -42,6 +44,7 @@
             (contentReordered)="collectionContentChanged($event)">
             <ng-container *ngFor="let index of projectContent[collection] | keyValArray : 'keys'">
               <div
+                *ngIf="userAccessLevel <= 2 || projectStructure[collection].access_levels == null || (projectStructure[collection].access_levels != null && projectStructure[collection].access_levels.indexOf(userAccessLevel) > -1)"
                 class="collection"
                 [draggable]="viewOnly == false"
                 [attr.data-key]="index">
