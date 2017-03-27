@@ -1,6 +1,9 @@
 <app-cms-navigation
 	[userAccessLevel]="userAccessLevel"
 	(requestToChangeView)="changeView($event)"></app-cms-navigation>
+<app-errors
+	[errors]="errors"
+	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>
 <div class="row">
 	<app-content-view
 		*ngIf="_view == 'content'"

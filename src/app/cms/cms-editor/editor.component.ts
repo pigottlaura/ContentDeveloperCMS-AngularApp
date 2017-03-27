@@ -11,9 +11,11 @@ export class EditorComponent {
   @Input() projectSettings;
   @Input() userAccessLevel:number;
   @Input() customCss;
+  @Input() errors:string[];
   @Output() editorRequestToSaveContent:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() editorRequestToResetContent:EventEmitter<void> = new EventEmitter<void>();
   @Output() editorRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
+  @Output() editorRequestToDismissErrors:EventEmitter<void> = new EventEmitter<void>();
   private _view:string="content";
 
   viewRequestToSaveContent(updatedContent=null){
@@ -26,6 +28,10 @@ export class EditorComponent {
 
   viewRequestToRefreshSettings(){
     this.editorRequestToRefreshSettings.emit();
+  }
+
+  requestToDismissErrors(){
+    this.editorRequestToDismissErrors.emit();
   }
 
   changeView(toView:string){

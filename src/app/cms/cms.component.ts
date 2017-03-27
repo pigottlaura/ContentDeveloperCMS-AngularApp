@@ -9,6 +9,7 @@ import { ContentDeveloperServerService } from './../services/content-developer-s
 export class CmsComponent {
   @Output() requestToUpdatePageTitle:EventEmitter<string> = new EventEmitter<string>();
   @Output() loginRequired:EventEmitter<void> = new EventEmitter<void>();
+  errors:string[];
   projectContent:Object;
   projectStructure:Object;
   projectContentHistory:any[];
@@ -32,6 +33,10 @@ export class CmsComponent {
 
   updatePageTitle(title:string){
     this.requestToUpdatePageTitle.emit(title);
+  }
+
+  dismissErrors(){
+    this.errors = [];
   }
 
   viewUserProjects(){
@@ -85,6 +90,7 @@ export class CmsComponent {
           this.resetProjectStructure();
           this.resetProjectHistory();
         }
+        this.errors = responseObject.errors;
       }
     );
   }
@@ -104,6 +110,7 @@ export class CmsComponent {
             this.resetProjectContent();
             this.resetProjectHistory();
           }
+          this.errors = responseObject.errors;
         }
       );
     }

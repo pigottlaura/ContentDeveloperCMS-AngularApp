@@ -1,0 +1,11 @@
+<div
+	*ngIf="errors != null && errors.length > 0"
+	class="row">
+	<div class="col-12-12">
+		Errors
+		<ul>
+			<li *ngFor="let error of errors">{{error}}</li>
+		</ul>
+		<button (click)="dismissErrors()">Close</button>
+	</div>
+</div>

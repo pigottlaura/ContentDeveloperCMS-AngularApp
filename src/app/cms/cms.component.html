@@ -9,6 +9,7 @@
     <button (click)="refreshProject()">Refresh from Server</button>
     <app-cms-admin
         *ngIf="_userAccessLevel == 1"
+        [errors]="errors"
         [(projectStructure)]="projectStructure"
         [(projectContent)]="projectContent"
         [projectStructureHistory]="projectStructureHistory"
@@ -19,10 +20,12 @@
         (adminRequestToSaveContent)="saveProjectContent($event)"
         (adminRequestToResetContent)="resetProjectContent()"
         (adminRequestToRefreshSettings)="loadProjectSettings()"
-        (adminNotifyingOfProjectDeletion)="projectDeleted()">
+        (adminNotifyingOfProjectDeletion)="projectDeleted()"
+        (adminRequestToDismissErrors)="dismissErrors()">
     </app-cms-admin>
     <app-cms-editor
         *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
+        [errors]="errors"
         [userAccessLevel]="_userAccessLevel"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
@@ -30,7 +33,8 @@
         [customCss]="projectSettings != null ? projectSettings.custom_css : ''"
         (editorRequestToSaveContent)="saveProjectContent($event)"
         (editorRequestToResetContent)="resetProjectContent()"
-        (editorRequestToRefreshSettings)="loadProjectSettings()">
+        (editorRequestToRefreshSettings)="loadProjectSettings()"
+        (editorRequestToDismissErrors)="dismissErrors()">
     </app-cms-editor>
     <app-cms-view-only
         *ngIf="_userAccessLevel == 3"

@@ -1,6 +1,9 @@
 <app-cms-navigation
 	[userAccessLevel]="1"
 	(requestToChangeView)="changeView($event)"></app-cms-navigation>
+<app-errors
+	[errors]="errors"
+	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>
 <div class="row">
 	<app-structure-view
 		*ngIf="_view == 'structure'"

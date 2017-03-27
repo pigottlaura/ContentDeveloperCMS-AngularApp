@@ -46,6 +46,7 @@ import { NavigationComponent } from './cms/reusable/cms-navigation/navigation.co
 import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwyg-html.component';
 import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upload.component';
 import { FormControlDirective } from './cms/reusable/content/form-control/form-control.directive';
+import { ErrorsComponent } from './cms/reusable/errors/errors.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { FormControlDirective } from './cms/reusable/content/form-control/form-c
     NavigationComponent,
     WysiwygHtmlComponent,
     FileUploadComponent,
-    FormControlDirective
+    FormControlDirective,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,
