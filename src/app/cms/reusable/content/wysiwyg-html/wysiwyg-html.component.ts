@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-wysiwyg-html',
   templateUrl: './wysiwyg-html.component.html',
   styleUrls: ['./wysiwyg-html.component.css']
 })
-export class WysiwygHtmlComponent implements AfterViewInit {
+export class WysiwygHtmlComponent implements AfterViewInit, OnChanges {
   @Input() viewContent:boolean;
   @Input() viewOnly:boolean;
   @Input() itemContent;
@@ -21,6 +21,16 @@ export class WysiwygHtmlComponent implements AfterViewInit {
 
   ngAfterViewInit(){
     this._textareaElement = <HTMLTextAreaElement> document.getElementById("wysiwyg-input");
+    this.updateTextAreaToItemContent();
+  }
+
+  ngOnChanges(changes){
+    if(changes.itemContent){
+      this.updateTextAreaToItemContent();
+    }
+  }
+
+  updateTextAreaToItemContent(){
     if(this._textareaElement != undefined){
       this._textareaElement.innerHTML = this.itemContent;  
     }
