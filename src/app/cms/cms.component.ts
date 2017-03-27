@@ -145,8 +145,8 @@ export class CmsComponent {
           this.loginRequired.emit();
         } else {
           console.log("Project History Reset!!");
-          this.projectContentHistory = this._cdService.getCurrentProjectContentHistory();
-          this.projectStructureHistory = this._cdService.getCurrentProjectStructureHistory();
+          this.projectContentHistory = responseObject.content_history;
+          this.projectStructureHistory = responseObject.structure_history;
         }
       }
     );

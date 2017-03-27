@@ -155,7 +155,6 @@ export class ContentDeveloperServerService {
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
         this._currentProjectContentStructureHistory.structure = responseObject.structure;
-        this.refreshProjectHistory();
       });
     
     return structureUpdateObservable;
@@ -172,7 +171,6 @@ export class ContentDeveloperServerService {
         .do(responseObject => {
           if(encapsulationPath.length == 0){
             this._currentProjectContentStructureHistory.content = responseObject.content;
-            this.refreshProjectHistory();
           } else {
             // Deal with encapsulated data
           }        
@@ -387,11 +385,19 @@ export class ContentDeveloperServerService {
   }
 
   getCurrentProjectContentHistory():any[]{
-    return this._currentProjectContentStructureHistory.content_history;
+    var result = null;
+    if(this._currentProjectContentStructureHistory.content_history != null){
+      result = this._currentProjectContentStructureHistory.content_history.slice();
+    }
+    return result;
   }
 
   getCurrentProjectStructureHistory():any[]{
-    return this._currentProjectContentStructureHistory.structure_history;
+    var result = null;
+    if(this._currentProjectContentStructureHistory.structure_history != null){
+      result = this._currentProjectContentStructureHistory.structure_history.slice();
+    }
+    return result;
   }
   
   leaveProject(){
