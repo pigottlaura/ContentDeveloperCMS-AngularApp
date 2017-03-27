@@ -14,6 +14,15 @@
 		(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
 		(viewRequestToResetContent)="viewRequestToResetContent()">
 	</app-content-view>
+	
+	<app-history-display
+		*ngIf="_view == 'history'"
+		[history]="projectContentHistory"
+		[historyOf]="'content'"
+		[showPreview]="false"
+		(revertToCommit)="revertToCommit($event)"
+		(previewCommit)="previewCommit($event)">
+	</app-history-display>
 
 	<app-settings-view
 		*ngIf="_view == 'settings' && userAccessLevel == 2"
@@ -21,4 +30,5 @@
 		(settingsUpdated)="viewRequestToRefreshSettings($event)"
 		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
 	</app-settings-view>
+	
 </div>

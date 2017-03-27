@@ -30,6 +30,7 @@
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
         [(projectSettings)]="projectSettings"
+        [projectContentHistory]="projectContentHistory"
         [customCss]="projectSettings != null ? projectSettings.custom_css : ''"
         (editorRequestToSaveContent)="saveProjectContent($event)"
         (editorRequestToResetContent)="resetProjectContent()"

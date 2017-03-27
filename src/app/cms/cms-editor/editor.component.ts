@@ -9,6 +9,7 @@ export class EditorComponent {
   @Input() projectContent;
   @Input() projectStructure;
   @Input() projectSettings;
+  @Input() projectContentHistory;
   @Input() userAccessLevel:number;
   @Input() customCss;
   @Input() errors:string[];
@@ -36,5 +37,10 @@ export class EditorComponent {
 
   changeView(toView:string){
     this._view = toView;
+  }
+
+  previewCommit(previewData){
+    this.projectContent = previewData.data;
+    this.changeView("content");
   }
 }

@@ -203,19 +203,8 @@ export class ContentDeveloperServerService {
     let commitContentObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content")
-      .do(responseObject => {
-        switch(historyOf) {
-          case "structure": {
-            this._currentProjectContentStructureHistory.structure = responseObject;
-            break;
-          }
-          case "content": {
-            this._currentProjectContentStructureHistory.content = responseObject;
-            break;
-          }
-        }
-      });
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content");
+
     return commitContentObservable;
   }
 

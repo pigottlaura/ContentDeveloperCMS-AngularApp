@@ -35,6 +35,7 @@ export class AdminComponent {
 
   viewRequestToSaveStructure(updatedStructure){
     this.adminRequestToSaveStructure.emit(updatedStructure);
+    this.changeView("structure");
   }
 
   viewRequestToResetStructure(){
@@ -43,6 +44,7 @@ export class AdminComponent {
 
   viewRequestToSaveContent(updatedContent=null){
     this.adminRequestToSaveContent.emit(updatedContent);
+    this.changeView("content");
   }
 
   viewRequestToResetContent(){
