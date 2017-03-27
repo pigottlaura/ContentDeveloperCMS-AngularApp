@@ -23,6 +23,7 @@
         <label>Allowed Update Origins:
           <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
         </label>
+        <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
       </div>
 
       <div class="row" *ngIf="isAdmin">
@@ -65,6 +66,13 @@
           <input #pName type="text">
         </label>
         <button (click)="deleteProject(pName.value)">Confirm Delete (can't undo)</button>
+    </div>
+    <h3>Generate New Public Auth Token</h3>
+    <div class="row">
+        <label>Current Auth Token:
+          <input #aToken type="text">
+        </label>
+        <button (click)="generateNewPublicAuthToken(aToken)">Generate New Token (can't undo)</button>
     </div>
   </div>
 </div>

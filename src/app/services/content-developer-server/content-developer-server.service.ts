@@ -113,6 +113,7 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         this._currentProjectSettings.update_origins = responseObject.update_origins;
         this._currentProjectSettings.read_origins = responseObject.read_origins;
+        this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
       });
 
     return loadAdminSettingsObservable;
@@ -127,6 +128,22 @@ export class ContentDeveloperServerService {
       .do(responseObject => console.log("Admin settings updated!!"));
 
     return updateProjectSettingsObservable;
+  }
+
+  generateNewPublicAuthToken(currentAuthToken){
+    let requestUrl = this._serverUrl + "/admin/settings/" + this._currentProjectId + "/publicAuthToken";
+    let generateNewPublicAuthTokenObservable = this._http
+      .put(requestUrl, {public_auth_token: currentAuthToken}, {headers: this._headers})
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error.json().error))
+      .do(responseObject => {
+        if(responseObject.public_auth_token != null){
+          this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
+          console.log("New public auth token generated!!");
+        }
+      });
+
+    return generateNewPublicAuthTokenObservable;
   }
 
   updateProjectStructure(projectStructure:Object, commitMessage:string=null):Observable<Object>{
@@ -357,15 +374,27 @@ export class ContentDeveloperServerService {
   }
 
   getCurrentProjectContent():Object{
-    return this._coPipe.transform(this._currentProjectContentStructureHistory.content);
+    var result = null;
+    if(this._currentProjectContentStructureHistory.content != null){
+      result = this._coPipe.transform(this._currentProjectContentStructureHistory.content)
+    }
+    return result;
   }
 
   getCurrentProjectStructure():Object{
-    return this._coPipe.transform(this._currentProjectContentStructureHistory.structure);
+    var result = null;
+    if(this._currentProjectContentStructureHistory.structure != null){
+      result = this._coPipe.transform(this._currentProjectContentStructureHistory.structure);
+    }
+    return result;
   }
 
   getCurrentProjectSettings():any{
-    return this._coPipe.transform(this._currentProjectSettings);
+    var result = null;
+    if(this._currentProjectSettings != null){
+      result = this._coPipe.transform(this._currentProjectSettings);
+    }
+    return result;
   }
 
   getCurrentProjectContentHistory():any[]{

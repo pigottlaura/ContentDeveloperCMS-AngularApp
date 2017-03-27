@@ -28,6 +28,19 @@ export class SettingsViewComponent {
     }
   }
 
+  generateNewPublicAuthToken(currentAuthTokenInput){
+    if(currentAuthTokenInput.value != null){
+      this._cdService.generateNewPublicAuthToken(currentAuthTokenInput.value).subscribe(
+        (responseObject:any) => {
+          if(responseObject.public_auth_token != null){
+            currentAuthTokenInput.value = "";
+            this.settingsUpdated.emit();
+          }
+        }
+      )
+    }
+  }
+
   updateSettings(){
     this.settingsUpdated.emit();
   }
