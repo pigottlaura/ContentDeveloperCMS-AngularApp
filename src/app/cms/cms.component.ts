@@ -13,7 +13,7 @@ export class CmsComponent {
   projectStructure:Object;
   projectContentHistory:any[];
   projectStructureHistory:any[];
-  projectSettings:Object;
+  projectSettings;
 
   private _projectId:number;
   private _projectName:string;
@@ -124,6 +124,11 @@ export class CmsComponent {
   
   resetProjectSettings(){
     this.projectSettings = this._cdService.getCurrentProjectSettings();
+    if(this._projectId != null){
+      this._projectName = this.projectSettings.project_name;
+      this.updatePageTitle(this._projectName);
+
+    }
   }
 
   resetProjectHistory(){
