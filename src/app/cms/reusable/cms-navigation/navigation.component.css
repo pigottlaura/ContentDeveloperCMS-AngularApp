@@ -8,9 +8,16 @@ nav ul li {
     cursor: pointer;
     box-sizing: border-box;
     display: inline-block;
-    width: 24%;
     padding: 1%;
     background-color: #000;
     color: #fff;
     text-align: center;
+}
+
+nav ul.admin li{
+    width: 24%;
+}
+
+nav ul.editor li{
+    width: 48%;
 }

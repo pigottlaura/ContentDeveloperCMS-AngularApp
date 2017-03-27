@@ -1,10 +1,10 @@
 <div class="row">
 	<nav>
-		<ul>
-			<li *ngIf="isAdmin" (click)="changeView('structure')">Structure</li>
+		<ul [class]="userAccessLevel == 1 ? 'admin' : 'editor'">
+			<li *ngIf="userAccessLevel == 1" (click)="changeView('structure')">Structure</li>
 			<li (click)="changeView('content')">Content</li>
 			<li (click)="changeView('history')">Project History</li>
-			<li (click)="changeView('settings')">Project Settings</li>
+			<li *ngIf="userAccessLevel <= 2" (click)="changeView('settings')">Project Settings</li>
 		</ul>
 	</nav>
 </div>

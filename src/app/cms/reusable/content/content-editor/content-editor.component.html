@@ -13,7 +13,7 @@
             [contentType]="object"
             (contentReordered)="collectionTabsReordered($event)">
             <ng-container *ngFor="let collection of projectStructure | keyValArray : 'keys'">
-              <div *ngIf="userAccessLevel <= 2 || projectStructure[collection].access_levels == null || (projectStructure[collection].access_levels != null && projectStructure[collection].access_levels.indexOf(userAccessLevel) > -1)"
+              <div *ngIf="userAccessLevel <= 2 || projectStructure[collection].no_access == null || (projectStructure[collection].no_access != null && projectStructure[collection].no_access.indexOf(userAccessLevel) < 0)"
                 [draggable]="viewContent == false"
                 [attr.data-key]="collection"
                 (click)="viewCollection(collection)"
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="col-10-12">
-      <ng-container *ngIf="currentCollectionName != null && (userAccessLevel <= 2 || projectStructure[currentCollectionName].access_levels == null || (projectStructure[currentCollectionName].access_levels != null && projectStructure[currentCollectionName].access_levels.indexOf(userAccessLevel) > -1))">
+      <ng-container *ngIf="currentCollectionName != null && (userAccessLevel <= 2 || projectStructure[currentCollectionName].no_access == null || (projectStructure[currentCollectionName].no_access != null && projectStructure[currentCollectionName].no_access.indexOf(userAccessLevel) < 0))">
         <h2>{{currentCollectionName | title}}</h2>
         <app-collection
           [userAccessLevel]="userAccessLevel"

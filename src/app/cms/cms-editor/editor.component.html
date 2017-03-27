@@ -1,4 +1,5 @@
 <app-cms-navigation
+	[userAccessLevel]="userAccessLevel"
 	(requestToChangeView)="changeView($event)"></app-cms-navigation>
 <div class="row">
 	<app-content-view
@@ -12,7 +13,7 @@
 	</app-content-view>
 
 	<app-settings-view
-		*ngIf="_view == 'settings'"
+		*ngIf="_view == 'settings' && userAccessLevel == 2"
 		[(projectSettings)]="projectSettings"
 		(settingsUpdated)="viewRequestToRefreshSettings($event)"
 		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">

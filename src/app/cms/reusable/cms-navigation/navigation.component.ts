@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
-  @Input() isAdmin:boolean = false;
+  @Input() userAccessLevel:number;
   @Output() requestToChangeView:EventEmitter<string> = new EventEmitter<string>();
 
   changeView(toView:string){
