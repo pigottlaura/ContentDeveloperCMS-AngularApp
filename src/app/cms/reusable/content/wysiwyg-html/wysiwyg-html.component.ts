@@ -1,15 +1,16 @@
-import { Component, AfterViewInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, Input, Output, EventEmitter, DoCheck, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-wysiwyg-html',
   templateUrl: './wysiwyg-html.component.html',
   styleUrls: ['./wysiwyg-html.component.css']
 })
-export class WysiwygHtmlComponent implements AfterViewInit, OnChanges {
+export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   @Input() viewContent:boolean;
   @Input() viewOnly:boolean;
   @Input() itemContent;
   @Input() itemAttributes;
+  @Input() encapsulationPath;
   @Output() wysiwygRequestToViewMediaItems:EventEmitter<Function> = new EventEmitter<Function>();
   @Output() wysiwygContentChanged:EventEmitter<Object> = new EventEmitter<Object>();
   private _insertType:string;
@@ -18,6 +19,9 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges {
   private _textareaElement:HTMLTextAreaElement;
   private _cursorPosition;
   private _lastChange:string;
+  private _contentError:string;
+
+  constructor(private _el:ElementRef) {}
 
   ngAfterViewInit(){
     this._textareaElement = <HTMLTextAreaElement> document.getElementById("wysiwyg-input");
@@ -27,6 +31,14 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes){
     if(changes.itemContent){
       this.updateTextAreaToItemContent();
+    }
+  }
+
+  ngDoCheck(){
+    if(this._textareaElement != null && this._textareaElement.hasAttribute("data-error")){
+        this._contentError = this._textareaElement.getAttribute("data-error");
+    } else {
+      this._contentError = null;
     }
   }
 

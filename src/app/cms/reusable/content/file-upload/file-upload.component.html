@@ -1,13 +1,17 @@
 <div
   *ngIf="_warning != null">{{_warning}}</div>
+<span *ngIf="_contentError != null && _contentError.length > 0" class="error">
+  {{_contentError}}
+</span>
 <input
   *ngIf="viewOnly == false"
   #fileInput
   type="file"
   [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
-  [class]="itemAttributes != null && itemAttributes.class != null ? itemAttributes.attributes.class : ''"
+  [class]="'fileInput' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
   (change)="fileInputChanged(fileInput)"
-  [required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
+  [attr.data-required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
+  [attr.data-name]="encapsulationPath"
   appFormControl>
 <button
   *ngIf="viewOnly == false" 

@@ -24,11 +24,11 @@ th {
 }
 
 /* Alerts */
-.warning {
-    border: 2px solid #F00;
+.error {
+    color: #f00;
 }
-[data-form-warning] {
-    border: 2px solid #F00;
+[data-error]:not([type="file"]){
+    border: 1px solid #F00 !important;
 }
 
 /* Visible */

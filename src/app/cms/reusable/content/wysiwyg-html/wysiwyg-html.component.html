@@ -63,6 +63,10 @@
   </div>
 </div>
 
+<span *ngIf="_contentError != null && _contentError.length > 0" class="error">
+  {{_contentError}}
+</span>
+
 <div
   *ngIf="viewContent && viewOnly == false"
   #textareaInput
@@ -73,6 +77,8 @@
   id="wysiwyg-input"
   [class]="'input' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
   [attr.data-required]="itemAttributes.required != null && itemAttributes.required ? true : false"
+  [attr.data-maxlength]="itemAttributes.maxlength != null ? itemAttributes.maxlength : ''"
+  [attr.data-name]="encapsulationPath"
   appFormControl>
 </div>
 

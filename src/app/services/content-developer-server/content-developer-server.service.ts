@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { CloneObjectPipe } from "./../../pipes/clone-object.pipe";
+import { KeyValArrayPipe } from "./../../pipes/key-val-array.pipe";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -15,11 +16,27 @@ export class ContentDeveloperServerService {
   private _currentProjectId;
   private _currentUser;
   private _headers:Headers;
-  submitContentAllowed:boolean = true;
+  private _contentErrors:any = {};
 
-  constructor(private _http:Http, private _coPipe:CloneObjectPipe) {
+  constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
     this._headers.append("Content-Type", "application/json");
+  }
+
+  getContentErrors():any {
+    return this._coPipe.transform(this._contentErrors);
+  }
+
+  updateContentError(propertyName:string, value:string){
+    this._contentErrors[propertyName] = value;
+  }
+
+  deleteContentError(propertyName){
+    delete this._contentErrors[propertyName];
+  }
+
+  clearContentErrors(){
+    this._contentErrors = {};
   }
   
   getLoginUrl():Observable<any>{
@@ -161,7 +178,7 @@ export class ContentDeveloperServerService {
   }
 
   updateProjectContent(projectContent:Object, commitMessage:string=null, encapsulationPath:string=""):Observable<Object>{
-    if(this.submitContentAllowed){
+    if(this._kvaPipe.transform(this._contentErrors, "values").length == 0){
       console.log(projectContent);
       let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "/" + encapsulationPath;
       let contentUpdateObservable = this._http

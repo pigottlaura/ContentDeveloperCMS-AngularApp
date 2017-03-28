@@ -1,4 +1,4 @@
-<ng-container *ngIf="itemStructure.attributes != null">
+<ng-container *ngIf="itemStructure != null && itemStructure.attributes != null">
   <br *ngIf="itemStructure.input_type == 'textarea'">
   <label>{{itemName | title}} {{itemStructure.attributes.required == "required" ? '*' : ''}}
     <ng-container *ngIf="itemStructure.type != 'html'">
@@ -9,8 +9,12 @@
         (change)="contentChanged($event)"
         [disabled]="viewOnly"
         [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
-        [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+        [class]="'contentInput' + (itemStructure.attributes.class != null ? ' ' + itemStructure.attributes.class : '')"
         [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+        [max]="itemStructure.attributes.max != null ? itemStructure.attributes.max : ''"
+        [min]="itemStructure.attributes.min != null ? itemStructure.attributes.min : ''"
+        [maxlength]="itemStructure.attributes.maxlength != null ? itemStructure.attributes.maxlength : ''"
+        [attr.data-name]="encapsulationPath"
         appFormControl>
 
       <textarea
@@ -19,8 +23,9 @@
         (change)="contentChanged($event)"
         [disabled]="viewOnly"
         [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
-        [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+        [class]="'contentInput' + (itemStructure.attributes.class != null ? ' ' + itemStructure.attributes.class : '')"
         [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+        [attr.data-name]="encapsulationPath"
         appFormControl>
       </textarea>
 
@@ -30,8 +35,9 @@
           [(ngModel)]="itemContent"
           (change)="contentChanged($event)"
           [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
-          [class]="itemStructure.attributes.class != null ? itemStructure.attributes.class : ''"
+          [class]="'contentInput' + (itemStructure.attributes.class != null ? ' ' + itemStructure.attributes.class : '')"
           [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+          [attr.data-name]="encapsulationPath"
           appFormControl>
           <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
             <option
@@ -50,12 +56,17 @@
     </ng-container>
   </label>
   
+<span *ngIf="_contentError != null && _contentError.length > 0" class="error">
+  {{_contentError}}
+</span>
+
   <app-wysiwyg-html
     *ngIf="itemStructure.type == 'html'"
     [viewContent]="viewContent"
     [viewOnly]="viewOnly"
     [itemContent]="itemContent"
     [itemAttributes]="itemStructure.attributes"
+    [encapsulationPath]="encapsulationPath"
     (wysiwygContentChanged)="contentChanged($event)"></app-wysiwyg-html>
   <app-file-upload
     *ngIf="itemStructure.attributes.type == 'file'"
@@ -63,6 +74,7 @@
     [viewContent]="viewContent"
     [(itemContent)]="itemContent"
     [itemAttributes]="itemStructure.attributes"
+    [encapsulationPath]="encapsulationPath"
     (fileChanged)="contentChanged($event)">
   </app-file-upload>
 </ng-container>

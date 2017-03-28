@@ -1,11 +1,13 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
+import { KeyValArrayPipe } from "./../../../../pipes/key-val-array.pipe";
 
 @Component({
   selector: 'app-content-editor',
   templateUrl: './content-editor.component.html',
   styleUrls: ['./content-editor.component.css']
 })
-export class ContentEditorComponent implements OnInit, OnChanges {
+export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
   @Input() viewOnly:boolean=false;
   @Input() viewContent:boolean=true;
   @Input() userAccessLevel:number;
@@ -17,6 +19,9 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
+  private _contentErrors:any;
+
+  constructor(private _kvaPipe:KeyValArrayPipe, private _cdService:ContentDeveloperServerService) { }
 
   ngOnInit() {
     this._selectFirstComponent();
@@ -31,6 +36,14 @@ export class ContentEditorComponent implements OnInit, OnChanges {
     }
   }
 
+  ngDoCheck(){
+    this._updateErrors();
+  }
+
+  requestToDismissErrors(){
+    this._contentErrors = null;
+  }
+
   viewCollection(collection){
     this.currentCollectionName = collection;
   }
@@ -40,6 +53,7 @@ export class ContentEditorComponent implements OnInit, OnChanges {
   }
 
   saveProjectContent(){
+    this._updateErrors(true);
     let contentData = {
       commit_message: "Update to content of '" + this.currentCollectionName + "'"
     }
@@ -78,6 +92,15 @@ export class ContentEditorComponent implements OnInit, OnChanges {
       for(let collection in this.projectStructure){
         this.viewCollection(collection);
         break;
+      }
+    }
+  }
+
+  private _updateErrors(forceView:boolean=false){
+    if(this.viewContent && this.viewOnly == false && (forceView || this._contentErrors != null)){
+      this._contentErrors = this._cdService.getContentErrors();
+      if(this._kvaPipe.transform(this._contentErrors, "values").length == 0){
+        this._contentErrors = null;
       }
     }
   }
