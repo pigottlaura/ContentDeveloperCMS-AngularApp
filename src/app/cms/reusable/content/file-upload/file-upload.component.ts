@@ -62,11 +62,12 @@ export class FileUploadComponent implements DoCheck {
         this._warning = "Uploading..."
         this._cdService.uploadMediaItem(fileInput.files[0]).subscribe(
         responseObject => {
-          if(responseObject.fileUrl != null){
-            this.itemContent = responseObject.fileUrl;
-            this.fileChanged.emit(responseObject.fileUrl); 
+          if(responseObject.media_item_url != null){
+            this.itemContent = responseObject.media_item_url;
+            this.fileChanged.emit(responseObject.media_item_url); 
             this._fileInputElement.setAttribute("data-url", this.itemContent);
             this._warning = this._contentError = null;    
+            this.hideMediaItemGallery();
           }
         }
       );

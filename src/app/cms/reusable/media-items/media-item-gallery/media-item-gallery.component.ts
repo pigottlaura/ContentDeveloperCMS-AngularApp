@@ -31,10 +31,11 @@ export class MediaItemGalleryComponent implements OnInit, OnChanges {
     var nextPageToken = useNextPageToken ? this._mediaItemNextPageToken : null;
     this._cdService.loadProjectMediaItems(this.numItemsPerPage, nextPageToken).subscribe(
       responseObject => {
-        this._mediaItemNextPageToken = responseObject.nextPageToken;       
+        console.log(responseObject);
+        this._mediaItemNextPageToken = responseObject.next_page_token;       
         
-        if(responseObject.files != null){
-          this._mediaItems = responseObject.files;
+        if(responseObject.media_items != null){
+          this._mediaItems = responseObject.media_items;
         }
       }
     );
