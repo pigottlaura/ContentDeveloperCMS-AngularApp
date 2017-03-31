@@ -119,6 +119,7 @@ export class CmsComponent {
   refreshProject(){
     console.log("REFRESH");
     this.loadProjectContentAndStructure();
+    this.loadProjectSettings();
   }
   
   resetProjectContent(){
