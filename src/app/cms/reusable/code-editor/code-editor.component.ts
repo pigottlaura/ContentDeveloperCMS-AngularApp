@@ -10,11 +10,13 @@ export class CodeEditorComponent implements DoCheck {
   @Input() codeJson:string;
   @Output() codeUpdated:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectStructure:EventEmitter<void> = new EventEmitter<void>();
-  @Output() requestToSaveProjectStructure:EventEmitter<void> = new EventEmitter<void>();
+  @Output() requestToSaveProjectStructure:EventEmitter<string> = new EventEmitter<string>();
   private _textarea;
   private _cursorPosition;
   private _updateFromStructure:boolean = false;
   private _formatJson:boolean = false;
+  private _commitMessage:string;
+
   constructor(private _jsPipe:CustomJsonPipe) { }
 
   ngDoCheck(){
@@ -34,8 +36,9 @@ export class CodeEditorComponent implements DoCheck {
   }
   
   saveProjectStructureClicked(){
-    this.requestToSaveProjectStructure.emit();
+    this.requestToSaveProjectStructure.emit(this._commitMessage);
     this._updateFromStructure = true;
+    this._commitMessage = null;
   }
 
   @HostListener("keyup", ["$event"])

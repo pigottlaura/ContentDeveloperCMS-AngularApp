@@ -30,10 +30,11 @@ export class StructureViewComponent implements OnChanges {
     this.viewRequestToResetStructure.emit();
   }
 
-  saveProjectStructure(){
+  saveProjectStructure(commitMessage){
     if(this.projectStructure != null){
       var structureData = {
-        structure: this.projectStructure
+        structure: this.projectStructure,
+        commit_message: commitMessage != null ? commitMessage : "Update to entire structure of project"
       }
       this.viewRequestToSaveStructure.emit(structureData);
     }

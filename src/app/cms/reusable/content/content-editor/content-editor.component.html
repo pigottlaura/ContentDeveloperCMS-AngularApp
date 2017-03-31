@@ -1,8 +1,15 @@
 <div *ngIf="projectStructure != null">
-  <div *ngIf="viewContent && viewOnly == false" class="row">
-    <button (click)="saveProjectContent()">Save</button>
-    <button (click)="resetProjectContent()">Reset</button>
-  </div>
+  <ng-container *ngIf="viewContent && viewOnly == false">
+    <div class="row">
+      <button (click)="resetProjectContent()">Reset</button>
+      <button (click)="saveProjectContent()">Save</button>
+      <label>Commit Message:
+        <input
+          type="text"
+          [(ngModel)]="_commitMessage">
+      </label>
+    </div>
+  </ng-container>
 <app-errors
 	[errors]="_contentErrors | keyValArray : 'values'"
 	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>

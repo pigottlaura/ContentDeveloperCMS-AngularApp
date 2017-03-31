@@ -1,6 +1,12 @@
+<div class="row">
+  <button (click)="formatJsonClicked()">Format JSON</button>
+  <button (click)="resetProjectStructureClicked()">Reset</button>
+  <button (click)="saveProjectStructureClicked()">Save</button>
+  <label>Commit Message:
+    <input
+      type="text"
+      [(ngModel)]="_commitMessage">
+  </label>
 <textarea
   [(ngModel)]="codeJson">
 </textarea>
-<button (click)="formatJsonClicked()">Format JSON</button>
-<button (click)="resetProjectStructureClicked()">Reset</button>
-<button (click)="saveProjectStructureClicked()">Save</button>

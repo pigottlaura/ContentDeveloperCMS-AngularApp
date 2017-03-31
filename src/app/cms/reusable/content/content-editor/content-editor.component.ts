@@ -20,6 +20,7 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
   currentCollectionName:string;
   private _encapsulationPathForCurrentFileInput:string;
   private _contentErrors:any;
+  private _commitMessage:string;
 
   constructor(private _kvaPipe:KeyValArrayPipe, private _cdService:ContentDeveloperServerService) { }
 
@@ -55,9 +56,10 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
   saveProjectContent(){
     this._updateErrors(true);
     let contentData = {
-      commit_message: "Update to content of '" + this.currentCollectionName + "'"
+      commit_message: this._commitMessage != null ? this._commitMessage : "Update to content of '" + this.currentCollectionName + "'"
     }
     this.requestToSaveProjectContent.emit(contentData);
+    this._commitMessage = null;
   }
 
   resetProjectContent(){
