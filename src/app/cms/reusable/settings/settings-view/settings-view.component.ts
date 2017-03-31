@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
 
 @Component({
@@ -6,14 +6,19 @@ import { ContentDeveloperServerService } from "./../../../../services/content-de
   templateUrl: './settings-view.component.html',
   styleUrls: ['./settings-view.component.css']
 })
-export class SettingsViewComponent {
+export class SettingsViewComponent implements OnInit {
   @Input() isAdmin:boolean = false;
   @Input() projectSettings;
   @Output() settingsUpdated:EventEmitter<void> = new EventEmitter<void>();
   @Output() viewRequestToRefreshSettings:EventEmitter<void> = new EventEmitter<void>();
   @Output() viewNotifyingOfProjectDeletion:EventEmitter<void> = new EventEmitter<void>();
+  private _projectId;
 
   constructor(private _cdService:ContentDeveloperServerService){}
+
+  ngOnInit(){
+    this._projectId = this._cdService.getCurrentProjectId();
+  }
   
   deleteProject(projectName){
     if(this.isAdmin && projectName == this.projectSettings.project_name){
@@ -29,7 +34,7 @@ export class SettingsViewComponent {
   }
 
   generateNewPublicAuthToken(currentAuthTokenInput){
-    if(currentAuthTokenInput.value != null){
+    if(this.isAdmin && currentAuthTokenInput.value == this.projectSettings.public_auth_token){
       this._cdService.generateNewPublicAuthToken(currentAuthTokenInput.value).subscribe(
         (responseObject:any) => {
           if(responseObject.public_auth_token != null){

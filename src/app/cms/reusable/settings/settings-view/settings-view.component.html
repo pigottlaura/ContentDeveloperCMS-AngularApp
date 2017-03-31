@@ -24,7 +24,6 @@
           <label>Allowed Update Origins:
             <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
           </label>
-          <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
         </div>
 
         <div class="row" *ngIf="isAdmin">
@@ -48,6 +47,14 @@
     </div>
   </div>
 
+  <div class="row" *ngIf="isAdmin">
+    <h3>Project Credentials</h3>
+    <div class="row" >
+        <strong>Project ID:</strong> {{_projectId}}<br>
+        <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
+    </div>
+  </div>
+
   <div class="row">
     <div [class]="isAdmin ? 'col-6-12' : 'col-12-12'">
       <app-collaborators
@@ -62,14 +69,15 @@
   </div>
 
   <div class="row" *ngIf="isAdmin">
-    <h3>Delete Project</h3>
+    <h3>Danger Zone</h3>
+    <h4>Delete Project</h4>
     <div class="row" >
         <label>Project Name:
           <input #pName type="text">
         </label>
         <button (click)="deleteProject(pName.value)">Confirm Delete (can't undo)</button>
     </div>
-    <h3>Generate New Public Auth Token</h3>
+    <h4>Generate New Public Auth Token</h4>
     <div class="row">
         <label>Current Auth Token:
           <input #aToken type="text">

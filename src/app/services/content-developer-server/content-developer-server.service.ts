@@ -373,8 +373,13 @@ export class ContentDeveloperServerService {
       .catch(error => Observable.throw(error) || "Unknown error uploading media item");
     return uploadMediaItemObservable;
   }
+
   getCurrentUser():Object{
     return this._currentUser;
+  }
+  
+  getCurrentProjectId():number {
+    return this._currentProjectId;
   }
 
   getCurrentProjectContent():Object{
