@@ -5,8 +5,9 @@
 </ng-container>
 
 <ng-container *ngIf="_projectId != null && _userAccessLevel != null">
-    <button (click)="viewUserProjects()">Back to all Projects</button>
     <button (click)="refreshProject()">Refresh from Server</button>
+    <button (click)="viewUserProjects()">Back to all Projects</button>
+    <button *ngIf="_userAccessLevel == 1"><a [href]="'./../feeds/' + _projectId" target="_blank">View JSON</a></button>
     <app-cms-admin
         *ngIf="_userAccessLevel == 1"
         [errors]="errors"
