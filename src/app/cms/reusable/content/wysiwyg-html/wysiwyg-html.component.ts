@@ -31,20 +31,22 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   ngOnChanges(changes){
     if(changes.itemContent){
       this.updateTextAreaToItemContent();
+      console.log(this._cursorPosition);
     }
   }
 
   ngDoCheck(){
     if(this._textareaElement != null && this._textareaElement.hasAttribute("data-error")){
-        this._contentError = this._textareaElement.getAttribute("data-error");
+      this._contentError = this._textareaElement.getAttribute("data-error");
     } else {
       this._contentError = null;
     }
   }
 
   updateTextAreaToItemContent(){
-    if(this._textareaElement != undefined){
-      this._textareaElement.innerHTML = this.itemContent;  
+    if(this._textareaElement != undefined && this._textareaElement.innerHTML.replace(/\"/g, "'") != this.itemContent){
+      this._textareaElement.innerHTML = this.itemContent; 
+      this._textareaElement.selectionStart = this._textareaElement.selectionEnd = this._cursorPosition;
     }
   }
 
@@ -63,6 +65,7 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
 
   updateContent(){
     this.itemContent = this._textareaElement.innerHTML.toString().replace(/\"/g, "'");
+    this._textareaElement.selectionStart = this._textareaElement.selectionEnd = this._cursorPosition;
     this.wysiwygContentChanged.emit(this.itemContent);
   }
 
