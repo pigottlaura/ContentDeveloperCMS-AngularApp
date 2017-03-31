@@ -4,44 +4,46 @@
 
 <div *ngIf="projectSettings != null">
   <div class="row">
-    <h3>General</h3>
+    <div class="col-12-12">
+      <h3>General</h3>
 
-    <div [class]="isAdmin ? 'col-6-12' : 'col-12-12'">
-      <div class="row">
-        <label>Project Name:
-          <input #pnInput type="text" [(ngModel)]="projectSettings.project_name">
-        </label>
+      <div [class]="isAdmin ? 'col-6-12' : 'col-12-12'">
+        <div class="row">
+          <label>Project Name:
+            <input #pnInput type="text" [(ngModel)]="projectSettings.project_name">
+          </label>
+        </div>
+
+        <div class="row" *ngIf="isAdmin">
+          <label>Maximum Content Cache Time (in milliseconds)
+            <input #pmcInput type="number" [(ngModel)]="projectSettings.max_cache_age">ms
+          </label>
+        </div>
+
+        <div class="row" *ngIf="isAdmin">
+          <label>Allowed Update Origins:
+            <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
+          </label>
+          <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
+        </div>
+
+        <div class="row" *ngIf="isAdmin">
+          <label>Allowed Read Origins:
+            <textarea [(ngModel)]="projectSettings.read_origins"></textarea>
+          </label>
+        </div>
       </div>
 
-      <div class="row" *ngIf="isAdmin">
-        <label>Maximum Content Cache Time (in milliseconds)
-          <input #pmcInput type="number" [(ngModel)]="projectSettings.max_cache_age">ms
-        </label>
-      </div>
-
-      <div class="row" *ngIf="isAdmin">
-        <label>Allowed Update Origins:
-          <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
-        </label>
-        <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
-      </div>
-
-      <div class="row" *ngIf="isAdmin">
-        <label>Allowed Read Origins:
-          <textarea [(ngModel)]="projectSettings.read_origins"></textarea>
-        </label>
-      </div>
-    </div>
-
-    <div class="col-6-12" *ngIf="isAdmin">
-      <div class="row">
-        <label>Custom Content Editor CSS
-          <textarea
-            #cssInput
-            class="customCss"
-            [(ngModel)]="projectSettings.custom_css">
-          </textarea>
-        </label>
+      <div class="col-6-12" *ngIf="isAdmin">
+        <div class="row">
+          <label>Custom Content Editor CSS
+            <textarea
+              #cssInput
+              class="customCss"
+              [(ngModel)]="projectSettings.custom_css">
+            </textarea>
+          </label>
+        </div>
       </div>
     </div>
   </div>
