@@ -7,7 +7,7 @@ import { CustomJsonPipe } from "./../../../pipes/custom-json.pipe";
   styleUrls: ['./code-editor.component.css']
 })
 export class CodeEditorComponent implements DoCheck {
-  @Input() codeJson:string;
+  @Input() codeJson:any;
   @Output() codeUpdated:EventEmitter<Object> = new EventEmitter<Object>();
   @Output() requestToResetProjectStructure:EventEmitter<void> = new EventEmitter<void>();
   @Output() requestToSaveProjectStructure:EventEmitter<string> = new EventEmitter<string>();
@@ -22,6 +22,9 @@ export class CodeEditorComponent implements DoCheck {
   ngDoCheck(){
     if(this._textarea != null && this._textarea.selectionStart == this.codeJson.length){
       this._textarea.setSelectionRange(this._cursorPosition, this._cursorPosition);
+    }
+    if(this.codeJson != null && this.codeJson instanceof Array){
+      this.codeJson = this.codeJson.join();
     }
   }
 
