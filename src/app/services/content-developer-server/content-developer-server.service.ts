@@ -249,7 +249,7 @@ export class ContentDeveloperServerService {
     console.log("CDService");
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=collaborators";
     let addNewCollaboratorObservable = this._http
-      .post(requestUrl, {email: emailAddress, accessLevelInt: accessLevelInt}, {headers: this._headers})
+      .post(requestUrl, {email: emailAddress, access_level_int: accessLevelInt}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
@@ -260,11 +260,11 @@ export class ContentDeveloperServerService {
     return addNewCollaboratorObservable;
   }
 
-  removeCollaborator(collaboratorID){
+  removeCollaborator(collaboratorId){
     console.log("CDService");
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=collaborators";
     let removeCollaboratorObservable = this._http
-      .delete(requestUrl + "&collaboratorID=" + collaboratorID, {headers: this._headers})
+      .delete(requestUrl + "&collaborator_id=" + collaboratorId, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
@@ -275,11 +275,11 @@ export class ContentDeveloperServerService {
     return removeCollaboratorObservable;
   }
 
-  updateCollaborator(collaboratorID, accessLevelInt){
-    console.log("About to updated " + collaboratorID + " to access level " + accessLevelInt);
+  updateCollaborator(collaboratorId, accessLevelInt){
+    console.log("About to updated " + collaboratorId + " to access level " + accessLevelInt);
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=collaborators";
     let addNewCollaboratorObservable = this._http
-      .put(requestUrl, {collaboratorID: collaboratorID, accessLevelInt: accessLevelInt}, {headers: this._headers})
+      .put(requestUrl, {collaborator_id: collaboratorId, access_level_int: accessLevelInt}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
