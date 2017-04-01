@@ -1,15 +1,13 @@
 <app-header
     [user]="user"
     [pageTitle]="pageTitle"
-    (requestToLogout)="logout()"></app-header>
-
-    <app-login
-        *ngIf="user == null">
-    </app-login>
+    (requestToLogout)="logout()"
+    [class]="user != null ? 'loggedIn' : 'loggedOut'"></app-header>
 
     <app-cms 
         *ngIf="user != null"
         (requestToUpdatePageTitle)="updatePageTitle($event)"
         (loginRequired)="loginRequired($event)">
     </app-cms>
-<app-footer></app-footer>
+<app-footer
+    [class]="user != null ? 'loggedIn' : 'loggedOut'"></app-footer>

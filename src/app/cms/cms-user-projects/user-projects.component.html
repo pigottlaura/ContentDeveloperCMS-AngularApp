@@ -1,8 +1,10 @@
-<button (click)="refreshUserProjects()">Refresh from Server</button>
-<div class="row">
+<button
+  (click)="refreshUserProjects()"
+  class="button cms top-tabs">Refresh from Server</button>
+<div class="row container-background">
   <div class="col-8-12">
-    <div *ngIf="_userProjects != null && _userProjects.length > 0">
-      <table>
+    <div *ngIf="_userProjects != null && _userProjects.length > 0" class="topOfTable">
+      <table class="head">
         <thead>
           <tr>
             <th>Project Name</th>
@@ -31,14 +33,14 @@
   </div>
   <div class="col-4-12">
     <h2>Create a New Project</h2>
-    <h3>Project Name</h3>
+    <h3>New Project Name</h3>
     <input #pnInput type="text">
     
     <h3>Templates</h3>
     <span class="templates">
-      <button (click)="createNewProject(pnInput)">No Template</button>
-      <button (click)="createNewProject(pnInput, 'website_template')">Website Template</button>
-      <button (click)="createNewProject(pnInput, 'mediaitems_template')">Media Items Template</button>
+      <button (click)="createNewProject(pnInput)" class="button template">No Template</button>
+      <button (click)="createNewProject(pnInput, 'website_template')" class="button template">Website Template</button>
+      <button (click)="createNewProject(pnInput, 'mediaitems_template')" class="button template">Media Items Template</button>
     </span>
   </div>
 </div>

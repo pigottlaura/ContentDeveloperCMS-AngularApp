@@ -1,8 +1,14 @@
-<div class="row">
-  <button (click)="formatJsonClicked()">Format JSON</button>
-  <button (click)="resetProjectStructureClicked()">Reset</button>
-  <button (click)="saveProjectStructureClicked()">Save</button>
-  <label>Commit Message:
+<div>
+  <button
+    (click)="formatJsonClicked()"
+    class="button cms bottom-tabs">Format JSON</button>
+  <button
+    (click)="resetProjectStructureClicked()"
+    class="button cms bottom-tabs">Reset</button>
+  <button
+    (click)="saveProjectStructureClicked()"
+    class="button cms bottom-tabs">Save</button>
+  <label class="right">Commit Message:
     <input
       type="text"
       [(ngModel)]="_commitMessage">

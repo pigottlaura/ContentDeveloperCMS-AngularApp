@@ -1,8 +1,12 @@
 <div *ngIf="_mediaItems != null">
   <h2>Available Images</h2>
   <div class="row">
-    <button (click)="hide()">Close</button>
-    <button (click)="loadMediaItems()">Next</button>
+    <button
+      (click)="hide()"
+      class="button cms small">Close</button>
+    <button
+      (click)="loadMediaItems()"
+      [class]="'button cms small' + (_mediaItemNextPageToken != null ? '' : ' disabled')">Next</button>
   </div>
   <div>
     <app-media-item

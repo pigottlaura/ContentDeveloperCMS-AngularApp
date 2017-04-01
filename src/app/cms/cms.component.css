@@ -1,3 +1,8 @@
+:host {
+    display: block;
+    background-color: #8fb7cc;
+    padding: 0 1% 2% 1%;
+}
 a {
     text-decoration: none;
     color: initial;

@@ -1,7 +1,12 @@
 :host > div {
-    background-color: black;
-    color: white;
+    background-color: #fff;
+    color: #0a2f42;
 }
+:host.loggedIn > div {
+    background-color: #fff;
+    color: #0a2f42;
+}
+
 h1 {
     margin: 1% 0;
 }
@@ -9,4 +14,19 @@ img {
     width: 50px;
     vertical-align: bottom;
     height: auto;
+}
+.button {
+    margin-top: 6px;
+    padding: 2% 4%;
+    color: #fff;
+    background-color: #1773a2;
+    text-shadow: black 1px 1px;
+    font-size: 1em;
+}
+.row {
+    margin: 0;
+}
+.right {
+    float: right;
+    padding-right: 0;
 }

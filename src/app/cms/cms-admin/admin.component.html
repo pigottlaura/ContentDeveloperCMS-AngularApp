@@ -4,7 +4,7 @@
 <app-errors
 	[errors]="errors"
 	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>
-<div class="row">
+<div class="row container-background">
 	<app-structure-view
 		*ngIf="_view == 'structure'"
 		[projectStructure]="projectStructure"

@@ -29,8 +29,8 @@
     </div>
   </div>
   <div *ngIf="showPreview" class="col-4-12">
-    <button (click)="clear()">Clear Preview</button>
-    <button (click)="revert()">Revert to this {{historyOf | upperCamelCase}}</button>
+    <button (click)="clear()" class="button cms bottom-tabs">Clear Preview</button>
+    <button (click)="revert()" class="button cms bottom-tabs">Revert to this {{historyOf | upperCamelCase}}</button>
     <textarea
       [value]="_previewHistoryObject != null ? (_previewHistoryObject | customJson : 'stringify') : ''">
     </textarea>

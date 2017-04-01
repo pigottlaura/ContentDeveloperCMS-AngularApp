@@ -4,17 +4,36 @@ th:nth-child(3), td:nth-child(3) {width: 20%;}
 th:nth-child(4), td:nth-child(4) {width: 20%;}
 th:nth-child(5), td:nth-child(5) {width: 10%;}
 
-.templates button {
-    cursor: pointer;
+h3 {
+    display: inline-block;
+}
+
+table {
+    background-color: white;
+}
+
+.button.template {
     text-align: left;
-    background-color: #000;
+    background-color: #0a2f42;
     color: #FFF;
     padding: 3%;
-    display: block;
     width: 100%;
+    margin-bottom: 1%;
+}
+
+.head {
+    width: 98%;
+}
+
+.topOfTable {
+    margin-top: 3%;
 }
 
 .scrollable {
     max-height: 400px;
     max-height: 60vh;
+}
+
+.container-backgroud {
+    margin-top: 1%;
 }

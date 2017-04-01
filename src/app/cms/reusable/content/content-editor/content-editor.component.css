@@ -1,8 +1,18 @@
 .collectionTab {
     padding: 7% 1%;
+    color: #0a2f42;
+    background-color: white;
+    text-align: left;
+    border: 1px solid #0a2f42;
+}
+.collectionTab.padding {
+    padding-left: 8%;
+}
+.collectionTab.active{
+    background-color: #0a2f42;
     color: white;
-    background-color: grey;
-    text-align: center;
-    border: 1px solid white;
+}
+.col-2-12 {
+    padding-left: 0;
 }
 

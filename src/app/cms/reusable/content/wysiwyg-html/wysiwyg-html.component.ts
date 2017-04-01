@@ -24,7 +24,7 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   constructor(private _el:ElementRef) {}
 
   ngAfterViewInit(){
-    this._textareaElement = <HTMLTextAreaElement> document.getElementById("wysiwyg-input");
+    this._textareaElement = <HTMLTextAreaElement> document.getElementsByClassName("wysiwyg-input")[0];
     this.updateTextAreaToItemContent();
   }
 

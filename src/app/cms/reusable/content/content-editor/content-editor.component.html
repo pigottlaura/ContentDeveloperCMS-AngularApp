@@ -1,20 +1,22 @@
 <div *ngIf="projectStructure != null">
   <ng-container *ngIf="viewContent && viewOnly == false">
-    <div class="row">
-      <button (click)="resetProjectContent()">Reset</button>
-      <button (click)="saveProjectContent()">Save</button>
+      <button
+        (click)="resetProjectContent()"
+        class="button cms bottom-tabs">Reset</button>
+      <button
+        (click)="saveProjectContent()"
+        class="button cms bottom-tabs">Save</button>
       <label>Commit Message:
         <input
           type="text"
           [(ngModel)]="_commitMessage">
       </label>
-    </div>
   </ng-container>
 <app-errors
 	[errors]="_contentErrors | keyValArray : 'values'"
 	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>
-  <div class="row">
-    <div class="col-2-12">
+  <div>
+    <div [class]="viewContent ? 'col-2-12' : 'col-3-12'">
         <div *ngIf="projectStructure != null">
           <app-draggable-container
             [content]="projectStructure"
@@ -26,13 +28,13 @@
                 [draggable]="viewContent == false"
                 [attr.data-key]="collection"
                 (click)="viewCollection(collection)"
-                [class]="(collection === currentCollectionName ? 'active ' : '')  + 'collectionTab'">{{collection | title}}
+                [class]="(viewContent ? 'padding' : '') + (collection === currentCollectionName ? ' active' : '')  + ' collectionTab'">{{collection | title}}
               </div>
             </ng-container>
           </app-draggable-container>
         </div>
     </div>
-    <div class="col-10-12">
+    <div [class]="viewContent ? 'col-10-12' : 'col-9-12'">
       <ng-container *ngIf="currentCollectionName != null && (userAccessLevel <= 2 || projectStructure[currentCollectionName].no_access == null || (projectStructure[currentCollectionName].no_access != null && projectStructure[currentCollectionName].no_access.indexOf(userAccessLevel) < 0))">
         <h2>{{currentCollectionName | title}}</h2>
         <form>

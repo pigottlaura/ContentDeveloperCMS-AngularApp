@@ -1,12 +1,28 @@
 <div class="row">
-  <div class="col-8-12">
+  <div class="col-6-12">
     <h1>{{pageTitle}}</h1>
   </div>
-  <div *ngIf="user != null" class="col-4-12 right">
-    <span>{{user.displayName}}</span>
-    <button (click)="logoutClicked()">Logout</button>
-    <img 
-      *ngIf="user.profileImage != null"
-      [src]="user.profileImage + '&sz=50'">
+  <div class="col-6-12 right">
+    <ng-container *ngIf="user != null" class="col-4-12 right">
+      <span>Welcome back {{user.displayName}}</span>
+      <img 
+        *ngIf="user.profileImage != null"
+        [src]="user.profileImage + '&sz=50'">
+      <span
+        (click)="logoutClicked()"
+        class="button">Logout</span>
+    </ng-container>
+
+    <ng-container *ngIf="user == null">
+      <a
+        [href]="_loginUrl"
+        class="button">
+        Login
+      </a>
+    </ng-container>
+
+    <a href="./../documentation" target="_blank" class="button">
+      Documentation
+    </a>
   </div>
 </div>

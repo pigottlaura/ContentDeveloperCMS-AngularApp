@@ -11,3 +11,7 @@ th:nth-child(5), td:nth-child(5) {width: 10%;}
 textarea {
     min-height: 200px;
 }
+
+table {
+    background-color: white;
+}

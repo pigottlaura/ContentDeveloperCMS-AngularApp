@@ -1,12 +1,12 @@
 <h2>Project Settings</h2>
-<button (click)="saveAllProjectSettings()">Save All</button>
-<button (click)="resetAllProjectSettings()">Reset All</button>
+<button (click)="saveAllProjectSettings()" class="button cms bottom-tabs">Save All</button>
+<button (click)="resetAllProjectSettings()" class="button cms bottom-tabs">Reset All</button>
 
-<div *ngIf="projectSettings != null">
+<ng-container *ngIf="projectSettings != null">
   <div class="row">
-    <div class="col-12-12">
-      <h3>General</h3>
+    <h3>General</h3>
 
+    <div class="row">
       <div [class]="isAdmin ? 'col-6-12' : 'col-12-12'">
         <div class="row">
           <label>Project Name:
@@ -17,18 +17,6 @@
         <div class="row" *ngIf="isAdmin">
           <label>Maximum Content Cache Time (in milliseconds)
             <input #pmcInput type="number" [(ngModel)]="projectSettings.max_cache_age">ms
-          </label>
-        </div>
-
-        <div class="row" *ngIf="isAdmin">
-          <label>Allowed Update Origins:
-            <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
-          </label>
-        </div>
-
-        <div class="row" *ngIf="isAdmin">
-          <label>Allowed Read Origins:
-            <textarea [(ngModel)]="projectSettings.read_origins"></textarea>
           </label>
         </div>
       </div>
@@ -49,40 +37,56 @@
 
   <div class="row" *ngIf="isAdmin">
     <h3>Project Credentials</h3>
-    <div class="row" >
+    <div class="row">
+      <div class="col-6-12">
         <strong>Project ID:</strong> {{_projectId}}<br>
         <strong>Public Auth Token:</strong> {{projectSettings.public_auth_token}}
+      </div>
+      <div class="col-6-12">
+        <div class="row">
+          <label>Allowed Update Origins:
+            <textarea [(ngModel)]="projectSettings.update_origins"></textarea>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Allowed Read Origins:
+            <textarea [(ngModel)]="projectSettings.read_origins"></textarea>
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row">
-    <div [class]="isAdmin ? 'col-6-12' : 'col-12-12'">
-      <app-collaborators
-        [projectSettings]="projectSettings"
-        (collaboratorsUpdated)="updateSettings()"></app-collaborators>
-    </div>
-    <div class="col-6-12" *ngIf="isAdmin">
-      <app-access-levels
-        [projectSettings]="projectSettings"
-        (accessLevelsUpdated)="updateSettings()"></app-access-levels>
-    </div>
+    <app-collaborators
+      [projectSettings]="projectSettings"
+      (collaboratorsUpdated)="updateSettings()"></app-collaborators>
+  </div>
+  
+  <div class="row">
+    <app-access-levels
+      [projectSettings]="projectSettings"
+      (accessLevelsUpdated)="updateSettings()"></app-access-levels>
   </div>
 
   <div class="row" *ngIf="isAdmin">
     <h3>Danger Zone</h3>
-    <h4>Delete Project</h4>
-    <div class="row" >
-        <label>Project Name:
-          <input #pName type="text">
-        </label>
-        <button (click)="deleteProject(pName.value)">Confirm Delete (can't undo)</button>
-    </div>
-    <h4>Generate New Public Auth Token</h4>
     <div class="row">
-        <label>Current Auth Token:
-          <input #aToken type="text">
-        </label>
-        <button (click)="generateNewPublicAuthToken(aToken)">Generate New Token (can't undo)</button>
+      <h4>Delete Project</h4>
+      <div class="row" >
+          <label>Project Name:
+            <input #pName type="text">
+          </label>
+          <button (click)="deleteProject(pName.value)">Confirm Delete (can't undo)</button>
+      </div>
+      <h4>Generate New Public Auth Token</h4>
+      <div class="row">
+          <label>Current Auth Token:
+            <input #aToken type="text">
+          </label>
+          <button (click)="generateNewPublicAuthToken(aToken)">Generate New Token (can't undo)</button>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

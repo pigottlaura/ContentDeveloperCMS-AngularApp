@@ -1,90 +1,95 @@
-<div *ngIf="viewOnly == false">
-  <button (click)="addImage()">Image</button>
-  <button (click)="addHeading('h1')">H1</button>
-  <button (click)="addHeading('h2')">H2</button>
-  <button (click)="addHeading('h3')">H3</button>
-  <button (click)="addLink()">Hyperlink</button>
-  <button (click)="undoLastChange()" [disabled]="_lastChange == null">Undo</button>
-  <button (click)="clearAllContent()">Clear All</button>
-</div>
+<div>
+  <div [class]="viewContent ? 'col-8-12' : 'col-12-12'">
+    <div *ngIf="viewOnly == false">
+      <button (click)="addImage()" class="button cms bottom-tabs">Image</button>
+      <button (click)="addHeading('h1')" class="button cms bottom-tabs">H1</button>
+      <button (click)="addHeading('h2')" class="button cms bottom-tabs">H2</button>
+      <button (click)="addHeading('h3')" class="button cms bottom-tabs">H3</button>
+      <button (click)="addLink()" class="button cms bottom-tabs">Hyperlink</button>
+      <button (click)="undoLastChange()" [disabled]="_lastChange == null" class="button cms bottom-tabs">Undo</button>
+      <button (click)="clearAllContent()" class="button cms bottom-tabs">Clear All</button>
+    </div>
 
-<div *ngIf="viewContent && viewOnly == false">
-  <div *ngIf="_insertType == 'image'">
-    <div class="row">
-      <h3>Image</h3>
+    <span *ngIf="_contentError != null && _contentError.length > 0" class="error">
+      {{_contentError}}
+    </span>
+
+    <div
+      *ngIf="viewContent && viewOnly == false"
+      #textareaInput
+      contenteditable="true"
+      (click)="updateCursorPosition()"
+      (change)="updateCursorPosition()"
+      (keyup)="updateCursorPosition()"
+      [class]="'input wysiwyg-input' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
+      [attr.data-required]="itemAttributes.required != null && itemAttributes.required ? true : false"
+      [attr.data-maxlength]="itemAttributes.maxlength != null ? itemAttributes.maxlength : ''"
+      [attr.data-name]="encapsulationPath"
+      appFormControl>
     </div>
-    <div class="row">
-      <label>Alt Text:
-        <input #altTextInput type="text">
-      </label>
-    </div>
-    <div class="row">
-      <app-file-upload
-        [viewContent]="viewContent"
-        [encapsulationPath]="encapsulationPath"
-        (fileChanged)="imageSelected($event)"></app-file-upload>
-    </div>
-    <div class="row">
-      <button (click)="insertImage(altTextInput)">Insert</button>
-      <button (click)="cancel()">Cancel</button>
-    </div>
+
   </div>
 
-  <div *ngIf="_insertType == 'heading'">
-    <div class="row">
-      <h3>Heading {{_headingType}}</h3>
+  <div 
+    *ngIf="viewContent && viewOnly == false"
+    class="col-4-12">
+    <div *ngIf="_insertType == 'image'">
+      <div class="row">
+        <h3>Image</h3>
+      </div>
+      <div class="row">
+        <label>Alt Text:
+          <input #altTextInput type="text">
+        </label>
+      </div>
+      <div class="row">
+        <app-file-upload
+          [viewContent]="viewContent"
+          [encapsulationPath]="encapsulationPath"
+          (fileChanged)="imageSelected($event)"></app-file-upload>
+      </div>
+      <div class="row">
+        <button (click)="insertImage(altTextInput)" class="button cms bottom-tabs bottom-border">Insert</button>
+        <button (click)="cancel()"  class="button cms bottom-tabs bottom-border">Cancel</button>
+      </div>
     </div>
-    <div class="row">
-      <label>Heading Text
-        <input #hTextInput type="text">
-      </label>
+
+    <div *ngIf="_insertType == 'heading'">
+      <div class="row">
+        <h3>Heading {{_headingType}}</h3>
+      </div>
+      <div class="row">
+        <label>Heading Text
+          <input #hTextInput type="text">
+        </label>
+      </div>
+      <div class="row">
+        <button (click)="insertHeading(hTextInput)">Insert</button>
+        <button (click)="cancel()">Cancel</button>
+      </div>
     </div>
-    <div class="row">
-      <button (click)="insertHeading(hTextInput)">Insert</button>
-      <button (click)="cancel()">Cancel</button>
+
+    <div *ngIf="_insertType == 'link'">
+      <div class="row">
+        <h3>Hyperlink</h3>
+      </div>
+      <div class="row">
+        <label>Link Text
+          <input #linkTextInput type="text">
+        </label>
+        <label>Link To
+          <input #linkHrefInput type="text">
+        </label>
+      </div>
+      <div class="row">
+        <button (click)="insertLink(linkTextInput, linkHrefInput)">Insert</button>
+        <button (click)="cancel()">Cancel</button>
+      </div>
     </div>
   </div>
-
-  <div *ngIf="_insertType == 'link'">
-    <div class="row">
-      <h3>Hyperlink</h3>
-    </div>
-    <div class="row">
-      <label>Link Text
-        <input #linkTextInput type="text">
-      </label>
-      <label>Link To
-        <input #linkHrefInput type="text">
-      </label>
-    </div>
-    <div class="row">
-      <button (click)="insertLink(linkTextInput, linkHrefInput)">Insert</button>
-      <button (click)="cancel()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<span *ngIf="_contentError != null && _contentError.length > 0" class="error">
-  {{_contentError}}
-</span>
-
-<div
-  *ngIf="viewContent && viewOnly == false"
-  #textareaInput
-  contenteditable="true"
-  (click)="updateCursorPosition()"
-  (change)="updateCursorPosition()"
-  (keyup)="updateCursorPosition()"
-  id="wysiwyg-input"
-  [class]="'input' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
-  [attr.data-required]="itemAttributes.required != null && itemAttributes.required ? true : false"
-  [attr.data-maxlength]="itemAttributes.maxlength != null ? itemAttributes.maxlength : ''"
-  [attr.data-name]="encapsulationPath"
-  appFormControl>
 </div>
 
 <div
   *ngIf="viewContent == false || viewOnly"
-  class="input"
-  id="wysiwyg-input">
+  class="input wysiwyg-input">
 </div>

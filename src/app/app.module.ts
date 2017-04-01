@@ -34,7 +34,6 @@ import { HistoryViewComponent } from './cms/cms-admin/history-view/history-view.
 import { SettingsViewComponent } from './cms/reusable/settings/settings-view/settings-view.component';
 import { HistoryDisplayComponent } from './cms/reusable/history/history-display/history-display.component';
 import { UserProjectsComponent } from './cms/cms-user-projects/user-projects.component';
-import { LoginComponent } from './login/login.component';
 import { MediaItemGalleryComponent } from './cms/reusable/media-items/media-item-gallery/media-item-gallery.component';
 import { MediaItemComponent } from './cms/reusable/media-items/media-item/media-item.component';
 import { DraggableContainerDirective } from './cms/reusable/draggable-container/draggable-container.directive';
@@ -75,7 +74,6 @@ import { ErrorsComponent } from './cms/reusable/errors/errors.component';
     CustomDatePipe,
     DoubleDigitPipe,
     UserProjectsComponent,
-    LoginComponent,
     MediaItemGalleryComponent,
     MediaItemComponent,
     DraggableContainerDirective,

@@ -1,3 +1,10 @@
 textarea.customCss {
     height: 160px;
 }
+:host > .row {
+    border-bottom: 2px solid #0a2f42;
+    padding-bottom: 3%;
+}
+.bottom-tabs {
+    border-bottom: 1px solid #010a4f !important;
+}

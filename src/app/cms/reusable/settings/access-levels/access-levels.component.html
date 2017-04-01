@@ -1,42 +1,44 @@
 <h3>Access Levels</h3>
 <div class="row">
-  <h4>Add Access Level</h4>
-  <label>Access Level Name:
-    <input #aalLevelNameInput type="text">
-  </label>
-  <br>
-  <label>Access Level Int:
-    <input #aalLevelIntInput type="text">
-  </label>
-  <br>
-  <button (click)="addNewAccessLevel(aalLevelNameInput, aalLevelIntInput)">Add New Access Level</button>
-</div>
-<div class="row">
-  <h4>Project Access Levels</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Access Level Name</th>
-        <th>Access Level Int</th>
-        <th>In Use</th>
-        <th>Options</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let accessLevel of projectSettings.access_levels">
-        <td>
-          <input type="text" [(ngModel)]="accessLevel.access_level_name">
-        </td>
-        <td>
-          {{accessLevel.access_level_int}}
-        </td>
-        <td>{{accessLevel.in_use ? "Yes" : "No"}}</td>
-        <td>
-          <button
-            *ngIf="accessLevel.access_level_int > 3 && !accessLevel.in_use"
-            (click)="deleteAccessLevel(accessLevel.access_level_int)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="col-6-12">
+    <h4>Project Access Levels</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Access Level Name</th>
+          <th>Access Level Int</th>
+          <th>In Use</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let accessLevel of projectSettings.access_levels">
+          <td>
+            <input type="text" [(ngModel)]="accessLevel.access_level_name">
+          </td>
+          <td>
+            {{accessLevel.access_level_int}}
+          </td>
+          <td>{{accessLevel.in_use ? "Yes" : "No"}}</td>
+          <td>
+            <button
+              *ngIf="accessLevel.access_level_int > 3 && !accessLevel.in_use"
+              (click)="deleteAccessLevel(accessLevel.access_level_int)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6-12">
+    <h4>Add Access Level</h4>
+    <label>Access Level Name:
+      <input #aalLevelNameInput type="text">
+    </label>
+    <br>
+    <label>Access Level Int:
+      <input #aalLevelIntInput type="text">
+    </label>
+    <br>
+    <button (click)="addNewAccessLevel(aalLevelNameInput, aalLevelIntInput)">Add New Access Level</button>
+  </div>
 </div>
