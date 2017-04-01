@@ -8,7 +8,7 @@
   #fileInput
   type="file"
   [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
-  [class]="'button cms small fileInput' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.attributes.class : '')"
+  [class]="'button cms small fileInput' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.class : '')"
   (change)="fileInputChanged(fileInput)"
   [attr.data-required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
   [attr.data-name]="encapsulationPath"
