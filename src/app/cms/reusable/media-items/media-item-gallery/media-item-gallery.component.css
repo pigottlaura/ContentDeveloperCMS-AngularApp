@@ -7,6 +7,12 @@
     overflow-y: scroll;
     display: block;
 }
+:host.visible {
+    visibility: visible;
+}
+:host.hidden {
+    visibility: hidden;
+}
 .button.cms.disabled {
     opacity: 0.5;
 }

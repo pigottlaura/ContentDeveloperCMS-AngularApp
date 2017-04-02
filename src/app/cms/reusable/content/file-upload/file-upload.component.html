@@ -19,15 +19,16 @@
   (click)="openFileExplorer()">Upload an Image</button>
 <button
   *ngIf="viewOnly == false" 
-  (click)="showMediaItemGallery()" class="button cms small">Select Existing Image</button>
+  (click)="toggleMediaItemGallery()" class="button cms small">Select Existing Image</button>
 <img
   *ngIf="viewContent && itemContent != null && _mediaItemGalleryVisible == false"
   [src]="itemContent">
 
 <app-media-item-gallery
-    *ngIf="_mediaItemGalleryVisible"
+    [class]="_mediaItemGalleryVisible ? 'visible' : 'hidden'"
     [numItemsPerPage]=9
     [numItemsPerRow]=3
+    [visible]="_mediaItemGalleryVisible"
     (closeButtonClicked)="hideMediaItemGallery()"
     (mediaItemSelected)="mediaItemSelected($event)">
 </app-media-item-gallery>

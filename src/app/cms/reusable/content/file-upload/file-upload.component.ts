@@ -48,6 +48,10 @@ export class FileUploadComponent implements DoCheck {
     this._mediaItemGalleryVisible = true;
   }
 
+  toggleMediaItemGallery(){
+    this._mediaItemGalleryVisible = !this._mediaItemGalleryVisible;
+  }
+
   hideMediaItemGallery(){
     this._mediaItemGalleryVisible = false;
   }
