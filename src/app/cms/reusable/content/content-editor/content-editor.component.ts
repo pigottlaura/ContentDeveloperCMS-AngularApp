@@ -82,6 +82,7 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
         currentContent = currentContent[encapsulationKeys[i]];
       }
       currentContent[encapsulationKeys[encapsulationKeys.length - 1]] = newContentData.content;
+      this.requestToDismissErrors();
     }
   }
 
