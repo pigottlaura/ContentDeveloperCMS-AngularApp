@@ -55,6 +55,7 @@ export class CodeEditorComponent implements DoCheck {
     this._cursorPosition = e.target.selectionStart;
     var deletePrevChar = false;
     var deleteSelection = false;
+    var tabBackwards = false;
     var appendChar = "";
     if(e.key.toLowerCase() == "enter" || e.keyCode == 13){
         e.preventDefault();
@@ -72,27 +73,30 @@ export class CodeEditorComponent implements DoCheck {
     if(e.key.toLowerCase() == "tab" || e.keyCode == 9){
         e.preventDefault();
         if(e.shiftKey){
-            deletePrevChar = true;
+            tabBackwards = true;
         } else {
             appendChar = "\t";
         }
         
     }
 
-    this._formatStructureJson(e, appendChar, deletePrevChar, deleteSelection);
+    this._formatStructureJson(e, appendChar, deletePrevChar, deleteSelection, tabBackwards);
   }
 
-  private _formatStructureJson(e=null, appendChar="", deletePrevChar=false, deleteSelection=false){
+  private _formatStructureJson(e=null, appendChar="", deletePrevChar=false, deleteSelection=false, tabBackwards=false){
     if(e != null){
       if(deleteSelection){
         this.codeJson = this.codeJson.slice(0, this._cursorPosition) + this.codeJson.slice(e.target.selectionEnd + 1);
         this._cursorPosition = this._cursorPosition > 1 ? this._cursorPosition - 1 : this._cursorPosition;
       } else if(deletePrevChar){
           var prevChar = this.codeJson.slice(this._cursorPosition-1, this._cursorPosition);
-          if(prevChar.replace(/\s/g, "").length == 0){
-              this.codeJson = this.codeJson.slice(0, this._cursorPosition-1) + this.codeJson.slice(this._cursorPosition);
-          }
           this._cursorPosition = this._cursorPosition > 1 ? this._cursorPosition - 1 : this._cursorPosition;      
+      } else if(tabBackwards){
+        var prevChar = this.codeJson.slice(this._cursorPosition-1, this._cursorPosition);
+        if(prevChar.replace(/\s/g, "").length == 0){
+            this.codeJson = this.codeJson.slice(0, this._cursorPosition-1) + this.codeJson.slice(this._cursorPosition);
+            this._cursorPosition = this._cursorPosition > 1 ? this._cursorPosition - 1 : this._cursorPosition;
+        }
       } else if(appendChar.length > 0) {
           this.codeJson = this.codeJson.slice(0, this._cursorPosition) + appendChar + this.codeJson.slice(e.target.selectionEnd);
           this._cursorPosition += 1;
