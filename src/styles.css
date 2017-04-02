@@ -120,13 +120,39 @@ th {
 
 /* Dragging */
 [draggable="true"]:before {
-    content: "...";
-    cursor: grab;
+    content: "";
+    display: inline-block;
+    width: 18px; height: 18px;
+    margin: 0 6px 0 -18px;
+    vertical-align: middle;
+    background-image: url("./assets/images/dragIcon_dark.png");
+    background-size: contain;
 }
-
-.dragging {
-    background-color: #f00;
-    cursor: grabbing;
+.collectionTab[draggable="true"]:before {
+    margin-left: 6px;
+}
+.collectionTab.active[draggable="true"]:before {
+    background-image: url("./assets/images/dragIcon_light.png");
+}
+[draggable="true"]{
+    cursor: move;
+    cursor: grab;
+    margin-left: 20px;
+}
+.collectionTab[draggable="true"] {
+    margin-left: 0;
+}
+[data-dragging="true"] {
+    opacity: 0.5;
+    cursor: grabbing !important;
+    cursor: -moz-grabbing !important;
+    cursor: -webkit-grabbing !important;
+}
+[data-draggingover="true"]{
+    border: 2px solid #888;
+}
+.collectionTab[data-draggingover="true"] {
+    opacity: 0.3;
 }
 
 /* ALIGN */

@@ -31,6 +31,7 @@ export class DraggableContainerDirective implements AfterViewInit {
     this._dragStartY = e.screenY;
     if(e.target.parentNode == this._containerElement){
       this._draggingElement = e.target;
+      this._draggingElement.setAttribute("data-dragging", "true");
     }    
   }
 
@@ -42,8 +43,23 @@ export class DraggableContainerDirective implements AfterViewInit {
       e.preventDefault();
   }
 
+  @HostListener("dragenter", ["$event"])
+  onDragEnter(e){
+    if(e.target.parentNode === this._containerElement){
+      e.target.setAttribute("data-draggingover", "true");
+    }
+    e.stopPropagation();
+  }
+
+  @HostListener("dragleave", ["$event"])
+  onDragLeave(e){
+    e.target.removeAttribute("data-draggingover");
+  }
+
   @HostListener("drop", ["$event"])
   onDrop(e){
+    this._draggingElement.removeAttribute("data-dragging");
+    e.target.removeAttribute("data-draggingover");
     if(this._draggingElement != null && e.target.parentNode === this._containerElement){
         var direction:number = e.screenY < this._dragStartY ? -1 : 1;
 
@@ -59,7 +75,8 @@ export class DraggableContainerDirective implements AfterViewInit {
         this._dragStartY = null;
         
         this._reorderContent(dragData);
-    }				
+    }	
+    e.stopPropagation();			
   }
 
   private _reorderContent(dragData){
