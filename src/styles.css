@@ -1,6 +1,7 @@
 /* General */
 html {
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 body {
     margin: 0;

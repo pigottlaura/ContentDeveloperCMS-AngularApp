@@ -7,12 +7,16 @@
   *ngIf="viewOnly == false"
   #fileInput
   type="file"
-  [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
-  [class]="'button cms small fileInput' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.class : '')"
+  class="fileInput"
   (change)="fileInputChanged(fileInput)"
   [attr.data-required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
   [attr.data-name]="encapsulationPath"
   appFormControl>
+<button
+  *ngIf="viewOnly == false" 
+  [id]="itemAttributes != null && itemAttributes.id != null ? itemAttributes.id : ''"
+  [class]="'button cms small' + (itemAttributes != null && itemAttributes.class != null ? ' ' + itemAttributes.class : '')"
+  (click)="openFileExplorer()">Upload an Image</button>
 <button
   *ngIf="viewOnly == false" 
   (click)="showMediaItemGallery()" class="button cms small">Select Existing Image</button>

@@ -2,6 +2,7 @@
     display: block;
     background-color: #8fb7cc;
     padding: 0 1% 2% 1%;
+    min-height: 77vh;
 }
 a {
     text-decoration: none;

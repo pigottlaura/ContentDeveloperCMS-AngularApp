@@ -40,6 +40,9 @@ export class FileUploadComponent implements DoCheck {
       }
     }
   }
+  openFileExplorer(){
+    this._fileInputElement.click();
+  }
   
   showMediaItemGallery(){
     this._mediaItemGalleryVisible = true;

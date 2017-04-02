@@ -1,5 +1,7 @@
 input[type="file"]{
-    width: 86px;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
 }
 
 img {
