@@ -15,6 +15,7 @@
         [min]="itemStructure.attributes.min != null ? itemStructure.attributes.min : ''"
         [maxlength]="itemStructure.attributes.maxlength != null ? itemStructure.attributes.maxlength : ''"
         [attr.data-name]="encapsulationPath"
+        [attr.data-validate]="viewContent && viewOnly == false"
         appFormControl>
 
       <textarea
@@ -25,7 +26,9 @@
         [id]="itemStructure.attributes.id != null ? itemStructure.attributes.id : ''"
         [class]="'contentInput' + (itemStructure.attributes.class != null ? ' ' + itemStructure.attributes.class : '')"
         [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
+        [maxlength]="itemStructure.attributes.maxlength != null ? itemStructure.attributes.maxlength : ''"
         [attr.data-name]="encapsulationPath"
+        [attr.data-validate]="viewContent && viewOnly == false"
         appFormControl>
       </textarea>
 
@@ -38,6 +41,7 @@
           [class]="'contentInput' + (itemStructure.attributes.class != null ? ' ' + itemStructure.attributes.class : '')"
           [required]="itemStructure.attributes.required != null && itemStructure.attributes.required"
           [attr.data-name]="encapsulationPath"
+          [attr.data-validate]="viewContent && viewOnly == false"
           appFormControl>
           <ng-container *ngIf="itemStructure.attributes != null && itemStructure.attributes.options != null">
             <option
@@ -70,6 +74,7 @@
     (wysiwygContentChanged)="contentChanged($event)"></app-wysiwyg-html>
   <app-file-upload
     *ngIf="itemStructure.attributes.type == 'file'"
+    class="static"
     [viewOnly]="viewOnly"
     [viewContent]="viewContent"
     [(itemContent)]="itemContent"

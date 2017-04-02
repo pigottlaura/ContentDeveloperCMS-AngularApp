@@ -11,6 +11,7 @@
   (change)="fileInputChanged(fileInput)"
   [attr.data-required]="itemAttributes != null && itemAttributes.required != null && itemAttributes.required ? true : false"
   [attr.data-name]="encapsulationPath"
+  [attr.data-validate]="viewContent && viewOnly == false"
   appFormControl>
 <button
   *ngIf="viewOnly == false" 
