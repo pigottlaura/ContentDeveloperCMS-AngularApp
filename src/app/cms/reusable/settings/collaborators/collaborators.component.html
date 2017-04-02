@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let collaborator of projectSettings.collaborators">
-          <td>{{collaborator.display_name}}</td>
+          <td>{{collaborator.display_name != null ? collaborator.display_name : collaborator.email_address}}</td>
           <td>
             <select
               #calInput
