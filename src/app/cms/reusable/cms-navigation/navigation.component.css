@@ -1,5 +1,9 @@
+nav {
+    clear: both;
+}
 nav ul {
     list-style: none;
+    display: flex;
     margin: 0;
     padding: 0;
 }
@@ -12,12 +16,6 @@ nav ul li {
     background-color: #0a2f42;
     color: #fff;
     text-align: center;
-}
-
-nav ul.admin li{
-    width: 24%;
-}
-
-nav ul.editor li{
-    width: 32%;
+    flex: 1;
+    margin-right: 5px;
 }

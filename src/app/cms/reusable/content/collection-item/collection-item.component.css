@@ -6,6 +6,6 @@ input, textarea {
 }
 
 [disabled] {
-    background-color: initial !important;
+    background-color: white !important;
     color: initial !important;
 }

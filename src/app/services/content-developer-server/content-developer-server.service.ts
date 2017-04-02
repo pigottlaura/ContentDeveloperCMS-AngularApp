@@ -207,8 +207,10 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error refreshing project history")
       .do(responseObject => {
-        this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
-        this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history;     
+        if(this._currentProjectContentStructureHistory != null){
+          this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
+          this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history; 
+        }            
       });
     return refreshProjectHistoryObservable;
   }
