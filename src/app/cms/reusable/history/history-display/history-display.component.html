@@ -1,17 +1,19 @@
 <h2 *ngIf="historyOf">{{historyOf | upperCamelCase }}History</h2>
 <div *ngIf="history != null" class="row">
   <div [class]="showPreview ? 'col-8-12' : 'col-12-12'">
-    <table>
-      <thead>
-        <tr>
-          <th>Commit ID</th>
-          <th>Date</th>
-          <th>Changes</th>
-          <th>Made By</th>
-          <th>Options</th>
-        </tr>
-      </thead>
-    </table>
+    <div class="tableHead">
+      <table>
+        <thead>
+          <tr>
+            <th>Commit ID</th>
+            <th>Date</th>
+            <th>Changes</th>
+            <th>Made By</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
     <div class="scrollable">
       <table>
         <tbody>
@@ -22,7 +24,9 @@
             <td>{{commit.date | customDate : false : true}}</td>
             <td>{{commit.message.split(" (HEAD ->")[0]}}</td>
             <td>{{commit.author_name}}</td>
-            <td><button (click)="preview(commit)">Preview</button></td>
+            <td><button
+                  class="button cms small"
+                  (click)="preview(commit)">Preview</button></td>
           </tr>
         </tbody>
       </table>  

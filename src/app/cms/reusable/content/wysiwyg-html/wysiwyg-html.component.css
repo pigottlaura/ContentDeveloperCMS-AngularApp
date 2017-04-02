@@ -5,6 +5,5 @@ label {
     min-height: 200px;
     resize: vertical;
     overflow-y: scroll;
-    border: 1px solid black;
     background-color: white;
 }

@@ -3,18 +3,20 @@
   class="button cms top-tabs">Refresh from Server</button>
 <div class="row container-background">
   <div class="col-8-12">
-    <div *ngIf="_userProjects != null && _userProjects.length > 0" class="topOfTable">
-      <table class="head">
-        <thead>
-          <tr>
-            <th>Project Name</th>
-            <th>Access Level</th>
-            <th>Last Modified By</th>
-            <th>Last Modified On</th>
-            <th>Options</th>			
-          </tr>
-        </thead>
-      </table>
+    <div *ngIf="_userProjects != null && _userProjects.length > 0">
+      <div class="tableHead">
+        <table>
+          <thead>
+            <tr>
+              <th>Project Name</th>
+              <th>Access Level</th>
+              <th>Last Modified By</th>
+              <th>Last Modified On</th>
+              <th>Options</th>			
+            </tr>
+          </thead>
+        </table>
+      </div>
 
       <div class="scrollable">
         <table>
@@ -24,7 +26,9 @@
               <td>{{project.access_level_name}}</td>
               <td>{{project.last_modified_by}}</td>
               <td>{{project.last_modified_on != null ? (project.last_modified_on | customDate : false : true) : "&nbsp;"}}</td>
-              <td><button (click)="editProject(project.project_id, project.project_name, project.access_level_int)">{{project.access_level_int == 3 ? "View" : "Edit"}}</button></td>
+              <td><button
+                  class="button cms small"
+                  (click)="editProject(project.project_id, project.project_name, project.access_level_int)">{{project.access_level_int == 3 ? "View" : "Edit"}}</button></td>
             </tr>
           </tbody>
         </table>

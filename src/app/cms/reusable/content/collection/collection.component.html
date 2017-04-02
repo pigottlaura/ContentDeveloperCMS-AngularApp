@@ -64,6 +64,7 @@
                 </ng-container>
                 <button
                   *ngIf="viewOnly == false"
+                  class="button cms small dark"
                   (click)="deleteItem(encapsulationPath, index)">Delete</button>
               </div>
             </ng-container>
@@ -114,6 +115,7 @@
 
         <button
             *ngIf="viewOnly == false"
+            class="button cms small"
             (click)="addNewItem(encapsulationPath, projectStructure[collection])"> Add {{collection | title}}</button>
       </ng-container>
 

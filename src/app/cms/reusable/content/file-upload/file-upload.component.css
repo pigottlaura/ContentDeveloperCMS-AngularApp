@@ -14,3 +14,8 @@ img {
 img[src="null"]{
     display: none;
 }
+
+:host.static app-media-item-gallery.visible {
+    position: static;
+    width: 50%;
+}

@@ -29,6 +29,9 @@ body {
     border-radius: 7px;
     cursor: pointer;
 }
+.button.cms.bottom-tabs, textarea, .input {
+    border: 1px solid #010a4f;
+}
 .button.cms {
     padding: 0.5% 2%;
     color: #010a4f;
@@ -37,7 +40,10 @@ body {
 .button.cms.small {
     background-color: #1773a2;
     color: white;
-    padding: 2% 4%;
+    padding: 8px 16px;;
+}
+.button.dark {
+    background-color: #010a4f !important;
 }
 .button.cms[class*="tabs"].bottom-border{
     border-bottom: 1px solid #010a4f !important;
@@ -45,11 +51,11 @@ body {
 .button.cms.bottom-tabs {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border: 1px solid #010a4f;
     border-bottom: none;
     margin-bottom: -1px;
     margin-right: 1px;
 }
+
 .button.cms.top-tabs {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -75,6 +81,9 @@ textarea {
     width: 100%;
     background-color: white;
     color: black;
+}
+.tableHead {
+    margin-right: 18px;
 }
 table {
     width: 100%;

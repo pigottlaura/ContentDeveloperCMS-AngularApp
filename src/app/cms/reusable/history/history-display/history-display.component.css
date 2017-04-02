@@ -15,3 +15,7 @@ textarea {
 table {
     background-color: white;
 }
+
+.button.cms.bottom-tabs {
+    margin-bottom: -2px;
+}
