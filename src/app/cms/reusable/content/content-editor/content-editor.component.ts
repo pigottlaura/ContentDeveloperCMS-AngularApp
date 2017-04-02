@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, DoCheck, ElementRef } from '@angular/core';
 import { ContentDeveloperServerService } from "./../../../../services/content-developer-server/content-developer-server.service";
 import { KeyValArrayPipe } from "./../../../../pipes/key-val-array.pipe";
 
@@ -21,18 +21,32 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
   private _encapsulationPathForCurrentFileInput:string;
   private _contentErrors:any;
   private _commitMessage:string;
+  private _contentEditorElement;
 
-  constructor(private _kvaPipe:KeyValArrayPipe, private _cdService:ContentDeveloperServerService) { }
+  constructor(private el:ElementRef, private _kvaPipe:KeyValArrayPipe, private _cdService:ContentDeveloperServerService) { }
 
   ngOnInit() {
-    this._selectFirstComponent();
+    this._contentEditorElement = this.el.nativeElement;
+    this._selectFirstComponent("", false);
   }
 
   ngOnChanges(changes){
     if(changes.projectStructure){
       if(this.projectStructure[this.currentCollectionName] == undefined){
         this.currentCollectionName = null;
-        this._selectFirstComponent();
+      }
+    }
+    if(changes.userAccessLevel){
+      console.log(this.userAccessLevel);
+      if(changes.userAccessLevel.currentValue != changes.userAccessLevel.previousValue){
+        if(this.userAccessLevel == 3){
+          this.viewOnly = true;
+        } else {
+          this.viewOnly = false;
+        }
+        var selectedCollectionName = this.currentCollectionName;
+        this.currentCollectionName = null;
+        setTimeout(()=> this._selectFirstComponent(selectedCollectionName), 10);
       }
     }
   }
@@ -90,11 +104,31 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
     this.structureCollectionTabsReordered.emit(updatedTabOrder.content);
   }
   
-  private _selectFirstComponent(){
-    if(this.currentCollectionName == null) {
-      for(let collection in this.projectStructure){
-        this.viewCollection(collection);
-        break;
+  private _selectFirstComponent(selectedCollectionName, click=true){
+    if(click){
+      if(this._contentEditorElement != null){
+        var allCollectionTabs = this._contentEditorElement.getElementsByClassName("collectionTab");
+        var firstVisibleCollection;
+
+        for(var i=0; i<allCollectionTabs.length; i++){
+            if(allCollectionTabs[i].getAttribute("data-key") == selectedCollectionName){
+              firstVisibleCollection = allCollectionTabs[i];
+            }
+        }
+        if(firstVisibleCollection == null && allCollectionTabs[0] != null){
+          firstVisibleCollection = allCollectionTabs[0];
+        }
+
+        if(firstVisibleCollection != null){
+          firstVisibleCollection.click();
+        }
+      }
+    } else {
+      if(this.currentCollectionName == null) {
+        for(let collection in this.projectStructure){
+          this.viewCollection(collection);
+          break;
+        }
       }
     }
   }

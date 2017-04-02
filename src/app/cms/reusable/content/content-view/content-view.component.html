@@ -2,8 +2,22 @@
   <div class="col-12-12">
     <h2>Project Content</h2>
     <div *ngIf="projectStructure != null">
+      <ng-container *ngIf="userAccessLevel == 1 || userAccessLevel == 2">
+        View As
+        <select
+          #viewAs
+          (change)="viewAsAccessLevelChange(viewAs.value)">
+          <ng-container *ngFor="let accessLevel of projectAccessLevels">
+            <option
+              *ngIf="accessLevel.access_level_int > 1 || (accessLevel.access_level_int == 1 && userAccessLevel == 1)"
+              [value]="accessLevel.access_level_int">
+              {{accessLevel.access_level_name}}
+            </option>
+          </ng-container>
+        </select>
+      </ng-container>
       <app-content-editor
-        [userAccessLevel]="userAccessLevel"
+        [userAccessLevel]="_viewAsAccessLevel"
         [viewContent]="true"
         [viewOnly]="viewOnly"
         [(projectContent)]="projectContent"

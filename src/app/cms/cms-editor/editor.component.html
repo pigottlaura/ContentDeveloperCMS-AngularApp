@@ -1,34 +1,37 @@
 <app-cms-navigation
+	*ngIf="userAccessLevel == 2"
 	[userAccessLevel]="userAccessLevel"
 	(requestToChangeView)="changeView($event)"></app-cms-navigation>
 <app-errors
 	[errors]="errors"
 	(requestToDismissErrors)="requestToDismissErrors($event)"></app-errors>
-<div class="row">
+<div class="row container-background">
 	<app-content-view
 		*ngIf="_view == 'content'"
 		[userAccessLevel]="userAccessLevel"
 		[customCss]="customCss"
 		[projectStructure]="projectStructure"
 		[(projectContent)]="projectContent"
+		[projectAccessLevels]="projectSettings != null ? projectSettings.access_levels : []"
 		(viewRequestToSaveContent)="viewRequestToSaveContent($event)"
 		(viewRequestToResetContent)="viewRequestToResetContent()">
 	</app-content-view>
 	
-	<app-history-display
-		*ngIf="_view == 'history'"
-		[history]="projectContentHistory"
-		[historyOf]="'content'"
-		[showPreview]="false"
-		(revertToCommit)="revertToCommit($event)"
-		(previewCommit)="previewCommit($event)">
-	</app-history-display>
+	<ng-container *ngIf="userAccessLevel == 2">
+		<app-history-display
+			*ngIf="_view == 'history'"
+			[history]="projectContentHistory"
+			[historyOf]="'content'"
+			[showPreview]="false"
+			(revertToCommit)="revertToCommit($event)"
+			(previewCommit)="previewCommit($event)">
+		</app-history-display>
 
-	<app-settings-view
-		*ngIf="_view == 'settings' && userAccessLevel == 2"
-		[(projectSettings)]="projectSettings"
-		(settingsUpdated)="viewRequestToRefreshSettings($event)"
-		(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
-	</app-settings-view>
-	
+		<app-settings-view
+			*ngIf="_view == 'settings'"
+			[(projectSettings)]="projectSettings"
+			(settingsUpdated)="viewRequestToRefreshSettings($event)"
+			(viewRequestToRefreshSettings)="viewRequestToRefreshSettings($event)">
+		</app-settings-view>
+	</ng-container>
 </div>
