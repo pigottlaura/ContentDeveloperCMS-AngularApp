@@ -132,10 +132,12 @@ export class CmsComponent {
   
   resetProjectSettings(){
     this.projectSettings = this._cdService.getCurrentProjectSettings();
-    if(this._projectId != null){
+    if(this._projectId != null && this.projectSettings != null){
       this._projectName = this.projectSettings.project_name;
       this.updatePageTitle(this._projectName);
 
+    } else {
+      this.loginRequired.emit();
     }
   }
 
