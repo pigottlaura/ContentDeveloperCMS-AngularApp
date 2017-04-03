@@ -70,22 +70,20 @@ export class ContentDeveloperServerService {
           this.logout();
         } else {
           this._resetIntervalTimer();
-          this._activeSessionInterval = setInterval(this._intervalTick, 1000);
+          this._activeSessionInterval = setInterval(()=>{
+            this._activeSessionTime++;
+            if(this._activeSessionTime > (this._serverSessionMax * this._warnTimeoutAt)){
+              var remainingMinutes = (this._serverSessionMax - this._activeSessionTime) / 1000 / 60;
+              console.log("Your session will expire in " + remainingMinutes + " minutes");
+            } else if(this._activeSessionInterval > this._serverSessionMax) {
+              clearInterval(this._activeSessionInterval);
+              console.log("Your session has expired");
+            }
+          }, 1000);
           this._currentUser = responseObject.user
         }
       });
     return loadUserObservable;
-  }
-
-  private _intervalTick(){
-    this._activeSessionTime++;
-    if(this._activeSessionTime > (this._serverSessionMax * this._warnTimeoutAt)){
-      var remainingMinutes = (this._serverSessionMax - this._activeSessionTime) / 1000 / 60;
-      console.log("Your session will expire in " + remainingMinutes + " minutes");
-    } else if(this._activeSessionInterval > this._serverSessionMax) {
-      clearInterval(this._activeSessionInterval);
-      console.log("Your session has expired");
-    }
   }
 
   private _resetIntervalTimer(){
