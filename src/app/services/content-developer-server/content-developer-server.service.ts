@@ -65,18 +65,18 @@ export class ContentDeveloperServerService {
     return loadUserObservable;
   }
 
-  logout():void{
-    if(this._currentUser != null){
-      let logoutUrl = this._serverUrl + "/admin/logout";
-      let logoutObservable = this._http
-        .get(logoutUrl)
-        .map((responseObject: Response) => <any> responseObject.json())
-        .catch(error => Observable.throw(error) || "Unknown error when logging user out")
-        .do(responseObject => console.log("User logged out"));
-      this._currentUser = null;
-    }
+  logout():Observable<any>{
+    let logoutUrl = this._serverUrl + "/admin/logout";
+    let logoutObservable = this._http
+      .get(logoutUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error) || "Unknown error when logging user out")
+      .do(responseObject => console.log("User logged out"));
+    this._currentUser = null;
     
     this.leaveProject();
+
+    return logoutObservable;
   }
 
   loadUserProjects():Observable<Object> {
