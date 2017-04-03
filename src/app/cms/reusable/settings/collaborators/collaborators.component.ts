@@ -19,22 +19,32 @@ export class CollaboratorsComponent implements OnInit {
   }
 
   addCollaborator(emailInput, accessLevelIntInput){
-    console.log(emailInput.value, accessLevelIntInput.value);
     this._cdService.addNewCollaborator(emailInput.value, accessLevelIntInput.value).subscribe(
       responseObject => {
-        console.log("Collaborator added!!");
-        emailInput.value = accessLevelIntInput.value = "";
-        this.collaboratorsUpdated.emit();
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Collaborator added!!");
+            emailInput.value = accessLevelIntInput.value = "";
+            this.collaboratorsUpdated.emit();
+          }
+        }
       }
     );  
   }
 
   deleteCollaborator(collaborator){
-    console.log(collaborator);
     this._cdService.removeCollaborator(collaborator.user_id).subscribe(
       responseObject => {
-        console.log("Collaborator removed!!");
-        this.collaboratorsUpdated.emit();
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Collaborator removed!!");
+            this.collaboratorsUpdated.emit();
+          }
+        }        
       }      
     );
   }

@@ -31,12 +31,15 @@ export class MediaItemGalleryComponent implements OnInit, OnChanges {
     var nextPageToken = useNextPageToken ? this._mediaItemNextPageToken : null;
     this._cdService.loadProjectMediaItems(this.numItemsPerPage, nextPageToken).subscribe(
       responseObject => {
-        console.log(responseObject);
-        this._mediaItemNextPageToken = responseObject.next_page_token;       
-        
-        if(responseObject.media_items != null){
-          this._mediaItems = responseObject.media_items;
-        }
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          this._mediaItemNextPageToken = responseObject.next_page_token;       
+          
+          if(responseObject.media_items != null){
+            this._mediaItems = responseObject.media_items;
+          }
+        }        
       }
     );
   }

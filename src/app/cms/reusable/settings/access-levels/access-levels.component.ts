@@ -21,11 +21,16 @@ export class AccessLevelsComponent {
     
     this._cdService.createAccessLevel(requestedAccessLevel, accessLevelNameInput.value).subscribe(
       responseObject => {
-        if(responseObject.success){
-          console.log("Access level added!!");
-          accessLevelIntInput.value = accessLevelNameInput.value = "";
-          this.accessLevelsUpdated.emit();
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Access level added!!");
+            accessLevelIntInput.value = accessLevelNameInput.value = "";
+            this.accessLevelsUpdated.emit();
+          }
         }
+        
       }
     );
   }
@@ -33,9 +38,13 @@ export class AccessLevelsComponent {
   deleteAccessLevel(accessLevelInt){
     this._cdService.deleteAccessLevel(accessLevelInt).subscribe(
       responseObject => {
-        if(responseObject.success){
-          console.log("Access level deleted");
-          this.accessLevelsUpdated.emit();
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Access level deleted");
+            this.accessLevelsUpdated.emit();
+          }
         }
       }
     ); 

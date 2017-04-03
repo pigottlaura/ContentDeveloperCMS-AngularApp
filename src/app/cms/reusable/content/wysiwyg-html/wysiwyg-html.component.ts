@@ -31,7 +31,6 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   ngOnChanges(changes){
     if(changes.itemContent){
       this.updateTextAreaToItemContent();
-      console.log(this._cursorPosition);
     }
   }
 
@@ -60,7 +59,6 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   updateCursorPosition(){
     this._cursorPosition = this._getCursorPosition(this._textareaElement);
     this.updateContent();
-    //console.log(this._cursorPosition);
   }
 
   updateContent(){
@@ -86,7 +84,6 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
   }
 
   clearAllContent(){
-    console.log("Clear all Content");
     this._textareaElement.innerHTML = "";
     this.updateContent();
     this.clear();
@@ -98,31 +95,24 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
 
   imageSelected(imageUrl){
     this._imageUrl = imageUrl;
-    console.log("WYSIWYG - " + this._imageUrl);
   }
   
   insertImage(altTextInput:HTMLInputElement) {
-    console.log("Insert Image");
     if(this._imageUrl != null){
       let newImage = "<img src='" + this._imageUrl + "' alt='" + altTextInput.value + "'>";
-      console.log(newImage);
       this.appendToContent(newImage);
       this.clear([altTextInput]);
     }
   }
 
   insertHeading(hTextInput:HTMLInputElement){
-    console.log("Insert Heading - " + this._headingType);
     let newHeading = "<" + this._headingType + ">" + hTextInput.value + "</" + this._headingType + ">";
-    console.log(newHeading);
     this.appendToContent(newHeading);
     this.clear([hTextInput]);
   }
 
   insertLink(linkTextInput:HTMLInputElement, linkHrefInput:HTMLInputElement){
-    console.log("Insert Link");
     let newLink = "<a href='" + linkHrefInput.value + "'>" + linkHrefInput.value + "</a>";
-    console.log(newLink);
     this.appendToContent(newLink);
     this.clear([linkTextInput, linkHrefInput]);
   }
@@ -141,7 +131,6 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
     this._textareaElement.selectionStart = this._textareaElement.selectionEnd = this._cursorPosition;
 
     this.updateContent();
-    console.log(this._textareaElement.innerHTML);
   }
 
   cancel(){
@@ -188,7 +177,6 @@ export class WysiwygHtmlComponent implements AfterViewInit, OnChanges, DoCheck {
                     contentBeforeCursor += nodeContent;
                 }
             }
-            console.log(contentBeforeCursor);
 
             cursorPosition = contentBeforeCursor.length;    
         }

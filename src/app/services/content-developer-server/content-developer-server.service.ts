@@ -65,16 +65,18 @@ export class ContentDeveloperServerService {
     return loadUserObservable;
   }
 
-  logout():Observable<any>{
-    let logoutUrl = this._serverUrl + "/admin/logout";
-    let logoutObservable = this._http
-      .get(logoutUrl)
-      .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
-    this._currentUser = null
+  logout():void{
+    if(this._currentUser != null){
+      let logoutUrl = this._serverUrl + "/admin/logout";
+      let logoutObservable = this._http
+        .get(logoutUrl)
+        .map((responseObject: Response) => <any> responseObject.json())
+        .catch(error => Observable.throw(error) || "Unknown error when logging user out")
+        .do(responseObject => console.log("User logged out"));
+      this._currentUser = null;
+    }
+    
     this.leaveProject();
-
-    return logoutObservable;
   }
 
   loadUserProjects():Observable<Object> {
@@ -165,7 +167,7 @@ export class ContentDeveloperServerService {
     return loadAdminSettingsObservable;
   }
 
-  updateAdminSettings(updateOrigins=null, readOrigins=null):Observable<Object>{
+  updateAdminSettings(updateOrigins=null, readOrigins=null):Observable<any>{
     let requestUrl = this._serverUrl + "/admin/settings/" + this._currentProjectId;
     let updateProjectSettingsObservable =  this._http
       .put(requestUrl, {update_origins: updateOrigins, read_origins: readOrigins}, {headers: this._headers})
@@ -203,7 +205,6 @@ export class ContentDeveloperServerService {
   }
 
   updateProjectStructure(projectStructure:Object, commitMessage:string=null):Observable<Object>{
-    console.log(commitMessage);
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId;
     let structureUpdateObservable = this._http
       .put(requestUrl, {structure: projectStructure, commit_message: commitMessage},{headers: this._headers})
@@ -224,7 +225,6 @@ export class ContentDeveloperServerService {
 
   updateProjectContent(projectContent:Object, commitMessage:string=null, encapsulationPath:string=""):Observable<Object>{
     if(this._kvaPipe.transform(this._contentErrors, "values").length == 0){
-      console.log(projectContent);
       let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "/" + encapsulationPath;
       let contentUpdateObservable = this._http
         .put(requestUrl, {content: projectContent, commit_message: commitMessage}, {headers: this._headers})
@@ -313,7 +313,6 @@ export class ContentDeveloperServerService {
   }
 
   addNewCollaborator(emailAddress, accessLevelInt){
-    console.log("CDService");
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=collaborators";
     let addNewCollaboratorObservable = this._http
       .post(requestUrl, {email: emailAddress, access_level_int: accessLevelInt}, {headers: this._headers})
@@ -333,7 +332,6 @@ export class ContentDeveloperServerService {
   }
 
   removeCollaborator(collaboratorId){
-    console.log("CDService");
     let requestUrl = this._serverUrl + "/feeds/" + this._currentProjectId + "?action=collaborators";
     let removeCollaboratorObservable = this._http
       .delete(requestUrl + "&collaborator_id=" + collaboratorId, {headers: this._headers})

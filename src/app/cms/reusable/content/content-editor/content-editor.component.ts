@@ -37,7 +37,6 @@ export class ContentEditorComponent implements OnInit, OnChanges, DoCheck {
       }
     }
     if(changes.userAccessLevel){
-      console.log(this.userAccessLevel);
       if(changes.userAccessLevel.currentValue != changes.userAccessLevel.previousValue){
         if(this.userAccessLevel == 3){
           this.viewOnly = true;

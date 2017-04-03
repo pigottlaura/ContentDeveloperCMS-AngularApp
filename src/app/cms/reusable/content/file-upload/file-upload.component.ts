@@ -69,13 +69,17 @@ export class FileUploadComponent implements DoCheck {
         this._warning = "Uploading..."
         this._cdService.uploadMediaItem(fileInput.files[0]).subscribe(
         responseObject => {
-          if(responseObject.media_item_url != null){
-            this.itemContent = responseObject.media_item_url;
-            this.fileChanged.emit(responseObject.media_item_url); 
-            this._fileInputElement.setAttribute("data-url", this.itemContent);
-            this._warning = this._contentError = null;    
-            this.hideMediaItemGallery();
-          }
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            if(responseObject.success){
+              this.itemContent = responseObject.media_item_url;
+              this.fileChanged.emit(responseObject.media_item_url); 
+              this._fileInputElement.setAttribute("data-url", this.itemContent);
+              this._warning = this._contentError = null;    
+              this.hideMediaItemGallery();
+            }
+          }          
         }
       );
     }    

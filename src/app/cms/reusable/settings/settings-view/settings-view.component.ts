@@ -24,10 +24,14 @@ export class SettingsViewComponent implements OnInit {
     if(this.isAdmin && projectName == this.projectSettings.project_name){
       this._cdService.deleteProject(projectName).subscribe(
         responseObject => {
-          if(responseObject.success){
-            this.viewNotifyingOfProjectDeletion.emit();
-            console.log("Project deleted");
-          }
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            if(responseObject.success){
+              this.viewNotifyingOfProjectDeletion.emit();
+              console.log("Project deleted");
+            }
+          }          
         }
       )
     }
@@ -37,9 +41,13 @@ export class SettingsViewComponent implements OnInit {
     if(this.isAdmin && currentAuthTokenInput.value == this.projectSettings.public_auth_token){
       this._cdService.generateNewPublicAuthToken(currentAuthTokenInput.value).subscribe(
         (responseObject:any) => {
-          if(responseObject.success){
-            currentAuthTokenInput.value = "";
-            this.settingsUpdated.emit();
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            if(responseObject.success){
+              currentAuthTokenInput.value = "";
+              this.settingsUpdated.emit();
+            }
           }
         }
       )
@@ -63,14 +71,26 @@ export class SettingsViewComponent implements OnInit {
         this.projectSettings.max_cache_age,
         this.projectSettings.custom_css
       ).subscribe(
-        responseObject => this.settingsUpdated.emit()
+        responseObject => {
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            this.settingsUpdated.emit();
+          }
+        }
       );
 
       this._cdService.updateAdminSettings(
         this.projectSettings.update_origins,
         this.projectSettings.read_origins
       ).subscribe(
-        responseObject => this.settingsUpdated.emit()
+        responseObject => {
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            this.settingsUpdated.emit();
+          }
+        }
       );
 
       if(currentProjectSettings.access_levels != this.projectSettings.access_levels){
@@ -94,8 +114,13 @@ export class SettingsViewComponent implements OnInit {
       this._cdService.updateProjectSettings(
         this.projectSettings.project_name
       ).subscribe(
-        responseObject => this.settingsUpdated.emit()
-      );
+        responseObject => {
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            this.settingsUpdated.emit();
+          }
+      });
     }
 
     if(currentProjectSettings.collaborators != this.projectSettings.collaborators){
@@ -123,9 +148,13 @@ export class SettingsViewComponent implements OnInit {
     if(accessLevelName != null && accessLevelName.length > 0){
       this._cdService.updateAccessLevel(accessLevelInt, accessLevelName).subscribe(
         responseObject => {
-          if(responseObject.success){
-            console.log("Access level updated");
-            this.settingsUpdated.emit();
+          if(responseObject.loginRequired){
+            this._cdService.logout();
+          } else {
+            if(responseObject.success){
+              console.log("Access level updated");
+              this.settingsUpdated.emit();
+            }
           }
         }
       );
@@ -136,10 +165,14 @@ export class SettingsViewComponent implements OnInit {
     collaborator.access_level_int = accessLevelInt;
     this._cdService.updateCollaborator(collaborator.user_id, accessLevelInt).subscribe(
       responseObject => {
-        if(responseObject.success){
-          console.log("Collaborator updated!!");
-          this.settingsUpdated.emit();
-        }
+        if(responseObject.loginRequired){
+          this._cdService.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Collaborator updated!!");
+            this.settingsUpdated.emit();
+          }
+        }        
       }
     );
   }

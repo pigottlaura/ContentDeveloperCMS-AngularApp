@@ -21,8 +21,14 @@ export class UserProjectsComponent implements OnInit {
     if(projectNameInput.value.length > 0){
       this._cdService.createNewProject(projectNameInput.value, template).subscribe(
         responseObject => {
-          this.editProject(responseObject.new_project_id, projectNameInput.value, 1);
-          projectNameInput.value = "";
+          if(responseObject.loginRequired){
+            this.viewLoginRequired.emit();
+          } else {
+            if(responseObject != null){
+              this.editProject(responseObject.new_project_id, projectNameInput.value, 1);
+              projectNameInput.value = "";
+            }            
+          }          
         }
       );
     }    

@@ -24,7 +24,6 @@ export class CollectionComponent {
   }
 
   collectionContentChanged(contentData){
-    console.log(contentData);
     this.contentChanged.emit(contentData);
   }
 

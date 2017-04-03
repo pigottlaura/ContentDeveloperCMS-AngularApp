@@ -16,8 +16,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
      this._cdService.getLoginUrl().subscribe(
-       responseObject => this._loginUrl = responseObject.loginUrl
-     );
+       responseObject => {
+         if(responseObject != null){
+           this._loginUrl = responseObject.loginUrl;
+         }
+      });
   }
 
   logoutClicked(){

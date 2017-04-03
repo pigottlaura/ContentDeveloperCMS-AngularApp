@@ -21,15 +21,21 @@ export class HistoryDisplayComponent {
   preview(historyObject){
     this._previewHistoryObject = this._cdService.getContentofCommit(historyObject.hash, this.historyOf).subscribe(
       responseObject => {
-        if(this.showPreview){
-          this._previewHistoryObject = this.historyOf == 'structure' ? responseObject.commit_structure : responseObject.commit_content;
-          this._previewHistoryHash = historyObject.hash;
+        if(responseObject.loginRequired){
+          this._cdService.logout();
         } else {
-          var previewData = {
-            data: this.historyOf == 'structure' ? responseObject.commit_structure : responseObject.commit_content,
-            hash: historyObject.hash
-          };
-          this.previewCommit.emit(previewData);
+          if(responseObject != null){
+            if(this.showPreview){
+              this._previewHistoryObject = this.historyOf == 'structure' ? responseObject.commit_structure : responseObject.commit_content;
+              this._previewHistoryHash = historyObject.hash;
+            } else {
+              var previewData = {
+                data: this.historyOf == 'structure' ? responseObject.commit_structure : responseObject.commit_content,
+                hash: historyObject.hash
+              };
+              this.previewCommit.emit(previewData);
+            }
+          }
         }        
       }
     );
