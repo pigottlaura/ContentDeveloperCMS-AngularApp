@@ -103,9 +103,12 @@ export class ContentDeveloperServerService {
   }
 
   private _stopIntervalTimer(){
-    this._activeSessionTime = 0;
-    clearInterval(this._activeSessionInterval);
+    this._activeSessionTime = 0;    
     this._warnTimeoutSent = false;
+    if(this._activeSessionInterval != null){
+      clearInterval(this._activeSessionInterval);
+      this._activeSessionInterval = null;
+    }
   }
 
   logout(){  
