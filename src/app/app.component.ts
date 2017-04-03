@@ -31,7 +31,9 @@ export class AppComponent implements OnInit {
 
   logout(){
     this._cdService.logout().subscribe(
-      responseObject => this.loginRequired()
+      responseObject => {
+        this.loginRequired();
+      }
     );
     this.loginRequired();
   }
