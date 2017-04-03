@@ -91,7 +91,7 @@ export class ContentDeveloperServerService {
                 }
               }
             }
-          }, 1000);
+          }, 10000);
           this._currentUser = responseObject.user
         }
       });

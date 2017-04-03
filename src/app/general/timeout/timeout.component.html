@@ -1,6 +1,13 @@
 <div>
   <div id="warning">
-    {{_warningMessage}}
+    <ng-container *ngIf="sessionExpired">
+      Your session has expired.<br>
+      Please log in again to access your admin panel.
+    </ng-container>
+    <ng-container *ngIf="sessionExpired == false">
+      Your session will expire in {{minutesRemaining}} minutes.<br>
+      Please refresh or save your content to the server to remain logged in
+    </ng-container>
   </div>
   <button (click)="dismissWarning()" class="button cms small dark">Ok</button>
 </div>
