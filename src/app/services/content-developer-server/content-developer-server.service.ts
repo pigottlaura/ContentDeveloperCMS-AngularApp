@@ -77,7 +77,7 @@ export class ContentDeveloperServerService {
         } else {
           this._resetIntervalTimer();
           this._activeSessionInterval = setInterval(()=>{
-            this._activeSessionTime++;
+            this._activeSessionTime += 10;
             if(this._activeSessionTime > this._serverSessionMaxSeconds) {
               this._stopIntervalTimer();
               this._notifyAppComponentOfImpendingTimeout(0, true);
