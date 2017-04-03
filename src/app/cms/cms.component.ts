@@ -69,8 +69,11 @@ export class CmsComponent {
         } else {
           this._cdService.loadAdminSettings().subscribe(
             responseObject => {
-              this.resetProjectSettings();
-              console.log(this.projectSettings);
+              if(responseObject.loginRequired){
+                this.loginRequired.emit();
+              } else {
+                this.resetProjectSettings();
+              }              
             }
           );   
         }     
