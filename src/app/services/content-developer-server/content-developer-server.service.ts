@@ -21,7 +21,7 @@ export class ContentDeveloperServerService {
   private _notifyAppComponentOfImpendingTimeout:Function;
   private _activeSessionInterval;
   private _activeSessionTime;
-  private _serverSessionMaxSeconds:number = 15; //60 * 30
+  private _serverSessionMaxSeconds:number = 30; //60 * 30
   private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
   private _warnTimeoutSent:boolean = false;
 
@@ -80,13 +80,15 @@ export class ContentDeveloperServerService {
             this._activeSessionTime++;
             if(this._activeSessionTime > this._serverSessionMaxSeconds) {
               this._stopIntervalTimer();
-              this._notifyAppComponentOfImpendingTimeout("Your session has expired", true);
+              this._notifyAppComponentOfImpendingTimeout(0, true);
               console.log("Your session has expired");
             } else if(!this._warnTimeoutSent){
               if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
                 var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
-                this._notifyAppComponentOfImpendingTimeout("Your session will expire in " + remainingMinutes + " minutes", false);
-                this._warnTimeoutSent = true;
+                if(remainingMinutes >= 0){
+                  this._notifyAppComponentOfImpendingTimeout(remainingMinutes, false);
+                  this._warnTimeoutSent = true;
+                }
               }
             }
           }, 1000);

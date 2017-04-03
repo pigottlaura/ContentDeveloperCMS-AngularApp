@@ -11,3 +11,9 @@
     </app-cms>
 <app-footer
     [class]="user != null ? 'loggedIn' : 'loggedOut'"></app-footer>
+<app-timeout
+    *ngIf="_sessionMinutesRemaining > -1"
+    (requestToDismissWarning)="requestToDismissTimeoutWarning()"
+    [minutesRemaining]="_sessionMinutesRemaining"
+    [sessionExpired]="_sessionExpired">
+</app-timeout>

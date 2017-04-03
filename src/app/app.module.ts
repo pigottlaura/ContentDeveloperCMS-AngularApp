@@ -46,6 +46,7 @@ import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwy
 import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upload.component';
 import { FormControlDirective } from './cms/reusable/content/form-control/form-control.directive';
 import { ErrorsComponent } from './cms/reusable/errors/errors.component';
+import { TimeoutComponent } from './general/timeout/timeout.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { ErrorsComponent } from './cms/reusable/errors/errors.component';
     WysiwygHtmlComponent,
     FileUploadComponent,
     FormControlDirective,
-    ErrorsComponent
+    ErrorsComponent,
+    TimeoutComponent
   ],
   imports: [
     BrowserModule,

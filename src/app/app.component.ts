@@ -9,6 +9,8 @@ import { ContentDeveloperServerService } from "./services/content-developer-serv
 export class AppComponent implements OnInit {
   user;
   pageTitle:string = "Content Developer CMS";
+  private _sessionMinutesRemaining:number = -1;
+  private _sessionExpired:boolean = false;
 
   constructor(private _cdService:ContentDeveloperServerService){}
 
@@ -17,8 +19,9 @@ export class AppComponent implements OnInit {
       this.loginRequired();
     });
 
-    this._cdService.setTimoutWarningCallback((warning:string, sessionExpired:boolean)=>{
-      console.log(warning);
+    this._cdService.setTimoutWarningCallback((remainingMinutes:number, sessionExpired:boolean)=>{
+      this._sessionMinutesRemaining = remainingMinutes;
+      this._sessionExpired = sessionExpired;
     });
 
     this._cdService.loadUser().subscribe(
@@ -26,6 +29,8 @@ export class AppComponent implements OnInit {
         if(responseObject.loginRequired){
           this.loginRequired();
         } else {
+          this._sessionMinutesRemaining = -1;
+          this._sessionExpired = false;
           this.user = this._cdService.getCurrentUser();
           if(this.user == {}){
             this.loginRequired();
@@ -35,6 +40,14 @@ export class AppComponent implements OnInit {
         }
       }
     );
+  }
+
+  requestToDismissTimeoutWarning(){
+    if(this._sessionExpired){
+      this.logout();
+    } else {
+      this._sessionMinutesRemaining = -1;
+    }
   }
 
   logout(){
