@@ -20,7 +20,7 @@ export class ContentDeveloperServerService {
   private _notifyAppComponentOfLogout:Function;
   private _activeSessionInterval;
   private _activeSessionTime;
-  private _serverSessionMax = 60 * 15; //60 * 30
+  private _serverSessionMaxSeconds = 15; //60 * 30
   private _warnTimeoutAt = 0.80; // Percentage of server session max time
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
@@ -72,12 +72,12 @@ export class ContentDeveloperServerService {
           this._resetIntervalTimer();
           this._activeSessionInterval = setInterval(()=>{
             this._activeSessionTime++;
-            if(this._activeSessionTime > (this._serverSessionMax * this._warnTimeoutAt)){
-              var remainingMinutes = (this._serverSessionMax - this._activeSessionTime) / 1000 / 60;
-              console.log("Your session will expire in " + remainingMinutes + " minutes");
-            } else if(this._activeSessionInterval > this._serverSessionMax) {
+            if(this._activeSessionInterval > this._serverSessionMaxSeconds) {
               clearInterval(this._activeSessionInterval);
               console.log("Your session has expired");
+            } else if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
+              var remainingMinutes = this._serverSessionMaxSeconds - this._activeSessionTime;
+              console.log("Your session will expire in " + remainingMinutes + " minutes");
             }
           }, 1000);
           this._currentUser = responseObject.user
