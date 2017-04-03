@@ -21,7 +21,7 @@ export class ContentDeveloperServerService {
   private _notifyAppComponentOfImpendingTimeout:Function;
   private _activeSessionInterval;
   private _activeSessionTime;
-  private _serverSessionMaxSeconds:number = 30; //60 * 30
+  private _serverSessionMaxSeconds:number = 60 * 30; //30 Minutes
   private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
   private _warnTimeoutSent:boolean = false;
 
@@ -77,7 +77,7 @@ export class ContentDeveloperServerService {
         } else {
           this._resetIntervalTimer();
           this._activeSessionInterval = setInterval(()=>{
-            this._activeSessionTime += 10;
+            this._activeSessionTime += 5; // Add 5 seconds
             if(this._activeSessionTime > this._serverSessionMaxSeconds) {
               this._stopIntervalTimer();
               this._notifyAppComponentOfImpendingTimeout(0, true);
@@ -91,7 +91,7 @@ export class ContentDeveloperServerService {
                 }
               }
             }
-          }, 10000);
+          }, 5000); // Every 5 seconds
           this._currentUser = responseObject.user
         }
       });
@@ -121,7 +121,6 @@ export class ContentDeveloperServerService {
 
     logoutObservable.subscribe(
       responseObject => {
-        clearInterval(this._activeSessionInterval);
         this._notifyAppComponentOfLogout();
         console.log("User logged out");
       }
