@@ -48,6 +48,8 @@ export class AppComponent implements OnInit {
 
   requestToDismissTimeoutWarning(){
     if(this._sessionExpired){
+      this._sessionExpired = false;
+      this._sessionMinutesRemaining = -1;
       this.logout();
     } else {
       this._sessionWarningDismissed = true;
