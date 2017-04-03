@@ -72,11 +72,11 @@ export class ContentDeveloperServerService {
           this._resetIntervalTimer();
           this._activeSessionInterval = setInterval(()=>{
             this._activeSessionTime++;
-            if(this._activeSessionInterval > this._serverSessionMaxSeconds) {
-              clearInterval(this._activeSessionInterval);
+            if(this._activeSessionTime > this._serverSessionMaxSeconds) {
+              this._stopIntervalTimer();
               console.log("Your session has expired");
             } else if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
-              var remainingMinutes = this._serverSessionMaxSeconds - this._activeSessionTime;
+              var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
               console.log("Your session will expire in " + remainingMinutes + " minutes");
             }
           }, 1000);
@@ -90,7 +90,13 @@ export class ContentDeveloperServerService {
     this._activeSessionTime = 0;
   }
 
-  logout(){    
+  private _stopIntervalTimer(){
+    this._activeSessionTime = 0;
+    clearInterval(this._activeSessionInterval);
+  }
+
+  logout(){  
+    this._stopIntervalTimer();  
     let logoutUrl = this._serverUrl + "/admin/logout";
     let logoutObservable = this._http
       .get(logoutUrl)
