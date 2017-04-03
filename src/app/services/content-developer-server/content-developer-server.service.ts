@@ -75,7 +75,18 @@ export class ContentDeveloperServerService {
 
   private _checkCookie(){
     var allCookies = document.cookie.split(";");
-    console.log(allCookies);
+    for(var i=0; i<allCookies.length; i++){
+      var cookieDataArray = allCookies[i].split("=");
+      if(cookieDataArray[0] == "loggedIn"){
+        console.log(cookieDataArray[1]);
+      }
+    }
+  }
+
+  private _updateCookie(){
+    var currentDateTime = new Date();
+    currentDateTime.setMinutes(currentDateTime.getMinutes() + 30);
+    document.cookie = "loggedIn=true; expires=" + currentDateTime.toISOString();
   }
 
   logout(){    
@@ -87,6 +98,7 @@ export class ContentDeveloperServerService {
 
     logoutObservable.subscribe(
       responseObject => {
+        clearInterval(this._checkCookieInterval);
         this._notifyAppComponentOfLogout();
         console.log("User logged out");
       }
@@ -106,6 +118,8 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         if(responseObject.loginRequired){
           this.logout();
+        } else {
+          this._updateCookie();
         }
       });
     return loadUserProjectsObservable;
@@ -123,6 +137,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           this._currentProjectContentStructureHistory = responseObject;
         }
       });
@@ -140,6 +155,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           this._currentProjectSettings = responseObject;
         }
       });
@@ -157,6 +173,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           console.log("Project settings updated!!");
         }
       });
@@ -174,6 +191,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject != null){
             this._currentProjectSettings.update_origins = responseObject.update_origins;
             this._currentProjectSettings.read_origins = responseObject.read_origins;
@@ -195,6 +213,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           console.log("Admin settings updated!!")
         }
       });
@@ -212,6 +231,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.success){
             this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
             console.log("New public auth token generated!!");
@@ -232,6 +252,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject != null){
             this._currentProjectContentStructureHistory.structure = responseObject.structure;
           }
@@ -252,6 +273,7 @@ export class ContentDeveloperServerService {
             if(responseObject.loginRequired){
               this.logout();
             } else {
+              this._updateCookie();
               if(responseObject != null){
                 this._currentProjectContentStructureHistory.content = responseObject.content;
               }
@@ -275,6 +297,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(this._currentProjectContentStructureHistory != null && responseObject != null){
             this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
             this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history; 
@@ -293,6 +316,8 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         if(responseObject.loginRequired){
           this.logout();
+        } else {
+          this._updateCookie();
         }
       });
 
@@ -308,6 +333,8 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         if(responseObject.loginRequired){
           this.logout();
+        } else {
+          this._updateCookie();
         }
       });
     return createProjectObservable;
@@ -323,6 +350,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           console.log("Project content created");
         }
       });
@@ -341,6 +369,7 @@ export class ContentDeveloperServerService {
           this.logout();
         } else {
           if(responseObject.success){
+            this._updateCookie();
             console.log("New Collaborator Added");
           }
         }
@@ -359,6 +388,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.success){
             console.log("Collaborator Removed");
           }
@@ -380,6 +410,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.success){
             console.log("Collaborator Updated");
           }
@@ -400,6 +431,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.success){
             console.log("Access Level Created");
           }
@@ -419,10 +451,11 @@ export class ContentDeveloperServerService {
           if(responseObject.loginRequired){
             this.logout();
           } else {
-              if(responseObject.success){
-                console.log("Project deleted");
-                this.leaveProject();
-              } 
+            this._updateCookie();
+            if(responseObject.success){
+              console.log("Project deleted");
+              this.leaveProject();
+            } 
           }         
         });
 
@@ -442,6 +475,7 @@ export class ContentDeveloperServerService {
           if(responseObject.loginRequired){
             this.logout();
           } else {
+            this._updateCookie();
             if(responseObject.success){
               console.log("Access Level deleted");
             }
@@ -463,6 +497,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.success){
             console.log("Access Level Updated Updated");
           }
@@ -481,6 +516,8 @@ export class ContentDeveloperServerService {
       .do(responseObject => {
         if(responseObject.loginRequired){
           this.logout();
+        } else {
+          this._updateCookie();
         }
       });
     return loadMediaItemsObservable;
@@ -498,6 +535,7 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._updateCookie();
           if(responseObject.media_item_url != null){
             console.log("Media item successfully uploaded");
           }
