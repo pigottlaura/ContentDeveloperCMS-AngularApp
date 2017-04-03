@@ -18,10 +18,12 @@ export class ContentDeveloperServerService {
   private _headers:Headers;
   private _contentErrors:any = {};
   private _notifyAppComponentOfLogout:Function;
+  private _notifyAppComponentOfImpendingTimeout:Function;
   private _activeSessionInterval;
   private _activeSessionTime;
-  private _serverSessionMaxSeconds = 15; //60 * 30
-  private _warnTimeoutAt = 0.80; // Percentage of server session max time
+  private _serverSessionMaxSeconds:number = 15; //60 * 30
+  private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
+  private _warnTimeoutSent:boolean = false;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
@@ -46,6 +48,10 @@ export class ContentDeveloperServerService {
 
   setupLogoutCallback(appComponentLogoutFunction:Function):void{
     this._notifyAppComponentOfLogout = appComponentLogoutFunction;
+  }
+
+  setTimoutWarningCallback(appComponentTimoutWarningFunction:Function):void{
+    this._notifyAppComponentOfImpendingTimeout = appComponentTimoutWarningFunction;
   }
   
   getLoginUrl():Observable<any>{
@@ -74,10 +80,14 @@ export class ContentDeveloperServerService {
             this._activeSessionTime++;
             if(this._activeSessionTime > this._serverSessionMaxSeconds) {
               this._stopIntervalTimer();
+              this._notifyAppComponentOfImpendingTimeout("Your session has expired", true);
               console.log("Your session has expired");
-            } else if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
-              var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
-              console.log("Your session will expire in " + remainingMinutes + " minutes");
+            } else if(!this._warnTimeoutSent){
+              if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
+                var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
+                this._notifyAppComponentOfImpendingTimeout("Your session will expire in " + remainingMinutes + " minutes", false);
+                this._warnTimeoutSent = true;
+              }
             }
           }, 1000);
           this._currentUser = responseObject.user
@@ -93,6 +103,7 @@ export class ContentDeveloperServerService {
   private _stopIntervalTimer(){
     this._activeSessionTime = 0;
     clearInterval(this._activeSessionInterval);
+    this._warnTimeoutSent = false;
   }
 
   logout(){  

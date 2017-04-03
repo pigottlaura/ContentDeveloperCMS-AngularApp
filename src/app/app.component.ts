@@ -17,6 +17,10 @@ export class AppComponent implements OnInit {
       this.loginRequired();
     });
 
+    this._cdService.setTimoutWarningCallback((warning:string, sessionExpired:boolean)=>{
+      console.log(warning);
+    });
+
     this._cdService.loadUser().subscribe(
       (responseObject:any) => {
         if(responseObject.loginRequired){
