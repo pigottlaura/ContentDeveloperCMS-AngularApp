@@ -20,8 +20,8 @@ export class ContentDeveloperServerService {
   private _notifyAppComponentOfLogout:Function;
   private _activeSessionInterval;
   private _activeSessionTime;
-  private _serverSessionMax:number = 1000 * 15; //1000 * 60 * 30
-  private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
+  private _serverSessionMax = 60 * 15; //60 * 30
+  private _warnTimeoutAt = 0.80; // Percentage of server session max time
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
