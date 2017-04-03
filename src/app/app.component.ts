@@ -13,6 +13,10 @@ export class AppComponent implements OnInit {
   constructor(private _cdService:ContentDeveloperServerService){}
 
   ngOnInit(){
+    this._cdService.setupLogoutObservable(()=>{
+      this.loginRequired();
+    });
+
     this._cdService.loadUser().subscribe(
       (responseObject:any) => {
         if(responseObject.loginRequired){
@@ -26,15 +30,11 @@ export class AppComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
 
   logout(){
-    this._cdService.logout().subscribe(
-      responseObject => {
-        this.loginRequired();
-      }
-    );
+    this._cdService.logout();
     this.loginRequired();
   }
 

@@ -17,6 +17,8 @@ export class ContentDeveloperServerService {
   private _currentUser;
   private _headers:Headers;
   private _contentErrors:any = {};
+  private _logoutObservable:Observable<any>;
+  private _notifyAppComponentOfLogout:Function;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
@@ -38,6 +40,15 @@ export class ContentDeveloperServerService {
   clearContentErrors(){
     this._contentErrors = {};
   }
+
+  setupLogoutObservable(appComponentLogoutFunction:Function):void{
+    this._notifyAppComponentOfLogout = appComponentLogoutFunction;
+    let logoutUrl = this._serverUrl + "/admin/logout";
+    this._logoutObservable = this._http
+      .get(logoutUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
+  }
   
   getLoginUrl():Observable<any>{
     let requestUrl = this._serverUrl + "/admin/loginUrl";
@@ -46,6 +57,7 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error) || "Unknown error getting login url")
       .do(responseObject=> responseObject.loginUrl);
+      
     return getLoginUrlObservable;
   }
   
@@ -65,23 +77,17 @@ export class ContentDeveloperServerService {
     return loadUserObservable;
   }
 
-  logout():Observable<any>{
-    let logoutUrl = this._serverUrl + "/admin/logout";
-    let logoutObservable = this._http
-      .get(logoutUrl)
-      .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
-      
-    logoutObservable.subscribe(
+  logout(){      
+    this._logoutObservable.subscribe(
       responseObject => {
+        this._notifyAppComponentOfLogout();
         console.log("User logged out");
       }
-    )
+    );
+
     this._currentUser = null;
     
     this.leaveProject();
-
-    return logoutObservable;
   }
 
   loadUserProjects():Observable<Object> {
