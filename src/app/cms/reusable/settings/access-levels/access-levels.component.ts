@@ -15,15 +15,17 @@ export class AccessLevelsComponent {
   addNewAccessLevel(accessLevelNameInput, accessLevelIntInput){
     var requestedAccessLevel = accessLevelIntInput.value;
     
-    while(this._accessLevelExists(requestedAccessLevel)){
+    while(this._accessLevelExists(requestedAccessLevel) || requestedAccessLevel < 4){
       requestedAccessLevel++;
     }
     
     this._cdService.createAccessLevel(requestedAccessLevel, accessLevelNameInput.value).subscribe(
       responseObject => {
-        console.log("Access level added!!");
-        accessLevelIntInput.value = accessLevelNameInput.value = "";
-        this.accessLevelsUpdated.emit();
+        if(responseObject.success){
+          console.log("Access level added!!");
+          accessLevelIntInput.value = accessLevelNameInput.value = "";
+          this.accessLevelsUpdated.emit();
+        }
       }
     );
   }
@@ -31,8 +33,10 @@ export class AccessLevelsComponent {
   deleteAccessLevel(accessLevelInt){
     this._cdService.deleteAccessLevel(accessLevelInt).subscribe(
       responseObject => {
-        console.log("Access level deleted");
-        this.accessLevelsUpdated.emit();
+        if(responseObject.success){
+          console.log("Access level deleted");
+          this.accessLevelsUpdated.emit();
+        }
       }
     ); 
   }

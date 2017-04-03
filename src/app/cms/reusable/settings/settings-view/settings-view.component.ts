@@ -37,7 +37,7 @@ export class SettingsViewComponent implements OnInit {
     if(this.isAdmin && currentAuthTokenInput.value == this.projectSettings.public_auth_token){
       this._cdService.generateNewPublicAuthToken(currentAuthTokenInput.value).subscribe(
         (responseObject:any) => {
-          if(responseObject.public_auth_token != null){
+          if(responseObject.success){
             currentAuthTokenInput.value = "";
             this.settingsUpdated.emit();
           }
@@ -79,7 +79,6 @@ export class SettingsViewComponent implements OnInit {
           for(var i=0; i < currentProjectSettings.access_levels.length; i++){
             if(currentProjectSettings.access_levels[i].access_level_int == accessLevel.access_level_int){
               if(currentProjectSettings.access_levels[i].access_level_name != accessLevel.access_level_name){
-                console.log(accessLevel.access_level_name);
                 updatedAccessLevels.push(accessLevel);
               }
             }
@@ -124,8 +123,10 @@ export class SettingsViewComponent implements OnInit {
     if(accessLevelName != null && accessLevelName.length > 0){
       this._cdService.updateAccessLevel(accessLevelInt, accessLevelName).subscribe(
         responseObject => {
-          console.log("Access level updated");
-          this.settingsUpdated.emit();
+          if(responseObject.success){
+            console.log("Access level updated");
+            this.settingsUpdated.emit();
+          }
         }
       );
     }    
@@ -135,8 +136,10 @@ export class SettingsViewComponent implements OnInit {
     collaborator.access_level_int = accessLevelInt;
     this._cdService.updateCollaborator(collaborator.user_id, accessLevelInt).subscribe(
       responseObject => {
-        console.log("Collaborator updated!!");
-        this.settingsUpdated.emit();
+        if(responseObject.success){
+          console.log("Collaborator updated!!");
+          this.settingsUpdated.emit();
+        }
       }
     );
   }

@@ -55,7 +55,13 @@ export class ContentDeveloperServerService {
       .get(requestUrl)
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error) || "Unknown error getting users details")
-      .do(responseObject => this._currentUser = responseObject.user);
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          this._currentUser = responseObject.user
+        }
+      });
     return loadUserObservable;
   }
 
@@ -76,7 +82,12 @@ export class ContentDeveloperServerService {
     let loadUserProjectsObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error getting users projects");
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting users projects")
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        }
+      });
     return loadUserProjectsObservable;
   }
 
@@ -89,9 +100,11 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error getting project content and structure")
       .do(responseObject => {
-        this._currentProjectContentStructureHistory = responseObject;
-        this._currentProjectContentStructureHistory.content_history = this._currentProjectContentStructureHistory.content_history;
-        this._currentProjectContentStructureHistory.structure_history = this._currentProjectContentStructureHistory.structure_history;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          this._currentProjectContentStructureHistory = responseObject;
+        }
       });
 
     return loadProjectContentAndStructureObservable;
@@ -104,7 +117,11 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
       .do(responseObject => {
-        this._currentProjectSettings = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          this._currentProjectSettings = responseObject;
+        }
       });
 
     return loadProjectSettingsObservable;
@@ -116,7 +133,13 @@ export class ContentDeveloperServerService {
       .put(requestUrl, {project_name: projectName, max_cache_age: maxCacheAge, custom_css: customCss}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
-      .do(responseObject => console.log("Project settings updated!!"));
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          console.log("Project settings updated!!");
+        }
+      });
 
     return updateProjectSettingsObservable;
   }
@@ -128,9 +151,15 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
       .do(responseObject => {
-        this._currentProjectSettings.update_origins = responseObject.update_origins;
-        this._currentProjectSettings.read_origins = responseObject.read_origins;
-        this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject != null){
+            this._currentProjectSettings.update_origins = responseObject.update_origins;
+            this._currentProjectSettings.read_origins = responseObject.read_origins;
+            this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
+          }
+        }
       });
 
     return loadAdminSettingsObservable;
@@ -142,7 +171,13 @@ export class ContentDeveloperServerService {
       .put(requestUrl, {update_origins: updateOrigins, read_origins: readOrigins}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
-      .do(responseObject => console.log("Admin settings updated!!"));
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          console.log("Admin settings updated!!")
+        }
+      });
 
     return updateProjectSettingsObservable;
   }
@@ -154,9 +189,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error))
       .do(responseObject => {
-        if(responseObject.public_auth_token != null){
-          this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
-          console.log("New public auth token generated!!");
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            this._currentProjectSettings.public_auth_token = responseObject.public_auth_token;
+            console.log("New public auth token generated!!");
+          }
         }
       });
 
@@ -171,7 +210,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project structure")
       .do(responseObject => {
-        this._currentProjectContentStructureHistory.structure = responseObject.structure;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject != null){
+            this._currentProjectContentStructureHistory.structure = responseObject.structure;
+          }
+        }
       });
     
     return structureUpdateObservable;
@@ -186,11 +231,13 @@ export class ContentDeveloperServerService {
         .map((responseObject: Response) => <any> responseObject.json())
         .catch(error => Observable.throw(error.json().error) || "Unknown error updating project content")
         .do(responseObject => {
-          if(encapsulationPath.length == 0){
-            this._currentProjectContentStructureHistory.content = responseObject.content;
-          } else {
-            // Deal with encapsulated data
-          }        
+            if(responseObject.loginRequired){
+              this.logout();
+            } else {
+              if(responseObject != null){
+                this._currentProjectContentStructureHistory.content = responseObject.content;
+              }
+          }    
         });
 
       return contentUpdateObservable;
@@ -207,10 +254,14 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error refreshing project history")
       .do(responseObject => {
-        if(this._currentProjectContentStructureHistory != null){
-          this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
-          this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history; 
-        }            
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(this._currentProjectContentStructureHistory != null && responseObject != null){
+            this._currentProjectContentStructureHistory.content_history = responseObject.content_history;
+            this._currentProjectContentStructureHistory.structure_hisory = responseObject.structure_history; 
+          }   
+        }         
       });
     return refreshProjectHistoryObservable;
   }
@@ -220,7 +271,12 @@ export class ContentDeveloperServerService {
     let commitContentObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content");
+      .catch(error => Observable.throw(error.json().error) || "Unknown error getting commit content")
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        }
+      });
 
     return commitContentObservable;
   }
@@ -230,7 +286,12 @@ export class ContentDeveloperServerService {
     let createProjectObservable = this._http
       .post(requestUrl, {project_name: projectName, template: template}, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content");
+      .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content")
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        }
+      });
     return createProjectObservable;
   }
 
@@ -241,7 +302,11 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error creating project content")
       .do(responseObject => {
-        console.log(responseObject);
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          console.log("Project content created");
+        }
       });
 
     return createContentObservable;
@@ -255,8 +320,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
-        console.log("New Collaborator Added");
-        //this._currentProjectSettings.collaborators = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            console.log("New Collaborator Added");
+          }
+        }
       });
 
     return addNewCollaboratorObservable;
@@ -270,9 +340,15 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
-        console.log("Collaborator Removed");
-        //this._currentProjectSettings.collaborators = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Collaborator Removed");
+          }
+        }
       });
+      
 
     return removeCollaboratorObservable;
   }
@@ -285,8 +361,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error adding new collaborator to project")
       .do(responseObject => {
-        console.log("Collaborator Updated");
-        //this._currentProjectSettings.collaborators = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Collaborator Updated");
+          }
+        }
       });
 
     return addNewCollaboratorObservable;
@@ -300,8 +381,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error creating project access level")
       .do(responseObject => {
-        console.log("Access Level Created");
-        //this._currentProjectSettings.access_levels = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Access Level Created");
+          }
+        }
       });
 
     return addNewCollaboratorObservable;
@@ -314,10 +400,14 @@ export class ContentDeveloperServerService {
         .map((responseObject: Response) => <any> responseObject.json())
         .catch(error => Observable.throw(error.json().error) || "Unknown error deleting project")
         .do(responseObject => {
-          if(responseObject.success){
-            console.log("Project deleted");
-            this.leaveProject();
-          }          
+          if(responseObject.loginRequired){
+            this.logout();
+          } else {
+              if(responseObject.success){
+                console.log("Project deleted");
+                this.leaveProject();
+              } 
+          }         
         });
 
     return deleteProjectObservable;
@@ -333,8 +423,13 @@ export class ContentDeveloperServerService {
         .map((responseObject: Response) => <any> responseObject.json())
         .catch(error => Observable.throw(error.json().error) || "Unknown error deleting project access level")
         .do(responseObject => {
-          console.log("Access Level deleted");
-          //this._currentProjectSettings.access_levels = responseObject;
+          if(responseObject.loginRequired){
+            this.logout();
+          } else {
+            if(responseObject.success){
+              console.log("Access Level deleted");
+            }
+          }
         });
 
       return deleteAccessLevelObservable;
@@ -349,8 +444,13 @@ export class ContentDeveloperServerService {
       .map((responseObject: Response) => <any> responseObject.json())
       .catch(error => Observable.throw(error.json().error) || "Unknown error updating project access level")
       .do(responseObject => {
-        console.log("Access Level Updated Updated");
-        //this._currentProjectSettings.access_levels = responseObject;
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.success){
+            console.log("Access Level Updated Updated");
+          }
+        }
       });
 
     return addNewCollaboratorObservable;
@@ -361,7 +461,12 @@ export class ContentDeveloperServerService {
     let loadMediaItemsObservable = this._http
       .get(requestUrl, {headers: this._headers})
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project access level");
+      .catch(error => Observable.throw(error.json().error) || "Unknown error updating project access level")
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        }
+      });
     return loadMediaItemsObservable;
   }
 
@@ -372,7 +477,16 @@ export class ContentDeveloperServerService {
     let uploadMediaItemObservable = this._http
       .post(requestUrl, formData)
       .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error) || "Unknown error uploading media item");
+      .catch(error => Observable.throw(error) || "Unknown error uploading media item")
+      .do(responseObject => {
+        if(responseObject.loginRequired){
+          this.logout();
+        } else {
+          if(responseObject.media_item_url != null){
+            console.log("Media item successfully uploaded");
+          }
+        }
+      });
     return uploadMediaItemObservable;
   }
 
