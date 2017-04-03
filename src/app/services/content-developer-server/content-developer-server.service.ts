@@ -18,6 +18,7 @@ export class ContentDeveloperServerService {
   private _headers:Headers;
   private _contentErrors:any = {};
   private _notifyAppComponentOfLogout:Function;
+  private _checkCookieInterval;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
@@ -65,10 +66,16 @@ export class ContentDeveloperServerService {
         if(responseObject.loginRequired){
           this.logout();
         } else {
+          this._checkCookieInterval = setInterval(this._checkCookie, 2000);
           this._currentUser = responseObject.user
         }
       });
     return loadUserObservable;
+  }
+
+  private _checkCookie(){
+    var allCookies = document.cookie.split(";");
+    console.log(allCookies);
   }
 
   logout(){    
