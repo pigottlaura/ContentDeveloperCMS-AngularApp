@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private _cdService:ContentDeveloperServerService){}
 
   ngOnInit(){
-    this._cdService.setupLogoutObservable(()=>{
+    this._cdService.setupLogoutCallback(()=>{
       this.loginRequired();
     });
 

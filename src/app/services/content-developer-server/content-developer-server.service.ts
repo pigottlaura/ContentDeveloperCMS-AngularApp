@@ -17,7 +17,6 @@ export class ContentDeveloperServerService {
   private _currentUser;
   private _headers:Headers;
   private _contentErrors:any = {};
-  private _logoutObservable:Observable<any>;
   private _notifyAppComponentOfLogout:Function;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
@@ -41,13 +40,8 @@ export class ContentDeveloperServerService {
     this._contentErrors = {};
   }
 
-  setupLogoutObservable(appComponentLogoutFunction:Function):void{
+  setupLogoutCallback(appComponentLogoutFunction:Function):void{
     this._notifyAppComponentOfLogout = appComponentLogoutFunction;
-    let logoutUrl = this._serverUrl + "/admin/logout";
-    this._logoutObservable = this._http
-      .get(logoutUrl)
-      .map((responseObject: Response) => <any> responseObject.json())
-      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
   }
   
   getLoginUrl():Observable<any>{
@@ -77,8 +71,14 @@ export class ContentDeveloperServerService {
     return loadUserObservable;
   }
 
-  logout(){      
-    this._logoutObservable.subscribe(
+  logout(){    
+    let logoutUrl = this._serverUrl + "/admin/logout";
+    let logoutObservable = this._http
+      .get(logoutUrl)
+      .map((responseObject: Response) => <any> responseObject.json())
+      .catch(error => Observable.throw(error) || "Unknown error when logging user out");
+
+    logoutObservable.subscribe(
       responseObject => {
         this._notifyAppComponentOfLogout();
         console.log("User logged out");
