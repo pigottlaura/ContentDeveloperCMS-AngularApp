@@ -85,8 +85,8 @@ export class ContentDeveloperServerService {
 
   private _updateCookie(){
     var currentDateTime = new Date();
-    currentDateTime.setMinutes(currentDateTime.getMinutes() + 30);
-    document.cookie = "loggedIn=true; expires=" + currentDateTime.toISOString();
+    currentDateTime.setMinutes(currentDateTime.getMinutes() + 0.2);
+    document.cookie = "loggedIn=true; expires=" + currentDateTime.toISOString() + ";";
   }
 
   logout(){    
