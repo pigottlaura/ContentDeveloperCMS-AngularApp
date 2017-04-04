@@ -23,7 +23,6 @@ export class ContentDeveloperServerService {
   private _activeSessionTime;
   private _serverSessionMaxSeconds:number = 60 * 30; //30 Minutes
   private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
-  private _warnTimeoutSent:boolean = false;
 
   constructor(private _http:Http, private _coPipe:CloneObjectPipe, private _kvaPipe:KeyValArrayPipe) {
     this._headers = new Headers();
@@ -82,14 +81,11 @@ export class ContentDeveloperServerService {
               this._stopIntervalTimer();
               this._notifyAppComponentOfImpendingTimeout(0, true);
               console.log("Your session has expired");
-            } else if(!this._warnTimeoutSent){
-              if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
+            } if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
                 var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
                 if(remainingMinutes >= 0){
                   this._notifyAppComponentOfImpendingTimeout(remainingMinutes, false);
-                  this._warnTimeoutSent = true;
                 }
-              }
             }
           }, 5000); // Every 5 seconds
           this._currentUser = responseObject.user
@@ -104,7 +100,6 @@ export class ContentDeveloperServerService {
 
   private _stopIntervalTimer(){
     this._activeSessionTime = 0;    
-    this._warnTimeoutSent = false;
     if(this._activeSessionInterval != null){
       clearInterval(this._activeSessionInterval);
       this._activeSessionInterval = null;
