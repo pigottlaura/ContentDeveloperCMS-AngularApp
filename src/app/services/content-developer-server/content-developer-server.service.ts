@@ -59,6 +59,7 @@ export class ContentDeveloperServerService {
   // Could have used the session cookie to monitor this more accuratley, but exposing this
   // as anything other than "http only" could have opened the site up to XSS attacks
   private _activeSessionInterval;
+  private _activeSessionIntervalSeconds:number = 5;
   private _activeSessionTime;
   private _serverSessionMaxSeconds:number = 60 * 30; //30 Minutes
   private _warnTimeoutAt:number = 0.80; // Percentage of server session max time
@@ -137,19 +138,32 @@ export class ContentDeveloperServerService {
           // Resetting the timer, as the user just completed an interaction with the
           // server, which will have reset their session
           this._resetIntervalTimer();
+          // Storing the active session interval, so that it can be cleared (on logout or expiry)
           this._activeSessionInterval = setInterval(()=>{
-            this._activeSessionTime += 5; // Add 5 seconds
+            // Increasing the active session time by the timer tick interval
+            // i.e. every 5 seconds, add 5 seconds
+            this._activeSessionTime += this._activeSessionIntervalSeconds; // Add 5 seconds
             if(this._activeSessionTime > this._serverSessionMaxSeconds) {
+              // If the active session time is greater than the server max time,
+              // the session has expired. Stopping the interval timer
               this._stopIntervalTimer();
+              // Using a callback (passed by the app component at initialisation) to notify 
+                // the app component of the timeout
               this._notifyAppComponentOfImpendingTimeout(0, true);
               console.log("Your session has expired");
             } if(this._activeSessionTime > (this._serverSessionMaxSeconds * this._warnTimeoutAt)){
+                // If the active session time is greater than the specified percentage of the
+                // max server time, then I start emitting warnings to the app component.
+                // Determining how many minutes are remaining by finding the difference (in seconds)
+                // between the max server time and active session time, and dividing it by 60
                 var remainingMinutes = (this._serverSessionMaxSeconds - this._activeSessionTime) / 60;
-                if(remainingMinutes >= 0){
-                  this._notifyAppComponentOfImpendingTimeout(remainingMinutes, false);
-                }
+                // Using a callback (passed by the app component at initialisation) to notify 
+                // the app component of the impending timeout
+                this._notifyAppComponentOfImpendingTimeout(remainingMinutes, false);
             }
-          }, 5000); // Every 5 seconds
+          }, this._activeSessionIntervalSeconds * 1000); // Every 5000 milliseconds (5seconds)
+
+          // Storing the user object in the response as the current user
           this._currentUser = responseObject.user
         }
       });

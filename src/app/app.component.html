@@ -12,8 +12,8 @@
 <app-footer
     [class]="user != null ? 'loggedIn' : 'loggedOut'"></app-footer>
 <app-timeout
-    *ngIf="_sessionMinutesRemaining > -1 && (_sessionExpired || _sessionWarningDismissed == false)"
+    *ngIf="sessionMinutesRemaining > -1 && (sessionExpired || _sessionWarningDismissed == false)"
     (requestToDismissWarning)="requestToDismissTimeoutWarning()"
-    [minutesRemaining]="_sessionMinutesRemaining"
-    [sessionExpired]="_sessionExpired">
+    [minutesRemaining]="sessionMinutesRemaining"
+    [sessionExpired]="sessionExpired">
 </app-timeout>
