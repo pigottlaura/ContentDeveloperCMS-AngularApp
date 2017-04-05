@@ -27,7 +27,8 @@
           <td>
             <button
               *ngIf="_currentUserId != null && collaborator.user_id != _currentUserId"
-              (click)="deleteCollaborator(collaborator)">Delete</button>
+              (click)="deleteCollaborator(collaborator)"
+              class="button cms small">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -49,6 +50,6 @@
       </select>
     </label>
     <br>
-    <button (click)="addCollaborator(acEmailInput, acAccessInput)">Add Collaborator</button>
+    <button (click)="addCollaborator(acEmailInput, acAccessInput)" class="button cms small">Add Collaborator</button>
   </div>
 </div>

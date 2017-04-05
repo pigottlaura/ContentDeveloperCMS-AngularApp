@@ -23,7 +23,8 @@
           <td>
             <button
               *ngIf="accessLevel.access_level_int > 3 && !accessLevel.in_use"
-              (click)="deleteAccessLevel(accessLevel.access_level_int)">Delete</button>
+              (click)="deleteAccessLevel(accessLevel.access_level_int)"
+              class="button cms small">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -39,6 +40,6 @@
       <input #aalLevelIntInput type="text">
     </label>
     <br>
-    <button (click)="addNewAccessLevel(aalLevelNameInput, aalLevelIntInput)">Add New Access Level</button>
+    <button (click)="addNewAccessLevel(aalLevelNameInput, aalLevelIntInput)" class="button cms small">Add New Access Level</button>
   </div>
 </div>
