@@ -7,9 +7,12 @@ import { UpperCamelCasePipe } from "./upper-camel-case.pipe";
 export class UnderscoreToSpacePipe implements PipeTransform {
 
   transform(stringVal:string):string {
+    // Appending an empty string to the string value, to implicitlty
+    // cast it to a string, and ensure it is not null
     stringVal += "";
     
-    return stringVal.replace(/_/g, " ");;
+    // Replacing all underscores with spaces
+    return stringVal.replace(/_/g, " ");
   }
 
 }

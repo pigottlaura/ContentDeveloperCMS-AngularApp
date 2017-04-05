@@ -18,6 +18,9 @@ import { DoubleDigitPipe } from './pipes/double-digit.pipe';
 // Services
 import { ContentDeveloperServerService } from './services/content-developer-server/content-developer-server.service';
 
+// Directives
+import { FormControlDirective } from './cms/reusable/content/form-control/form-control.directive';
+
 // Components
 import { AppComponent } from './app.component';
 import { CmsComponent } from './cms/cms.component';
@@ -44,7 +47,6 @@ import { AccessLevelsComponent } from './cms/reusable/settings/access-levels/acc
 import { NavigationComponent } from './cms/reusable/cms-navigation/navigation.component';
 import { WysiwygHtmlComponent } from './cms/reusable/content/wysiwyg-html/wysiwyg-html.component';
 import { FileUploadComponent } from './cms/reusable/content/file-upload/file-upload.component';
-import { FormControlDirective } from './cms/reusable/content/form-control/form-control.directive';
 import { ErrorsComponent } from './cms/reusable/errors/errors.component';
 import { TimeoutComponent } from './general/timeout/timeout.component';
 

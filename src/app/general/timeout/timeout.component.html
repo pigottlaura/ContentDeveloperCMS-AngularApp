@@ -5,7 +5,7 @@
       Please log in again to access your admin panel.
     </ng-container>
     <ng-container *ngIf="sessionExpired == false">
-      Your session will expire in {{minutesRemaining}} minutes.<br>
+      Your session will expire in {{minutesRemaining}} minute{{minutesRemaining == 1 ? '' : 's'}} and {{_secondsRemaining}} second{{_secondsRemaining == 1 ? '' : 's'}}.<br>
       Please refresh or save your content to the server to remain logged in
     </ng-container>
   </div>

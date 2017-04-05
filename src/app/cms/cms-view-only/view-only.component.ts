@@ -6,6 +6,7 @@ import { Component, Input, Output } from '@angular/core';
   styleUrls: ['./view-only.component.css']
 })
 export class ViewOnlyComponent {
+  // Inputs to allow these values to be bound to this component
   @Input() projectStructure;
   @Input() projectContent;
   @Input() customCss:string;

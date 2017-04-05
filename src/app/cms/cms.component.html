@@ -1,19 +1,19 @@
-<ng-container *ngIf="_projectId == null && _userAccessLevel == null">
+<ng-container *ngIf="_projectId == null && userAccessLevel == null">
     <app-user-projects
         (viewProject)="viewProject($event)"
         (viewLoginRequired)="viewLoginRequired($event)"></app-user-projects>
 </ng-container>
 
-<ng-container *ngIf="_projectId != null && _userAccessLevel != null">
+<ng-container *ngIf="_projectId != null && userAccessLevel != null">
     <button (click)="refreshProject()" class="button cms top-tabs">Refresh from Server</button>
     <button (click)="viewUserProjects()" class="button cms top-tabs">Back to all Projects</button>
     <a
-        *ngIf="_userAccessLevel == 1"
+        *ngIf="userAccessLevel == 1"
         [href]="'./../feeds/' + _projectId"
         target="_blank"
         class="button cms top-tabs">View JSON</a>
     <app-cms-admin
-        *ngIf="_userAccessLevel == 1"
+        *ngIf="userAccessLevel == 1"
         [errors]="errors"
         [(projectStructure)]="projectStructure"
         [(projectContent)]="projectContent"
@@ -29,9 +29,9 @@
         (adminRequestToDismissErrors)="dismissErrors()">
     </app-cms-admin>
     <app-cms-editor
-        *ngIf="_userAccessLevel == 2 || _userAccessLevel > 3"
+        *ngIf="userAccessLevel == 2 || userAccessLevel > 3"
         [errors]="errors"
-        [userAccessLevel]="_userAccessLevel"
+        [userAccessLevel]="userAccessLevel"
         [(projectContent)]="projectContent"
         [projectStructure]="projectStructure"
         [(projectSettings)]="projectSettings"
@@ -43,7 +43,7 @@
         (editorRequestToDismissErrors)="dismissErrors()">
     </app-cms-editor>
     <app-cms-view-only
-        *ngIf="_userAccessLevel == 3"
+        *ngIf="userAccessLevel == 3"
         [projectContent]="projectContent"
         [projectStructure]="projectStructure"
         [customCss]="projectSettings != null ? projectSettings.custom_css : ''">
