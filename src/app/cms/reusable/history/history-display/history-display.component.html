@@ -22,7 +22,7 @@
             [class]="_previewHistoryHash == commit.hash ? 'selected' : ''">
             <td>{{commit.hash | shortener : 6}}</td>
             <td>{{commit.date | customDate : false : true}}</td>
-            <td>{{commit.message.split(" (HEAD ->")[0]}}</td>
+            <td>{{commit.message.split(" (HEAD")[0]}}</td>
             <td>{{commit.author_name}}</td>
             <td><button
                   class="button cms small"
